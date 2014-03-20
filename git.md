@@ -51,8 +51,7 @@ Pull requests are how we ensure quality and share knowledge. The goal is for eve
 other. The tone should be conducive to learning, and direct.
 
 An important part of making the PR process constructive is to have **everyone review everyone else**, meaning, no one person is above everyone in the context of
-PR's. This is important because everyone makes mistakes, nobody's code is ever perfect, and everyone can always become a better developer. The context of the pull
-request is that
+PR's. This is important because everyone makes mistakes, nobody's code is ever perfect, and everyone can always become a better developer.
 
 ### Descriptions
 
@@ -75,7 +74,11 @@ you should click **delete branch** in Github, so that old branches do not pile u
 
 ## Tracking Branches
 
+need to write this
+
 ## Rebasing Rules
+
+need to write this
 
 ## Tools
 
