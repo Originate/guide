@@ -1,98 +1,79 @@
 # The Originate Guide to Git
 
-As an engineer at Originate, you should be familiar with this guide and follow its recommendations to make working with your team flow smoother.
-These are not hard rules, rather it is a way to help us be more efficient and move between projects easier.
+These are recommendations. They should be followed in the absence of good, justifiable reasons to do things differently.
 
-## Branching
 
-Part of the beauty of git lies in it's ability to branch projects intuitively. On an Originate project, you should expect to see, at the very least,
-1 feature branch created per story in Pivotal. You can go further though, and sometimes it is necessary. Any logical grouping of related changes to a
-codebase can be turned into a branch, and it becomes especially necessary to break things up when you have a large amount of changes. Determining what
-is a "large amount" is mostly project dependent, and if you have trouble with it you should seek advice from your tech lead.
+## Branches
 
-### Naming
+We follow the [Nvie branching model](http://nvie.com/posts/a-successful-git-branching-model/).
 
-In order to homogenize our projects, you should use [spinal case](http://en.wikipedia.org/wiki/Letter_case#Special_case_styles) to name your branches
-(this-is-spinal-case). For small projects, with less than 5 people, a simple naming strategy is suggested:
+* One (or more) feature branches per user story.
+* Refactorings and bug fixes should be in their own feature branches, and be reviewed separately.
+* Feature branches are named like "[developer initials]-[feature-name]", e.g. __kg-new-settings-page__
+* feature branches are cut from the __development__ branch, and get merged into it
+* the __development__ branch matches the _development_ server
+* the __master__ branch matches what is in production
+* other servers have long-lived branches that match them by name: the __staging__ branch matches the _staging_ server etc
 
-```ruby
-my-feature-branch
-```
 
-For projects with more than 5 people, it becomes necessary to relay a bit more information in your branch names, and the following is suggested:
+## Commits
 
-```ruby
-feature/my-feature-branch-mh # initials at the end
-bug/fixes-broken-thing-mh
-```
-
-### Breaking Up Large Branches
-
-The easiest place to start is in Pivotal. If your stories are too big, your branches are going to be too big. Request smaller stories from your project manager.
-
-Regardless, you will still find yourself with branches that are too big, and pull requests that are hard to manage, so here are some suggestions to help you break
-them up further:
-
-- Try to break it into a smaller feature first—any change that doesn’t depend on something else to function (even if it’s ugly) could be a different
-story/chore/bug
-- if that didn’t work, create a ‘merge’ branch that your changes will be merged into (i.e., not `develop`/`master`); then, for each piece of your large change,
-create a new branch off of your merge branch, and do a PR into the merge branch, following the standard review/merge process.  When all changes are
-done, do another review of the merge branch, and merge it into `develop`/`master`.
-
-## Commit Granularity
-
-Your commits should be granular. When it comes time to commit your changes, using ([interactive staging](http://git-scm.com/book/en/Git-Tools-Interactive-Staging))
-is often a big help for creating small sensible commits. Using a GUI is also very helpful for this (see below).
+* Each commit should contain only one particular change. Its okay to have many small commits.
+* Commit frequently during your work, each time a dedicated change is done and the tests pass. Don't accumulate dozens of changes before committing. Rather, get into the habit of doing one thing at a time, committing it, then do the next.
+* Always review your work before committing it. 
+* Commit messages should have a 50 characters summary written in imperative ("fix signup") if possible, or as a short summary for features ("logout button"), followed by an empty line, followed by an optional longer description.
 
 
 ## Pull Requests
 
-Pull requests are how we ensure quality and share knowledge. The goal is for everyone to hold one another to a high standard, and for everyone to learn from each
-other. The tone should be conducive to learning, and direct.
+Pull requests are how we ensure quality and share knowledge. The goal is for everyone to hold one another to a high standard, and for everyone to learn from each other. The tone should be conducive to learning.
 
-An important part of making the PR process constructive is to have **everyone review everyone else**, meaning, no one person is above everyone in the context of
-PR's. This is important because everyone makes mistakes, nobody's code is ever perfect, and everyone can always become a better developer.
+* everyone can (and should) review everyone else's pull requests
+* refactorings should be reviewed by the tech lead or architect
+* every feedback given in a PR must be at least addressed
+* finding and pointing out issues in PRs is a good thing. Bonus points if you find issues in the code of senior people!
+* you need to tag the reviewers in the description of your pull request (`@username`).
+* every piece of code (backend, database changes, HTML, CSS) must be reviewed. You can use multiple reviewers for different types of code.
+* mark pull request that should not be merged as "WIP" in the PR title ("WIP: new settings page")
+* No comments on a PR means the review was not throurough enough. Getting comments on your PR is good, it means you are alive and learning. The learning never ends!
+* Well written code bases get reviewed in one iteration (one set of comments, one round of fixes, good to go). If your reviews usually take several rounds, try to be more thorough before sending off PRs.
+* When a PR gets LGTMed ("looks good to me"), it will be merged by the author, and the feature branch deleted from both the local machine as well as from Github.
 
-### Descriptions
+Here is a check list for reviewers:
 
-When creating a pull request, you should tag relevant people in the description with `@username`. On larger projects (more than 5 people), you should
-try to only tag 2 relevant people in a PR. Having everyone review everything does not scale well.
+* Is every piece of code in the right place, i.e. model code in a model, controller logic in a controller, app-specific helper code in a helper, generic helper code in a library?
+* Do all classes have only one responsibility?
+* Do all methods do only one thing?
+* Are all classes/methods/variables named properly so that the code is self-describing?
+* Is everything as private as possible, i.e. no things public that don't need to be public?
+* Are not too many things private?
+* Are all files within a reasonable size (less than 100 loc)?
+* Are all methods less than 10 loc?
+* No law of demeter violations (providing whole objects to methods when all that's needed is the value of one attribute of them)?
+* Is everything tested? Is each thing tested enough? Is it not over-tested?
+* Every class should have a small comment describing what it represents/does. * Public methods should have comments describing what they are for, or when to call them, if this isn't obvious from the code. Comments shouldn't describe what the method does (this is visible from looking at the code).
+* Are there any obvious performance-stupidities, like making a database query for each loop iteration, rather than using a more optimized query that loads all data at once? 
+* Spacing errors like no empty line between methods, or too many empty lines
+* There shouldn't be any commented-out code.
+* There should be no debug statements like "console.log" or the likes.
 
-On some projects, you will be required to reference the Pivotal story that this PR is based on. This will help reviewers and project managers keep track of features
-and ensure that the project's progress has visibility from a high level.
 
-### WIP
+### Breaking Up Large Branches
 
-When you have a branch that needs a second set of eyes, but it is not done yet, you should clearly mark in the description that it is a WIP (work in progress).
-This should ensure that nobody accidentally merges your unfinished work.
+[see Kevin's blog post]
 
-## Who Merges
-
-The creator of the pull request is responsible for merging. This is because people need to be accountable for their own work. Merges should occur after at least 1 person
-has signed off on the PR (some projects will require more than 1). For big pull requests, you should aim to have 2 people sign off before merging. After you merge a branch,
-you should click **delete branch** in Github, so that old branches do not pile up needlessly.
-
-## Tracking Branches
-
-need to write this
-
-## Rebasing Rules
-
-need to write this
 
 ## Tools
 
-### Suggested Git GUI’s
+The best Git tool is the command line. It is easy to learn and use, and makes the full power of Git available. An exception to this are highly interactive things like reviewing and staging changes for commits, looking at git history, or similar things.
 
-- SourceTree
-- gitx
-- tower
-- gitk
-- tig
+### OS X
+* __[GitX](http://gitx.frim.nl):__ free, very lean, provides the things that are better done in a visual tool than on the command line: staging, committing, looking at history.
+* __[Github for Mac]__
+* __[Tower]()__
+* __[SourceTree]()__
 
 ### Conflict Resolution
-
-- vi
 - Araxis Merge
 - vimdiff
 - FileMerge
