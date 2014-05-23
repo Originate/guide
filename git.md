@@ -15,6 +15,11 @@ We follow the [Nvie branching model](http://nvie.com/posts/a-successful-git-bran
 * the __master__ branch matches what is in production
 * other servers have long-lived branches that match them by name: the __staging__ branch matches the _staging_ server etc
 
+```shell
+$ git checkout development
+$ git pull --rebase
+$ git checkout -b [new feature branch name]
+```
 
 ## Commits
 
@@ -56,6 +61,16 @@ Here is a check list for reviewers:
 * Spacing errors like no empty line between methods, or too many empty lines
 * There shouldn't be any commented-out code.
 * There should be no debug statements like "console.log" or the likes.
+
+```shell
+$ git checkout development
+$ git pull --rebase
+$ git checkout [feature branch]
+$ git pull --rebase
+$ git rebase development
+$ git push -u origin -f
+# Create the pull request on the Github page of the project
+```
 
 
 ### Breaking Up Large Branches
