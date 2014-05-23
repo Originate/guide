@@ -55,8 +55,16 @@ To resolve them
 * use `git status` to see which files have conflicts
 * open the conflictiong files in your editor and resolve the conflicts. Make sure you consider that both sides of the conflict contain changes that happened at the same time, so both changes should be present in your resolved code.
 
+```shell
+# resolve conflicts in your text editor
+$ git add [path of resolved file]
+$ git rebase --continue
+```
+
 
 ## Pull Requests
+
+When you are done with a feature, submit a pull request so that it can be reviewed and merged into the development branch.
 
 Pull requests are how we ensure quality and share knowledge. The goal is for everyone to hold one another to a high standard, for everyone to learn from each other, and to catch architectural and other mistakes before they make it into the main branch. The tone should be constructive and positive.
 
