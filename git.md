@@ -15,10 +15,13 @@ We follow the [Nvie branching model](http://nvie.com/posts/a-successful-git-bran
 * the __master__ branch matches what is in production
 * other servers have long-lived branches that match them by name: the __staging__ branch matches the _staging_ server etc
 
+### Start a new feature branch
+
 ```shell
 $ git checkout development
 $ git pull --rebase
 $ git checkout -b [new feature branch name]
+$ git push -u origin [new feature branch name]
 ```
 
 ## Commits
@@ -27,6 +30,30 @@ $ git checkout -b [new feature branch name]
 * Commit frequently during your work, each time a dedicated change is done and the tests pass. Don't accumulate dozens of changes before committing. Rather, get into the habit of doing one thing at a time, committing it, then do the next.
 * Always review your work before committing it. 
 * Commit messages should have a 50 characters summary written in imperative ("fix signup") if possible, or as a short summary for features ("logout button"), followed by an empty line, followed by an optional longer description.
+
+
+## Staying in sync
+
+It is important that you keep your feature branches in sync with the main _development_ branch.
+This prevents many merge conflicts in the first place, and with the rest you can deal one at a time,
+instead of all at once when you want to merge your feature branch into development.
+
+```shell
+$ git checkout development
+$ git pull --rebase
+$ git checkout [feature branch]
+$ git pull --rebase
+$ git rebase development   --or--   git merge development
+$ git push -f    --or--  git push
+```
+
+
+## Resolving conflicts
+
+Conflicts happen when two developers change the same line in the same file at the same time.
+To resolve them
+* use `git status` to see which files have conflicts
+* open the conflictiong files in your editor and resolve the conflicts. Make sure you consider that both sides of the conflict contain changes that happened at the same time, so both changes should be present in your resolved code.
 
 
 ## Pull Requests
