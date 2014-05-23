@@ -63,6 +63,28 @@ Here is a check list for reviewers:
 See our blog post about [Refactoring Git Branches](http://blog.originate.com/blog/2014/04/19/refactoring_git_branches).
 
 
+## Merging
+
+If possible, do a squash merge
+
+```shell
+$ git checkout [feature branch]
+$ git rebase development   --or--  git merge development   (then fix any conflicts)
+$ git checkout development
+$ git merge --squash [feature branch name]`
+```
+
+Advantages of squash merges:
+* the Git history contains only one clean commit per feature / bug fix
+* the Git history is one straight line of linear commits, instead of the typical Git spaghetti branch madness
+* `git bisect` becomes a possibility again
+* a `git blame` not only tells you who wrote a line of code, but also why (i.e. the bigger context of a change)
+* confusing detours during development are no longer visible in the final commit
+* each change provides the whole context of the change ("the user is set to null because of this feature")
+* easier cherry-picking of features/bug fixes as part of the release process: when a release is broken, we can leave broken features out and release anyways
+* easier naming of commits: name your development commits any way you want, for the final commit copy-and-paste the ticket title and description
+
+
 ## Tools
 
 The best Git tool is the command line. It is easy to learn and use, and makes the full power of Git available. An exception to this are highly interactive things like reviewing and staging changes for commits, looking at git history, or similar things.
