@@ -18,7 +18,7 @@ We follow the [Nvie branching model](http://nvie.com/posts/a-successful-git-bran
 
 ## Commits
 
-* Each commit should contain only one particular change. Its okay to have many small commits.
+* Each commit should contain only one particular change. Its okay (and encouraged) to have many small commits during development.
 * Commit frequently during your work, each time a dedicated change is done and the tests pass. Don't accumulate dozens of changes before committing. Rather, get into the habit of doing one thing at a time, committing it, then do the next.
 * Always review your work before committing it. 
 * Commit messages should have a 50 characters summary written in imperative ("fix signup") if possible, or as a short summary for features ("logout button"), followed by an empty line, followed by an optional longer description.
@@ -26,11 +26,11 @@ We follow the [Nvie branching model](http://nvie.com/posts/a-successful-git-bran
 
 ## Pull Requests
 
-Pull requests are how we ensure quality and share knowledge. The goal is for everyone to hold one another to a high standard, and for everyone to learn from each other. The tone should be conducive to learning.
+Pull requests are how we ensure quality and share knowledge. The goal is for everyone to hold one another to a high standard, for everyone to learn from each other, and to catch architectural and other mistakes before they make it into the main branch. The tone should be constructive and positive.
 
 * everyone can (and should) review everyone else's pull requests
 * refactorings should be reviewed by the tech lead or architect
-* every feedback given in a PR must be at least addressed
+* every feedback given in a PR must be at least addressed, i.e. if you don't want to do it, say why and come to an agreement with your reviewer about this issue. Getting a third opinion is a good option.
 * finding and pointing out issues in PRs is a good thing. Bonus points if you find issues in the code of senior people!
 * you need to tag the reviewers in the description of your pull request (`@username`).
 * every piece of code (backend, database changes, HTML, CSS) must be reviewed. You can use multiple reviewers for different types of code.
@@ -60,7 +60,7 @@ Here is a check list for reviewers:
 
 ### Breaking Up Large Branches
 
-[see Kevin's blog post]
+See our blog post about [Refactoring Git Branches](http://blog.originate.com/blog/2014/04/19/refactoring_git_branches).
 
 
 ## Tools
