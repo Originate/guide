@@ -5,8 +5,6 @@ These are recommendations. They should be followed in the absence of good, justi
 
 ## Branches
 
-We follow the [Nvie branching model](http://nvie.com/posts/a-successful-git-branching-model/).
-
 * One (or more) feature branches per user story.
 * Refactorings and bug fixes should be in their own feature branches, and be reviewed separately.
 * Feature branches are named like "[developer initials]-[feature-name]", e.g. __kg-new-settings-page__
