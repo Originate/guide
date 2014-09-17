@@ -16,8 +16,10 @@ do not always have the right answers and learning to accept helpful criticism im
 terms with this, you’ll find that the pull request allows you to learn extremely fast and constantly raise the bar on your team’s code quality.
 
 We use TDD to catch bugs during our own development cycles, but code reviews catch a different subset of bugs, things like: bad variable names, wrong assumptions,
-bad code structure/architecture, etc. Additionally, code reviews provide a tight feedback loop that improves learning and knowledge transfer. Using TDD and code reviews
-together provides us with the fastest feedback loop for ensuring application behavior, sharing knowledge, holding each other to high standards, producing readable
+bad code structure/architecture, performance issues, security issues, repeated code, etc. The average bug count is 4.5 errors per 100 lines of code, with code reviews,
+the bug rate drops down to 0.8 (from: [Code Complete: A Practical Handbook of Software Construction](http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670)).
+Additionally, code reviews provide a tight feedback loop that improves learning and knowledge transfer between developers on a project. Using TDD and code reviews
+together provides us with the fastest feedback mechanism for ensuring application behavior, sharing knowledge, holding each other to high standards, producing readable
 and maintainable code, and allowing new people on a project to ramp up quickly.
 
 Another benefit you get from doing code reviews is that you end up reading a lot of code, and as such, you hone that skill. Getting good at reading code is
@@ -81,6 +83,27 @@ In order to avoid situations like this, always remember that we review the code,
 * people review
 * discuss/make changes per review
 * if people sign off/you get LGTM, then you can merge and delete the branch
+
+## Code Review Cheat Sheet
+
+If you are new to code reviews, you can use this cheat sheet to help give you a list of things to look for when reviewing someone's code.
+
+* Is every piece of code in the right place, i.e. model code in a model, controller logic in a controller, app-specific helper code in a helper,
+generic helper code in a library?
+* Do all classes have only one responsibility?
+* Do all methods do only one thing?
+* Are all classes/methods/variables named properly so that the code is self-describing?
+* Is everything as private as possible, i.e. no things public that don't need to be public?
+* Are too many things private?
+* No law of demeter violations (providing whole objects to methods when all that's needed is the value of one attribute of them)?
+* Is everything tested? Is each thing tested enough? Is it not over-tested?
+* Comments shouldn't describe what the method does (this is visible from looking at the code).
+* Are there any obvious performance-stupidities, like making a database query for each loop iteration, rather than using a more optimized query
+that loads all data at once?
+* Spacing/style issues like no empty line between methods, or too many empty lines
+* There shouldn't be any commented-out code.
+* There should be no debug statements like `console.log("here")` etc.
+* There should be no TODO's, this is often a crutch for being lazy.
 
 ## Tips
 
