@@ -5,7 +5,7 @@ tools we have to ensure this. Since we use GitHub to host all of our projects, c
 
 ## What is a Pull Request
 
-When we work on any logical change to a codebase, it is done in its own Git branch. Before the branch is ready to be merged into master, we create a Pull
+When we work on adding a feature to a codebase, we do it in a separate Git branch. Before the branch is ready to be merged into master, we create a Pull
 Request (PR for short) that visualizes the changes that the developer wants to make. Other team members can make sure the changes are good, or suggest
 improvements.
 
@@ -43,7 +43,7 @@ This should result in less comments in the code that look like: `//TODO: make th
 Since the goal of pull requests is to help people improve and learn from each other, there are some simple rules we can follow to make this more efficient.
 The most important thing is that you have to realize that nobody is perfect, neither reviewer nor reviewee. When a reviewer sees something that is questionable,
 it’s arrogant to assume that it is wrong. Always better to ask “is this supposed to do X?” or point out “i’m confused, it seems like this is supposed to do X”.
-On the contrary, it would be arrogant for a reviewee to assume that the reviewer is stupid because they are confused about the code. It’s actually good when
+Additionally, it would be arrogant for a reviewee to assume that the reviewer is stupid because they are confused about the code. It’s actually good when
 you recognize that your reviewer is confused, because that cues you to improve the understandability of your code.
 
 One thing to keep in mind is that it’s extremely easy to write code that a computer understands (we all do it, all day, it’s our job). Martin Fowler put it
@@ -67,8 +67,7 @@ Every now and then, two engineers will come to a standstill. At this point it’
 right, but to find the best solution. If one person believes the other person to be getting out of hand, it’s useful to ping them outside of the PR and ask
 “Did i offend you?”. More often than not, this will lead to both parties realizing that there is a miscommunication.
 
-If the argument is over something arbitrary, you can ask your tech lead for help. If the reviewer insists, sometimes it’s helpful to take the conversation
-to continue the conversation in person or over the phone. Text-based conversation loses much of the subtleties of communication, and as such sometimes you need
+If the argument is over something arbitrary, you can ask your tech lead for help. If the reviewer insists, sometimes it’s helpful to continue the conversation in person or over the phone. Text-based conversation loses much of the subtleties of communication, and as such sometimes you need
 to hear someones voice to come to an agreement. In this case, you will often find out that while you thought the reviewer was being harsh, it was actually a
 miscommunication. These things happen.
 
