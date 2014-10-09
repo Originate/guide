@@ -27,9 +27,9 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" docu
 
 ### Additional recommendations
 
-- Error handling
+- [Error handling](http://tersesystems.com/2012/12/27/error-handling-in-scala/)
 - Using [Options](http://blog.originate.com/blog/2014/06/15/idiomatic-scala-your-options-do-not-match/)
-- use Seq, not List (see: http://stackoverflow.com/a/10866807/410286) except where you specifically need to force one implementation over another... the most common exception is that Play form mappers require List, so you have to use it there
+- use Seq, not List (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another... the most common exception is that Play form mappers require List, so you have to use it there
 - use infix notation for single argument methods on monad types: map flatMap foreach filter collect exists getOrElse
 - if continuing an expression to the next line, indent once. if the expression is a method signature or class signature, double indent so that the following lines are visually separated
 - single space after comma
