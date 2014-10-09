@@ -29,6 +29,16 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" docu
 
 - Error handling
 - Using [Options](http://blog.originate.com/blog/2014/06/15/idiomatic-scala-your-options-do-not-match/)
+- use Seq, not List (see: http://stackoverflow.com/a/10866807/410286) except where you specifically need to force one implementation over another... the most common exception is that Play form mappers require List, so you have to use it there
+- use infix notation for single argument methods on monad types: map flatMap foreach filter collect exists getOrElse
+- if continuing an expression to the next line, indent once. if the expression is a method signature or class signature, double indent so that the following lines are visually separated
+- single space after comma
+- space after colon in type annotations
+- use _ for small simple functions, as in: Seq(1, 2, 3, 4, 5, 6) filter (_ % 2 == 0)
+- single space after method names, before brackets, as in: someSequence map { item => ... }
+- do not commit your comments/TODO's, but leave them in your working tree if you'd like
+- when passing function blocks, use { arg1 => ... } over (arg1 => { ... }) (avoid "inner block" syntax)
+- when passing function blocks, for single line, prefer parens: something map (_.name) and something map (a => a + a) ...for multiline, prefer brackets (shown above)
 
 Static Analysis Tools & Configuration
 -------------------------------------
