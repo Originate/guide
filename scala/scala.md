@@ -18,15 +18,15 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 - Use **two spaces** indentation.
 - Omit unnecessary blocks to avoid excessive nesting:
-``` scala
-// Wrong
-if (condition) {
-  magicHappens()
-}
-
-// Better
-if (condition) magicHappens()
-```
+    ``` scala
+    // Wrong
+    if (condition) {
+      magicHappens()
+    }
+    
+    // Better
+    if (condition) magicHappens()
+    ```
 - Avoid line wrapping. If possible, split long lines into multiple expressions and assign intermediate results to `val`s. Otherwise, indent wrapped lines once (two spaces).
 - Use lower camel case for `valName`, `varName`, `methodName`, `functionObject`, `packageObject`, and `annotationName`.
 - Use upper camel case for `ConstantName`, `ClassName`, `ObjectName`, `TypeParameter`.
@@ -39,18 +39,17 @@ if (condition) magicHappens()
 - Opening curly braces (`{`) must be on the same line as the declaration.
 - Constructors should be declared all on one line. If not possible, put each constructor argument on its own line, indented **four** spaces.
 - Extensions follow the same rule above, but indent **two** spaces to provide visual separation between constructor arguments and extensions:
-``` scala
-class Platypus (
-    name: String,
-    age: Int)
-  extends Beaver
-  with Duck
-```
+    ``` scala
+    class Platypus (
+        name: String,
+        age: Int)
+      extends Beaver
+      with Duck
+    ```
 - Favor short, single-expression, single-line method bodies.
 - No procedure syntax.
 - No suffix operator notation.
 - Always use infix notation for methods with symbolic names or higher-order functions (`map`, `foreach`, etc.).
-
 
 ### Additions and Deviations from the Official Style Guide
 
