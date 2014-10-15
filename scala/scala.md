@@ -32,7 +32,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 - Avoid line wrapping. If possible, split long lines into multiple expressions and assign intermediate results to `val`s. Otherwise, indent wrapped lines once (two spaces).
 - Use lower camel case for `valName`, `varName`, `methodName`, `functionObject`, `packageObject`, and `annotationName`.
 - Use upper camel case for `ConstantName`, `ClassName`, `ObjectName`, `TypeParameter`.
-- No `UPPER_CASE_UNDERSCORES`, not even for constants or type parameters!
+- No `UPPERCASE_UNDERSCORE`, not even for constants or type parameters!
 - No `get`/`set` prefixes for accessors and mutators.
 - Always use empty parentheses when (and only for) declaring and calling methods with side-effects.
 - Avoid symbolic method names (*"operators"*)!
@@ -67,6 +67,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     - A single space before (no space after) `(`, except for method invocation or declaration;
     - Single spaces around `=`, `+`, `-`, `*`, `{`, `}`, `=>`, `<-`, etc.
     - No spaces between consecutive `(` or `)`.
+- For documentation comments, follow Javadoc style. Scaladoc left-hand margin convention is silly.
 - **Favor readability, favor readability, favor readability.**
 
 Best Practices
