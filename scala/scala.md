@@ -6,8 +6,8 @@ Introduction
 
 In this guide, we leverage mainly two documents which contain the bulk of our recommendations:
 
-- The official [Scala Style Guide] for formatting conventions.
-- Twitter's "[Effective Scala]" for coding style and best practices.
+0. The official [Scala Style Guide] for formatting conventions.
+0. Twitter's "[Effective Scala]" for coding style and best practices.
 
 We will highlight any cases where we diverge from the original documents and include reasons for doing so.
 
@@ -16,10 +16,9 @@ Code Formatting
 
 Please read the [Scala Style Guide] carefully. The main points to consider are:
 
-- Use **two spaces** indentation.
-- Omit unnecessary blocks to avoid excessive nesting:
-
-    ``` scala
+0. Use **two spaces** indentation.
+0. Omit unnecessary blocks to avoid excessive nesting:
+    ```scala
     // Wrong
     if (condition) {
       magicHappens()
@@ -28,58 +27,55 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     // Better
     if (condition) magicHappens()
     ```
-
-- Avoid line wrapping. If possible, split long lines into multiple expressions and assign intermediate results to `val`s. Otherwise, indent wrapped lines once (two spaces).
-- Use lower camel case for `valName`, `varName`, `methodName`, `functionObject`, `packageObject`, and `annotationName`.
-- Use upper camel case for `ConstantName`, `ClassName`, `ObjectName`, `TypeParameter`.
-- No `UPPERCASE_UNDERSCORE`, not even for constants or type parameters!
-- No `get`/`set` prefixes for accessors and mutators.
-- Always use empty parentheses when (and only for) declaring and calling methods with side-effects.
-- Avoid symbolic method names (*"operators"*)!
-- Use type inference where possible. But put clarity first and favor explicitness when an inferred type may not be obvious.
-- Public methods must always have explicit return types.
-- Opening curly braces (`{`) must be on the same line as the declaration.
-- Constructors should be declared all on one line. If not possible, put each constructor argument on its own line, indented **four** spaces.
-- Extensions follow the same rule above, but indent **two** spaces to provide visual separation between constructor arguments and extensions:
-
-    ``` scala
+0. Avoid line wrapping. If possible, split long lines into multiple expressions and assign intermediate results to `val`s. Otherwise, indent wrapped lines once (two spaces).
+0. Use lower camel case for `valName`, `varName`, `methodName`, `functionObject`, `packageObject`, and `annotationName`.
+0. Use upper camel case for `ConstantName`, `ClassName`, `ObjectName`, `TypeParameter`.
+0. No `UPPERCASE_UNDERSCORE`, not even for constants or type parameters!
+0. No `get`/`set` prefixes for accessors and mutators.
+0. Always use empty parentheses when (and only for) declaring and calling methods with side-effects.
+0. Avoid symbolic method names (*"operators"*)!
+0. Use type inference where possible. But put clarity first and favor explicitness when an inferred type may not be obvious.
+0. Public methods must always have explicit return types.
+0. Opening curly braces (`{`) must be on the same line as the declaration.
+0. Constructors should be declared all on one line. If not possible, put each constructor argument on its own line, indented **four** spaces.
+0. Extensions follow the same rule above, but indent **two** spaces to provide visual separation between constructor arguments and extensions:
+    ```scala
     class Platypus (
         name: String,
         age: Int)
       extends Beaver
       with Duck
     ```
-
-- Favor short, single-expression, single-line method bodies.
-- No procedure syntax.
-- No suffix operator notation.
-- Always use infix notation for methods with symbolic names or higher-order functions (`map`, `foreach`, etc.).
+0. Favor short, single-expression, single-line method bodies.
+0. No procedure syntax.
+0. No suffix operator notation.
+0. Always use infix notation for methods with symbolic names or higher-order functions (`map`, `foreach`, etc.).
 
 ### Additions and Deviations from the Official Style Guide
 
-- Text file format: UTF-8, no BOM, Unix line endings (LF, '\n'), newline at EOF.
-- 120 characters maximum line length.
-- The bigger the scope, the more descriptive the name. Only for very small, local scopes may single-letter mnemonics be used.
-- The formatting rules for constructors also apply to method declarations.
-- Use infix notation for single argument methods on monadic types (`contains`, `getOrElse`, etc.)
-- In general, obey English rules for punctuation:
-    - A single space after (no space before) `,`, `:`, `;`, `)`, etc.
-    - A single space before (no space after) `(`, except for method invocation or declaration;
-    - Single spaces around `=`, `+`, `-`, `*`, `{`, `}`, `=>`, `<-`, etc.
-    - No spaces between consecutive `(` or `)`.
-- For documentation comments, follow Javadoc style. Scaladoc left-hand margin convention is silly.
-- **Favor readability, favor readability, favor readability.**
+0. Text file format: UTF-8, no BOM, Unix line endings (LF, '\n'), newline at EOF.
+0. 120 characters maximum line length.
+0. The bigger the scope, the more descriptive the name. Only for very small, local scopes may single-letter mnemonics be used.
+0. The formatting rules for constructors also apply to method declarations.
+0. Use infix notation for single argument methods on monadic types (`contains`, `getOrElse`, etc.)
+0. In general, obey English rules for punctuation:
+    1. A single space after (no space before) `,`, `:`, `;`, `)`, etc.
+    1. A single space before (no space after) `(`, except for method invocation or declaration;
+    1. Single spaces around `=`, `+`, `-`, `*`, `{`, `}`, `=>`, `<-`, etc.
+    1. No spaces between consecutive `(` or `)`.
+0. For documentation comments, stick to Javadoc style. Scaladoc left-hand margin convention is silly.
+0. **Favor readability, favor readability, favor readability.**
 
 Best Practices
 --------------
 
 It is definitely recommended to read the full Twitter's "[Effective Scala]" guide. The following sections highlight areas most often seen in our applications:
 
-- [_Return type annotations_](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Return%20type%20annotations)
-- [_Type aliases_](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Type%20aliases)
-- [_Implicits_](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Implicits)
-- [_Collections_](http://twitter.github.io/effectivescala/#Collections) - Pay special attention to [performance](http://twitter.github.io/effectivescala/#Collections-Performance)
-- [_Functional programming_](http://twitter.github.io/effectivescala/#Functional%20programming)
+0. [_Return type annotations_](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Return%20type%20annotations)
+0. [_Type aliases_](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Type%20aliases)
+0. [_Implicits_](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Implicits)
+0. [_Collections_](http://twitter.github.io/effectivescala/#Collections) - Pay special attention to [performance](http://twitter.github.io/effectivescala/#Collections-Performance)
+0. [_Functional programming_](http://twitter.github.io/effectivescala/#Functional%20programming)
 
 ### Additional recommendations
 
