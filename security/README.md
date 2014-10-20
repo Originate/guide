@@ -202,7 +202,7 @@ Why Salt & Hash?
 
 Always prepare for the worst. Assume the database is going get leaked eventually. If user passwords are stored in plaintext (as-is) or hashed using a weak hash function, it's trivial for the attacker to get users' passwords –- passwords they probably use on other websites aside from yours.
 
-Appending a salt to your users' passwords before hashing will, with a high degree of certainty, prevent duplicate passwords for different users from having the same hash. Salting prevents attackers from using [rainbow tables](https://en.wikipedia.org/wiki/Rainbow_table) to quickly look-up the plaintext that the hash was derived from and forces them to either spend lots of money bruteforcing the hash or just give up entirely.
+Appending a salt to your users' passwords before hashing will, with a high degree of certainty, prevent duplicate passwords for different users from having the same hash. Salting also prevents attackers from using [rainbow tables](https://en.wikipedia.org/wiki/Rainbow_table) to quickly look-up the plaintext that the hash was derived from and forces them to either spend lots of time/money bruteforcing the hash or just give up entirely.
 
 Choosing a Hash Function
 
@@ -216,6 +216,19 @@ Choosing a Hash Function
 - Don't use old, deprecated hash functions like MD5 or SHA1 anymore!
 
 Like with most things in security, use popular peer-reviewed crypto libraries written by people that do cryptography full-time. Do **NOT** implement any algorithms yourself! And do not ever, **ever** , **EVER** write your own encryption/hashing algorithms!!!
+
+
+**Crypto Libraries**
+
+- Scala/Play Framework
+  - [Scala-bcrypt](https://github.com/t3hnar/scala-bcrypt) (Scala wrapper for jBcrypt)
+  - [Crypto](https://www.playframework.com/documentation/2.3.0/api/java/play/libs/Crypto.html) (Included crypto library in Play Framework)
+- Ruby
+  - [bcrypt-ruby](https://rubygems.org/gems/bcrypt-ruby) (Ruby wrapper for bcrypt)
+  - [Symmetric-encryption](https://github.com/reidmorrison/symmetric-encryption) (Symmetric encryption gem using OpenSSL)
+- NodeJS
+  - [Crypto](http://nodejs.org/api/crypto.html) (Included crypto module for NodeJS)
+
 
 **Operational Security**
 
@@ -287,5 +300,6 @@ Misc Tools
 - Vulnerability Databases
   - [U.S. National Vulnerability Database](https://web.nvd.nist.gov/view/vuln/search)
   - [CVE Details](http://www.cvedetails.com/)
-- Password strength checker (To be safe, don't type in your actual password)
-  - [Howsecureismypassword.net](https://howsecureismypassword.net/)
+- Password strength checker
+  - [Originate's Private Password Entropy Calculator](https://sites.google.com/a/originate.com/originate/it/password-entropy)
+  - [Howsecureismypassword.net](https://howsecureismypassword.net/) (To be safe, don't type in your actual password)
