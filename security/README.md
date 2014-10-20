@@ -102,6 +102,14 @@ Stored procedures are similar to prepared statements in that the SQL queries are
 
 Prepared statements and stored procedures are supported by all major databases and languages. Look them up and learn how to use them before doing anything database-related!
 
+- Database Libraries
+
+With a database library there's no need to directly write SQL queries. Using a library that handles turning function calls and objects into queries will be smart enough to protect against malicious input like ```13 or 1=1--``` by searching for that literal string instead of treating it as part of the query. [Slick](http://slick.typesafe.com/) for Scala is one such library.
+
+- Data Access Objects [(DAO)](https://en.wikipedia.org/wiki/Data_access_object)
+
+DAOs are objects that provide an interface to some underlying persistent storage (like a database). They essentially separate database logic from data access logic. For example, a DAO can have a public method like ```Student getStudent(String id)```and if implemented correctly, there is no way a call to ```getStudent()``` can return the entire Students table instead of a Student object (or it'll throw an error) if a malicious input like ```13 or 1=1--``` is entered.
+
 Note:
 
 Another popular mitigation technique is to just escape all user input before using it to build an SQL query string. While it may work on smaller projects, it's not recommended for the large projects Originate works on since all you need to do is forget to escape something **ONCE** to open up the entire application and database to SQL injection.
@@ -300,6 +308,6 @@ Misc Tools
 - Vulnerability Databases
   - [U.S. National Vulnerability Database](https://web.nvd.nist.gov/view/vuln/search)
   - [CVE Details](http://www.cvedetails.com/)
-- Password strength checker
+- Password strength checkers
   - [Originate's Private Password Entropy Calculator](https://sites.google.com/a/originate.com/originate/it/password-entropy)
   - [Howsecureismypassword.net](https://howsecureismypassword.net/) (To be safe, don't type in your actual password)
