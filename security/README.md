@@ -14,7 +14,7 @@ HTTPS Guidelines
 - If having site-wide HTTPS isn't feasible, at least have all connections to login and authenticated pages be over HTTPS.
   - Don't let the user log in over HTTP! Their username and password can be stolen while it's in-transit to the server if the connection isn't encrypted! 
   - All pages post-login should also be delivered over HTTPS! An attacker can steal the user's authenticated session cookie if it's sent over an insecure connection!
-- If the web application is powered by multiple servers that need to communicate with each other, be sure to encrypt the internal server connections as well either using SSL/TLS or some other transport layer security protocol. The NSA was able to sniff data sent between Google datacenters because the connection was unencrypted!
+- If the web application is powered by multiple servers that need to communicate with each other, it's recommended to encrypt the internal server connections as well either using SSL/TLS or some other transport layer security protocol. The NSA was able to sniff data sent between Google datacenters because the connection was unencrypted!
 - Redirect users to the HTTPS version of pages if they try to visit the unencrypted version.
 - Do not link to HTTP content in a HTTPS page! An attacker can still intercept the unencrypted content and modify it for malicious purposes. (See section about XSS)
 - While HTTPS encrypts everything past a URL's domain, it's still recommended to not have any sensitive data in the URL itself as it can leak out via referer headers.
@@ -30,9 +30,9 @@ XSS is extremely prevalent and accounts for "roughly 84% of all security vulnera
 
 **Non-Persistent**
 
-Non-persistent XSS occurs when the server echos back raw user input immediately after it's submitted. This usually happens on insecure search pages that contain the search query the user made. For example, if a user searched for "_"_ and the search page contains "Found 0 results for _%userQuery%_" where _%userQuery%_ is the search query, then the script tags will be injected directly into the DOM and executed by the browser.
+Non-persistent XSS occurs when the server echos back raw user input immediately after it's submitted. This usually happens on insecure search pages that contain the search query the user made. For example, if a user searched for "_<script>alert(0)</script>_" and the search page contains "Found 0 results for _%userQuery%_" where _%userQuery%_ is the search query, then the script tags will be injected directly into the DOM and executed by the browser.
 
-Attack Vector
+Possible Attack Vector
 
 - Attacker crafts a URL with the malicious search query (ie. ```http://search.com/?q=<script> /*malicious javascript*/ </script>```)
 - Attacker sends the URL to an administrator or posts it somewhere online
@@ -46,7 +46,7 @@ Mitigation
 
 Persistent XSS is similar to its non-persistent counterpart with the main difference being that the server saves and permanently displays malicious user data. This usually happens on insecure user profile pages or forum posts. Myspace was a shining example of the horrors of persistent XSS.
 
-Attack Vector
+Possible Attack Vector
 
 - Attacker puts script tags with malicious javascript in some persistently stored field
 - Anybody who visits a page where that field is displayed has the malicious javascript executed
@@ -69,7 +69,7 @@ For more information on how to defend against XSS, read OWASP's [XSS Prevention 
 
 SQL injections aren't seen in the wild nearly as much as they used to be due to increased awareness on how to prevent them. But, in cases where SQL injections are found and exploited, the consequences can be much more serious than XSS. SQL injections occur when malicious user input is incorrectly filtered and then used to build a SQL query that is executed on the database.
 
-Attack Vector
+Possible Attack Vector
 
 (Fig 1) Consider the following string containing a SQL query
 ```
@@ -119,7 +119,7 @@ Another popular mitigation technique is to just escape all user input before usi
 
 Cross Site Request Forgery is used by an attacker to trick users into performing actions on a web application that they're currently logged into. This happens when the application server trusts the user's browser and doesn't check to make sure the request came from a trusted source. Attackers can abuse this trust by crafting requests that match legitimate requests that would be made by an authorized user on the web app.
 
-Attack Vector
+Possible Attack Vector
 
 - A banking website has an endpoint that handles sending funds from the user's account
   - POST /user/send
@@ -147,7 +147,7 @@ Mitigation
 
 Session hijacking is when an attacker is able to get a copy of a user's session identifier, allowing them to impersonate that user.
 
-Attack Vector
+Possible Attack Vector
 
 - Connection between the server and the user is unencrypted
 - An attacker is able to get in between the connection and read the session id
@@ -161,30 +161,28 @@ Mitigation
 
 Session fixation is a clever way to "steal" a user's session. Instead of getting a copy of a user's session identifier, an attacker would instead get a valid session by authenticating into their own account. They would then have a victim authenticate themselves using the attacker's session identifier. If the server doesn't create a new session upon authentication, the attacker will gain access to the victim's account.
 
-Attack Vector
+Possible Attack Vector
 
-- The web app accepts session identifiers as a hidden field in the login form
-- Attacker builds a login form with their cookie in the hidden field
-- The attacker tricks the victim into logging in using their form, either through CSRF or some other exploit in the web app
-- The victim logs in and the server associates the submitted session with the victim's account
-- The attacker now has access to the victim's account
+- There is an XSS vulnerability in a web app
+- An attacker exploits this to change the victim's session cookie to one that's known by the attacker
+- The victim gets logged out and tries to log back in using the compromised session cookie
+- The victim logs in and the server associates the compromised session with the victim's account
+- The attacker now has access to the victim's authenticated session
 
 Mitigation
 
-- There are several other attack vectors depending on how the web app is set up, including intercepting the connection and changing the session cookie value in the header or using XSS to change the user's cookie. An easy way to prevent all this is to just create and set a new session every time a user logs in. Of course, if the web app is vulnerable to XSS or a man-in-the middle attack, there are bigger things to worry about. :)
+- There are several other attack vectors depending on how the web app is set up, including intercepting the connection and changing the session cookie value in the header or crafting a malicious url with a compromised session id in it. An easy way to prevent all this is to just create and set a new session every time a user logs in. Of course, if the web app is vulnerable to XSS or a man-in-the-middle attack, there are bigger things to worry about. :)
 - Other mitigation tips
   - **Always enable SSL when in production!**
-  - Don't send session identifiers via POST/GET! Instead, store them as cookies and mark them as HttpOnly and Secure.
+  - Don't send session identifiers in form data or in the URL. Instead, store them as cookies and mark them as HttpOnly and Secure.
   - Time-out sessions after a certain amount of time and invalidate them.
   - Identity Confirmation
     - Require the user to authenticate again when doing anything "critical."
   - Reminder: **Always enable SSL when in production!**
 
-There are session management libraries out there for every major web framework. It's better to use those than to implement your own.
-
 **Doing Authentication (with and without OAuth)**
 
-Like with session management, there are usually libraries that handle authentication. But, sometimes for whatever reason you may need to roll your own. If OAuth is not an option, then the two most important things to remember are 1) **Always enable SSL in production** and 2) **Use cryptographically strong hash functions** .
+There usually are libraries and features bundled into frameworks that handle authentication but sometimes you may need to roll your own. Whether you're using Oauth or writing your own, the two most important things to remember are 1) **Always enable SSL in production** and 2) **Use cryptographically strong hash functions** .
 
 Authentication Basics w/o OAuth
 
