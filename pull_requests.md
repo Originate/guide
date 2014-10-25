@@ -16,7 +16,7 @@ do not always have the right answers and learning to accept helpful criticism im
 terms with this, you’ll find that the pull request allows you to learn extremely fast and constantly raise the bar on your team’s code quality.
 
 We use TDD to catch bugs during our own development cycles, but code reviews catch a different subset of bugs, things like: bad variable names, wrong assumptions,
-bad code structure/architecture, performance issues, security issues, repeated code, etc. The average bug count is 4.5 errors per 100 lines of code, with code reviews,
+bad code structure/architecture, performance issues, security issues, repeated code, etc. The average bug count is 4.5 errors per 100 lines of code. With code reviews,
 the bug rate drops down to 0.8 (from: [Code Complete: A Practical Handbook of Software Construction](http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670)).
 Additionally, code reviews provide a tight feedback loop that improves learning and knowledge transfer between developers on a project. Using TDD and code reviews
 together provides us with the fastest feedback mechanism for ensuring application behavior, sharing knowledge, holding each other to high standards, producing readable
@@ -42,7 +42,7 @@ This should result in less comments in the code that look like: `//TODO: make th
 
 Since the goal of pull requests is to help people improve and learn from each other, there are some simple rules we can follow to make this more efficient.
 The most important thing is that you have to realize that nobody is perfect, neither reviewer nor reviewee. When a reviewer sees something that is questionable,
-it’s arrogant to assume that it is wrong. Always better to ask “is this supposed to do X?” or point out “i’m confused, it seems like this is supposed to do X”.
+it’s arrogant to assume that it is wrong. Always better to ask “Is this supposed to do X?” or point out “I’m confused, it seems like this is supposed to do X.”
 Additionally, it would be arrogant for a reviewee to assume that the reviewer is stupid because they are confused about the code. It’s actually good when
 you recognize that your reviewer is confused, because that cues you to improve the understandability of your code.
 
@@ -68,20 +68,20 @@ right, but to find the best solution. If one person believes the other person to
 “Did i offend you?”. More often than not, this will lead to both parties realizing that there is a miscommunication.
 
 If the argument is over something arbitrary, you can ask your tech lead for help. If the reviewer insists, sometimes it’s helpful to continue the conversation in person or over the phone. Text-based conversation loses much of the subtleties of communication, and as such sometimes you need
-to hear someones voice to come to an agreement. In this case, you will often find out that while you thought the reviewer was being harsh, it was actually a
+to hear someone's voice to come to an agreement. In this case, you will often find out that while you thought the reviewer was being harsh, it was actually a
 miscommunication. These things happen.
 
 In order to avoid situations like this, always remember that we review the code, not the other person. Criticism should be taken professionally and not personally.
 
 ## Workflow
 
-* submit PR
-* tag relevant parties (using GitHub’s `@username`)
-* describe changes
-* add comments about parts you need help with/are unsure about/etc
-* people review
-* discuss/make changes per review
-* if people sign off/you get LGTM, then you can merge and delete the branch
+* Submit PR
+* Tag relevant parties (using GitHub’s `@username`)
+* Describe changes
+* Add comments about parts you need help with/are unsure about/etc.
+* People review
+* Discuss/make changes per review
+* If people sign off/you get LGTM, then you can merge and delete the branch
 
 ## Code Review Cheat Sheet
 
@@ -94,24 +94,24 @@ generic helper code in a library?
 * Are all classes/methods/variables named properly so that the code is self-describing?
 * Is everything as private as possible, i.e. no things public that don't need to be public?
 * Are too many things private?
-* No law of demeter violations (providing whole objects to methods when all that's needed is the value of one attribute of them)?
+* There should be no law of demeter violations (providing whole objects to methods when all that's needed is the value of one attribute of them).
 * Is everything tested? Is each thing tested enough? Is it not over-tested?
 * Comments shouldn't describe what the method does (this is visible from looking at the code).
 * Are there any obvious performance-stupidities, like making a database query for each loop iteration, rather than using a more optimized query
 that loads all data at once?
-* Spacing/style issues like no empty line between methods, or too many empty lines
+* Are there spacing/style issues like no empty line between methods, or too many empty lines?
 * There shouldn't be any commented-out code.
 * There should be no debug statements like `console.log("here")` etc.
-* There should be no TODO's, this is often a crutch for being lazy.
+* There should be no TODO's, as this is often a crutch for being lazy.
 
 ## Tips
 
-* Try to avoid tagging too many people in pull requests (in most cases 2 is the max)
-* If your pull request contains changes to both frontend and backend code, tag someone from each team and tell them what to review
-* Try to keep pull requests small. bigger pull requests are harder to review effectively, and often sit for longer. if you need help figuring out how to
-break up a pull request that became massive, see: [Refactoring Git Branches](http://blog.originate.com/blog/2014/04/19/refactoring_git_branches/)
-* Expect to get affirmations that the PR is ready to merge by your reviewers. something like “LGTM” (looks good to me), “ship it”, a thumbsup GIF, or sheep
+* Try to avoid tagging too many people in pull requests (in most cases 2 is the max).
+* If your pull request contains changes to both frontend and backend code, tag someone from each team and tell them what to review.
+* Try to keep pull requests small. Bigger pull requests are harder to review effectively, and often sit for longer. If you need help figuring out how to
+break up a pull request that became massive, see: [Refactoring Git Branches](http://blog.originate.com/blog/2014/04/19/refactoring_git_branches/).
+* Expect to get affirmations that the PR is ready to merge by your reviewers. Something like “LGTM” (looks good to me), “ship it”, a thumbsup GIF, or sheep
 icon (or any permutation of these).
-* The creator of the pull request merges! this is to maintain accountability. If reviewers are neglecting you, you can bump the PR or send them a message.
+* The creator of the pull request merges! This is to maintain accountability. If reviewers are neglecting you, you can bump the PR or send them a message.
 * A good trick for making sure you’ve addressed most of the comments is to look at the pull request for a bunch of “username commented on an outdated diff”
 messages. These appear when changes are made to lines that a reviewer commented on.
