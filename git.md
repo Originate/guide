@@ -51,7 +51,7 @@ $ git push -f    --or--  git push
 Conflicts happen when two developers change the same line in the same file at the same time.
 To resolve them
 * use `git status` to see which files have conflicts
-* open the conflictiong files in your editor and resolve the conflicts. Make sure you consider that both sides of the conflict contain changes that happened at the same time, so both changes should be present in your resolved code.
+* open the conflicting files in your editor and resolve the conflicts. Make sure you consider that both sides of the conflict contain changes that happened at the same time, so both changes should be present in your resolved code.
 
 ```shell
 # resolve conflicts in your text editor
@@ -66,13 +66,13 @@ When you are done with a feature, submit a pull request so that it can be review
 
 Pull requests are how we ensure quality and share knowledge. The goal is for everyone to hold one another to a high standard, for everyone to learn from each other, and to catch architectural and other mistakes before they make it into the main branch. The tone should be constructive and positive.
 
-* Everyone can (and should) review everyone else's pull requests
-* Refactorings should be reviewed by the tech lead or architect
+* Everyone can (and should) review everyone else's pull requests.
+* Refactorings should be reviewed by the tech lead or architect.
 * All feedback given in a PR must be at least addressed, i.e. if you don't want to do it, say why and come to an agreement with your reviewer about this issue. Getting a third opinion is a good option.
 * Finding and pointing out issues in PRs is a good thing. Bonus points if you find issues in the code of senior people!
 * You need to tag the reviewers in the description of your pull request (`@username`). This is especially important on larger projects because it helps people know what PRs need their attention.
 * Every piece of code (backend, database changes, HTML, CSS) must be reviewed. You can use multiple reviewers for different types of code.
-* Mark pull requests that should not be merged as "WIP" in the PR title ("WIP: new settings page")
+* Mark pull requests that should not be merged as "WIP" in the PR title ("WIP: new settings page").
 * No comments on a PR means the review was not thorough enough. Getting comments on your PR is good, it means you are alive and learning. The learning never ends!
 * Well written codebases get reviewed in one iteration (one set of comments, one round of fixes, good to go). If your reviews usually take several rounds, try to be more thorough before sending off your PRs.
 * When a PR gets LGTMed ("looks good to me"), it will be merged by the author, and the feature branch should be deleted from both the local machine as well as from Github.
@@ -127,8 +127,8 @@ Advantages of squash merges:
 * A `git blame` not only tells you who wrote a line of code, but also why (i.e. the bigger context of a change)
 * Confusing detours during development are no longer visible in the final commit
 * Each change provides the whole context of the change ("the user is set to null because of this feature")
-* Easier cherry-picking of features/bug fixes as part of the release process: when a release is broken, we can leave broken features out and release anyways
-* Easier naming of commits: name your development commits any way you want, for the final commit copy-and-paste the ticket title and description
+* Easier cherry-picking of features/bug fixes as part of the release process: when a release is broken, we can leave broken features out and release anyway
+* Easier naming of commits: name your development commits any way you want, and for the final commit copy-and-paste the ticket title and description
 
 
 ## Tools
