@@ -124,7 +124,7 @@ Possible Attack Vector
 - The victim visits the webpage and the form is submitted silently in the background with the user's authorization cookies
 - The bank server receives the request to send $9001 to the attacker's account, validates the cookies, and performs the transaction
 
-Because the victim was logged in to the banking website, their cookies and any other identifying information get sent to the banking server when the form is submitted. The server has no idea the request came from a malicious webpage and since the authentication cookies check out, the request is assumed to be legitimate and funds are sent to the attacker's account.
+Because the victim was logged in to the banking website, their cookies and any other identifying information got sent to the banking server when the form was submitted. The server had no idea the request came from a malicious webpage and since the authentication cookies checked out, the request was assumed to be legitimate and funds were sent to the attacker's account.
 
 CSRF can be combined with XSS where javascript is injected into a page to submit valid requests on the user's behalf without their knowledge.
 
