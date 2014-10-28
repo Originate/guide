@@ -30,7 +30,7 @@ XSS is a vulnerability in a web application that allows an attacker to inject cl
 
 **Non-Persistent**
 
-Non-persistent XSS occurs when the server echos back raw user input immediately after it's submitted. This usually happens on insecure search pages that contain the search query the user made. For example, if a user searched for "_<script>alert(0)</script>_" and the search page contains "Found 0 results for _%userQuery%_" where _%userQuery%_ is the search query, then the script tags will be injected directly into the DOM and executed by the browser.
+Non-persistent XSS occurs when the server echos back raw user input immediately after it's submitted. This usually happens on insecure search pages that contain the search query the user made. For example, if a user searched for ```<script>alert(0)</script>``` and the search page contains ```Found 0 results for _%userQuery%_``` where ```_%userQuery%_``` is the search query, then the script tags will be injected directly into the DOM and executed by the browser.
 
 Possible Attack Vector
 
