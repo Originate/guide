@@ -26,7 +26,7 @@ HTTPS Guidelines
 
 **Cross Site Scripting (XSS)**
 
-XSS is extremely prevalent and accounts for "roughly 84% of all security vulnerabilities" according to Symantec. At best, the website gets defaced. At worst, session cookies are stolen, accounts get hijacked, and the browser turns into a [zombie](http://www.pcworld.com/article/2045944/researcher-builds-botnetpowered-distributed-file-storage-system-using-javascript.html).
+XSS is a vulnerability in a web application that allows an attacker to inject client-side scripts (usually Javascript) into webpages that can be viewed by other users. At best, the website gets defaced. At worst, session cookies are stolen, accounts get hijacked, and the browser turns into a [zombie](http://www.pcworld.com/article/2045944/researcher-builds-botnetpowered-distributed-file-storage-system-using-javascript.html). It is extremely prevalent and, according to Symantec, accounted for 84% of all web vulnerabilities in the last six months of 2007.
 
 **Non-Persistent**
 
