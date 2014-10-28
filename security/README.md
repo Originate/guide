@@ -110,7 +110,7 @@ With a database library there's no need to directly write SQL queries. Using a l
 
 **Cross Site Request Forgery (CSRF)**
 
-Cross Site Request Forgery is used by an attacker to trick users into performing actions on a web application that they're currently logged into. This happens when the application server trusts the user's browser and doesn't check to make sure the request came from a trusted source. Attackers can abuse this trust by crafting requests that match legitimate requests that would be made by an authorized user on the web app.
+Cross Site Request Forgery is used by an attacker to trick users into performing actions on a website that they're currently not browsing. This happens when the application server trusts the user's browser and doesn't check to make sure the request came from a trusted source. Attackers can abuse this trust by crafting requests that match legitimate requests that would be made by an actual user on the web app.
 
 Possible Attack Vector
 
