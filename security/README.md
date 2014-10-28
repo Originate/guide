@@ -106,9 +106,6 @@ Prepared statements and stored procedures are supported by all major databases a
 With a database library there's no need to directly write SQL queries. Using a library that handles turning function calls and objects into queries will be smart enough to protect against malicious input like ```13 or 1=1--``` by searching for that literal string instead of treating it as part of the query. [Slick](http://slick.typesafe.com/) for Scala is one such library.
 
 
-Note:
-
-Another popular mitigation technique is to just escape all user input before using it to build an SQL query string. While it may work on smaller projects, it's not recommended for the large projects Originate works on since all you need to do is forget to escape something **ONCE** to open up the entire application and database to SQL injection.
 
 
 **Cross Site Request Forgery (CSRF)**
