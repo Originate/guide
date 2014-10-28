@@ -76,7 +76,7 @@ var query = "SELECT * FROM users WHERE id = '"+ userId + "'";
 ```
 (Fig 2) An attacker submits the following as their _userId_
 ```
-13' or 1=1—-
+13' or 1=1--
 ```
 The user input gets inserted into the query and executed as
 ```
@@ -177,7 +177,7 @@ Mitigation
 
 **Doing Authentication (with and without OAuth)**
 
-There usually are libraries and features bundled into frameworks that handle authentication but sometimes you may need to roll your own. Whether you're using Oauth or writing your own, the two most important things to remember are 1) **Always enable SSL in production** and 2) **Use cryptographically strong hash functions** .
+There usually are libraries and features bundled into frameworks that handle authentication but sometimes you may need to roll your own. Whether you're using Oauth or writing your own, the two most important things to remember are 1) **Always enable SSL in production**, and 2) **Use cryptographically strong hash functions** .
 
 Authentication Basics w/o OAuth
 
@@ -201,7 +201,7 @@ Why Salt & Hash?
 
 ![Salty hash](http://i.imgur.com/fGLtPpM.jpg)
 
-Always prepare for the worst. Assume the database is going get leaked eventually. If user passwords are stored in plaintext (as-is) or hashed using a weak hash function, it's trivial for the attacker to get users' passwords –- passwords they probably use on other websites aside from yours.
+Always prepare for the worst. Assume the database is going get leaked eventually. If user passwords are stored in plaintext (as-is) or hashed using a weak hash function, it's trivial for the attacker to get users' passwords — passwords they probably use on other websites aside from yours.
 
 Appending a salt to your users' passwords before hashing will, with a high degree of certainty, prevent duplicate passwords for different users from having the same hash. Salting also prevents attackers from using [rainbow tables](https://en.wikipedia.org/wiki/Rainbow_table) to quickly look-up the plaintext that the hash was derived from and forces them to either spend lots of time/money bruteforcing the hash or just give up entirely.
 
