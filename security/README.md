@@ -105,9 +105,6 @@ Prepared statements and stored procedures are supported by all major databases a
 
 With a database library there's no need to directly write SQL queries. Using a library that handles turning function calls and objects into queries will be smart enough to protect against malicious input like ```13 or 1=1--``` by searching for that literal string instead of treating it as part of the query. [Slick](http://slick.typesafe.com/) for Scala is one such library.
 
-- Data Access Objects [(DAO)](https://en.wikipedia.org/wiki/Data_access_object)
-
-DAOs are objects that provide an interface to some underlying persistent storage (like a database). They essentially separate database logic from data access logic. For example, a DAO can have a public method like ```Student getStudent(String id)```and if implemented correctly, there is no way a call to ```getStudent()``` can return the entire Students table instead of a Student object (or it'll throw an error) if a malicious input like ```13 or 1=1--``` is entered.
 
 Note:
 
