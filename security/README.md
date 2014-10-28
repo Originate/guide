@@ -15,7 +15,7 @@ HTTPS Guidelines
   - Don't let the user log in over HTTP. Their username and password can be stolen while it's in-transit to the server if the connection isn't encrypted!
   - All pages post-login should also be delivered over HTTPS since an attacker can steal the user's authenticated session cookie if it's sent over an insecure connection.
 - If the web application is powered by multiple servers that need to communicate with each other, it's recommended to encrypt the internal server connections as well either using SSL/TLS or some other transport layer security protocol. The NSA was able to sniff data sent between Google datacenters because the connection was unencrypted!
-- Redirect users to the HTTPS version of pages if they try to visit the unencrypted version.
+- Redirect users to the HTTPS version of pages if they try to visit the unencrypted version. This can be done with middleware outside your application.
 - Do not link to HTTP content in a HTTPS page. An attacker can still intercept the unencrypted content and modify it for malicious purposes. (See section about XSS)
 - While HTTPS encrypts everything past a URL's domain, it's still recommended to not have any sensitive data in the URL itself as it can leak out via referer headers.
 - Implement [HTTP Strict Transport Policy (HSTS)](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) if possible
