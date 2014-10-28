@@ -131,7 +131,9 @@ CSRF can be combined with XSS where javascript is injected into a page to submit
 Mitigation
 
 - Check the HTTP referer header to make sure the request came from a trusted page
-- Add a CSRF-token (nonce) to all HTML forms and send it to the server for validation before processing the request
+- Add a CSRF-token [(nonce)](https://en.wikipedia.org/wiki/Cryptographic_nonce) as a hidden field when rendering all HTML forms
+  - The nonce gets sent to the server and validated before processing the rest of the form submission
+  - The token should only be used once per form
   - The token can also be set as a cookie by the server and then, using javascript, added as a custom HTTP header that's sent back to the server on each request
 
 **Authentication and Session Management**
@@ -143,7 +145,7 @@ Session hijacking is when an attacker is able to get a copy of a user's session 
 Possible Attack Vector
 
 - Connection between the server and the user is unencrypted
-- An attacker is able to get in between the connection and read the session id
+- An attacker is able to eavesdrop on the connection and read the session id
 - The attacker uses the session id to impersonate the user
 
 Mitigation
