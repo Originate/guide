@@ -166,7 +166,7 @@ Possible Attack Vector
 
 Mitigation
 
-- There are several other attack vectors depending on how the web app is set up, including intercepting the connection and changing the session cookie value in the header or crafting a malicious url with a compromised session id in it. An easy way to prevent all this is to just create and set a new session every time a user logs in. Of course, if the web app is vulnerable to XSS or a man-in-the-middle attack, there are bigger things to worry about. :)
+- There are several other attack vectors depending on how the web app is set up, including intercepting the connection and changing the session cookie value in the header or crafting a malicious url with a compromised session id in it. An easy way to prevent all this is to just create and set a new session token every time a user logs in. Of course, if the web app is vulnerable to XSS or a man-in-the-middle attack, there are bigger things to worry about. :^)
 - Other mitigation tips
   - **Always enable SSL when in production!**
   - Don't send session identifiers in form data or in the URL. Instead, store them as cookies and mark them as HttpOnly and Secure.
