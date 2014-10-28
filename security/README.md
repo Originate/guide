@@ -3,7 +3,7 @@ Best Practices for Web App Security
 
 Hello! This document will give a general guideline on best practices in building a secure web application as well as list and describe commonly used web application exploits and how to defend against them.
 
-First and foremost, **always enable SSL when in production!** It doesn't matter how well written and secure the code is if an attacker can just man-in-the-middle the connection and steal session cookies or inject malicious code.
+First and foremost, **always enable HTTPS when in production!** It doesn't matter how well written and secure the code is if an attacker can just man-in-the-middle the connection and steal session cookies or inject malicious code.
 
 **HTTPS (SSL/TLS)**
 
@@ -12,9 +12,9 @@ HTTPS is one of the most important inventions of the past two decades and is res
 HTTPS Guidelines
 
 - If having site-wide HTTPS isn't feasible, at least have all connections to login and authenticated pages be over HTTPS.
-  - Don't let the user log in over HTTP. Their username and password can be stolen while it's in-transit to the server if the connection isn't encrypted!
+  - Do not let the user log in over HTTP. Their username and password can be stolen while it's in-transit to the server if the connection isn't encrypted!
   - All pages post-login should also be delivered over HTTPS since an attacker can steal the user's authenticated session cookie if it's sent over an insecure connection.
-- If the web application is powered by multiple servers that need to communicate with each other, it's recommended to encrypt the internal server connections as well either using SSL/TLS or some other transport layer security protocol. The NSA was able to sniff data sent between Google datacenters because the connection was unencrypted!
+- If the web application is powered by multiple servers that need to communicate with each other, it's recommended to encrypt the internal server connections as well either using SSL/TLS or some other transport layer security protocol. The [NSA](http://www.slate.com/blogs/future_tense/2013/10/30/nsa_smiley_face_muscular_spying_on_google_yahoo_speaks_volumes_about_agency.html) was able to sniff data sent between Google datacenters because the connection was unencrypted!
 - Redirect users to the HTTPS version of pages if they try to visit the unencrypted version. This can be done with middleware outside your application.
 - Do not link to HTTP content in a HTTPS page. An attacker can still intercept the unencrypted content and modify it for malicious purposes. (See section about XSS)
 - While HTTPS encrypts everything past a URL's domain, it's still recommended to not have any sensitive data in the URL itself as it can leak out via referer headers.
@@ -168,16 +168,16 @@ Mitigation
 
 - There are several other attack vectors depending on how the web app is set up, including intercepting the connection and changing the session cookie value in the header or crafting a malicious url with a compromised session id in it. An easy way to prevent all this is to just create and set a new session token every time a user logs in. Of course, if the web app is vulnerable to XSS or a man-in-the-middle attack, there are bigger things to worry about. :^)
 - Other mitigation tips
-  - **Always enable SSL when in production!**
+  - **Always enable HTTPS when in production!**
   - Don't send session identifiers in form data or in the URL. Instead, store them as cookies and mark them as HttpOnly and Secure.
   - Time-out sessions after a certain amount of time and invalidate them.
   - Identity Confirmation
     - Require the user to authenticate again when doing anything "critical."
-  - Reminder: **Always enable SSL when in production!**
+  - Reminder: **Always enable HTTPS when in production!**
 
 **Doing Authentication (with and without OAuth)**
 
-There usually are libraries and features bundled into frameworks that handle authentication but sometimes you may need to roll your own. Whether you're using Oauth or writing your own, the two most important things to remember are 1) **Always enable SSL in production**, and 2) **Use cryptographically strong hash functions** .
+There usually are libraries and features bundled into frameworks that handle authentication but sometimes you may need to roll your own. Whether you're using Oauth or writing your own, the two most important things to remember are 1) **Always enable HTTPS in production**, and 2) **Use cryptographically strong hash functions** .
 
 Authentication Basics w/o OAuth
 
