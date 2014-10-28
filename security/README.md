@@ -150,7 +150,7 @@ Possible Attack Vector
 
 Mitigation
 
-- There are a lot of different vectors through which a session can be hijacked. It's a symptom of an insecure app, rather than a cause. Generally, the most common way for account sessions to be stolen is through an insecure communication channel or because of XSS. Remember to always enable SSL and to sanitize all user-submitted data.
+- There are a lot of different vectors through which a session can be hijacked. It's a symptom of an insecure app, rather than a cause. Generally, the most common way for account sessions to be stolen is through an insecure communication channel or because of XSS. Remember to always enable HTTPS and to sanitize all user-submitted data.
 
 **Session Fixation**
 
