@@ -65,7 +65,6 @@ For more information on how to defend against XSS, read OWASP's [XSS Prevention 
 
 ![Obligatory XKCD reference](http://i.imgur.com/gHNiJMY.png)
 
-(Obligatory XKCD reference)
 
 SQL injections aren't seen in the wild nearly as much as they used to be due to increased awareness on how to prevent them. But, in cases where SQL injections are found and exploited, the consequences can be much more serious than XSS. SQL injections occur when malicious user input is incorrectly filtered and then used to build a SQL query that is executed on the database.
 
