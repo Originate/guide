@@ -3,7 +3,7 @@ Best Practices for Web App Security
 
 Hello! This document will give a general guideline on best practices in building a secure web application as well as list and describe commonly used web application exploits and how to defend against them.
 
-First and foremost, **always enable SSL when in production!** It doesn't matter how well written and secure the code is if an attacker can just man-in-the-middle the connection and steal session cookies or inject malicious code!
+First and foremost, **always enable SSL when in production!** It doesn't matter how well written and secure the code is if an attacker can just man-in-the-middle the connection and steal session cookies or inject malicious code.
 
 **HTTPS (SSL/TLS)**
 
@@ -12,11 +12,11 @@ HTTPS is one of the most important inventions of the past two decades and is res
 HTTPS Guidelines
 
 - If having site-wide HTTPS isn't feasible, at least have all connections to login and authenticated pages be over HTTPS.
-  - Don't let the user log in over HTTP! Their username and password can be stolen while it's in-transit to the server if the connection isn't encrypted! 
-  - All pages post-login should also be delivered over HTTPS! An attacker can steal the user's authenticated session cookie if it's sent over an insecure connection!
+  - Don't let the user log in over HTTP. Their username and password can be stolen while it's in-transit to the server if the connection isn't encrypted!
+  - All pages post-login should also be delivered over HTTPS since an attacker can steal the user's authenticated session cookie if it's sent over an insecure connection.
 - If the web application is powered by multiple servers that need to communicate with each other, it's recommended to encrypt the internal server connections as well either using SSL/TLS or some other transport layer security protocol. The NSA was able to sniff data sent between Google datacenters because the connection was unencrypted!
 - Redirect users to the HTTPS version of pages if they try to visit the unencrypted version.
-- Do not link to HTTP content in a HTTPS page! An attacker can still intercept the unencrypted content and modify it for malicious purposes. (See section about XSS)
+- Do not link to HTTP content in a HTTPS page. An attacker can still intercept the unencrypted content and modify it for malicious purposes. (See section about XSS)
 - While HTTPS encrypts everything past a URL's domain, it's still recommended to not have any sensitive data in the URL itself as it can leak out via referer headers.
 - Implement [HTTP Strict Transport Policy (HSTS)](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) if possible
   - Policy that requires all clients (browsers) communicate with the server over HTTPS
@@ -40,7 +40,7 @@ Possible Attack Vector
 
 Mitigation
 
-- Don't output un-encoded user input! Sanitize potentially dangerous user-given data by html encoding it before placing it in the DOM
+- Don't output un-encoded user input. Sanitize potentially dangerous user-given data by html encoding it before placing it in the DOM.
 
 **Persistent**
 
@@ -100,7 +100,7 @@ First, the query is written with placeholders (usually a '?') being used where u
 
 Stored procedures are similar to prepared statements in that the SQL queries are defined and separated from the data. The main difference between the two is that queries in stored procedures are, as per their namesake, stored in the database. An application can call these procedures and send the data without first building a string with placeholders like in prepared statements.
 
-Prepared statements and stored procedures are supported by all major databases and languages. Look them up and learn how to use them before doing anything database-related!
+Prepared statements and stored procedures are supported by all major databases and languages. Look them up and learn how to use them before doing anything database-related.
 
 - Database Libraries
 
@@ -155,7 +155,7 @@ Possible Attack Vector
 
 Mitigation
 
-- There are a lot of different vectors through which a session can be hijacked. It's a symptom of an insecure app, rather than a cause. Generally, the most common way for account sessions to be stolen is through an insecure communication channel or because of XSS. Remember to always enable SSL and to encode all user-submitted data!
+- There are a lot of different vectors through which a session can be hijacked. It's a symptom of an insecure app, rather than a cause. Generally, the most common way for account sessions to be stolen is through an insecure communication channel or because of XSS. Remember to always enable SSL and to encode all user-submitted data.
 
 **Session Fixation**
 
@@ -200,7 +200,7 @@ Authentication Basics w/ OAuth
 
 Notes:
 
-Do not store the access token! It's not necessary and poses an unnecessary risk as the user can just send a new one in the future if needed. Refer to each provider's documentation on how to implement OAuth as they each do things slightly differently.
+Do not store the access token. It's not necessary and poses an unnecessary risk as the user can just send a new one in the future if needed. Refer to each provider's documentation on how to implement OAuth as they each do things slightly differently.
 
 Why Salt & Hash?
 
@@ -212,16 +212,16 @@ Appending a salt to your users' passwords before hashing will, with a high degre
 
 Choosing a Hash Function
 
-- Slower is actually better!
+- Slower is actually better
   - We want the hash computation to be slow for an attacker, but not too slow for the server
 - With the rise of GPU computing, SHA-family hash functions can be computed much faster by the average user
 - [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) was made to slow down GPU-based bruteforce attacks, but requires very little RAM which lets it be quickly computed using dedicated hardware like ASICs or FPGAs
   - Bcrypt is the most popular and is the most widely used
 - [Scrypt](https://en.wikipedia.org/wiki/Scrypt) is a relatively new hash function that's similar to bcrypt but was designed specifically to make it more costly to bruteforce on dedicated hardware by having larger RAM requirements
   - Scrypt is still young (~2 years old) and in the world of cryptography, older time-tested and peer reviewed algorithms are preferred
-- Don't use old, deprecated hash functions like MD5 or SHA1 anymore!
+- Don't use old, deprecated hash functions like MD5 or SHA1 anymore
 
-Like with most things in security, use popular peer-reviewed crypto libraries written by people that do cryptography full-time. Do **NOT** implement any algorithms yourself! And do not ever, **ever** , **EVER** write your own encryption/hashing algorithms!!!
+Like with most things in security, use popular peer-reviewed crypto libraries written by people that do cryptography full-time. Do **NOT** implement any algorithms yourself. And do not ever, **ever** , **EVER** write your own encryption/hashing algorithms!!!
 
 
 **Crypto Libraries**
@@ -250,7 +250,7 @@ Here are some tips and best practices in securing the project you're working on 
 - Make sure any frameworks and libraries being used are configured correctly. If a component is being switched out make sure the replacement passes functional **AND** security requirements.
 - Delete test accounts before going into production
 - Make sure sensitive files aren't stored in publically accessible directories
-- Use strong passwords!
+- Use strong passwords
   - Preferably randomly generated with letters, numbers, and other characters
 - Try not to use public personal information to secure anything (i.e. using your dog's name as the answer to a secret question and your dog's name is on Facebook)
   - Don't assume information about your personal life or relationships is private enough to only be known by you. It's 2014.
@@ -260,7 +260,7 @@ Here are some tips and best practices in securing the project you're working on 
 - Make sure not to check in any private keys or other sensitive information to a 3rd party source control service. (Or preferably, any source control)
 - Follow standards. They're standards for a reason!
 
-Admittedly, having good operational security can be tough sometimes – we’re all human and mistakes can happen. If you don’t think you can follow these best practices, especially if it would have you too pressed for time, try to find someone who can to help out or take over for you instead. Don’t be shy and bring up any concerns you have with your PM!
+Admittedly, having good operational security can be tough sometimes – we’re all human and mistakes can happen. If you don’t think you can follow these best practices, especially if it would have you too pressed for time, try to find someone who can to help out or take over for you instead. Don’t be shy and bring up any concerns you have with your PM.
 
 **Useful Tools**
 
