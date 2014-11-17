@@ -16,18 +16,18 @@ There are two simple rules for doing work on the UI thread:
 1. Don't block the UI thread.
 2. Don't do UI work when you aren't on the UI thread.
 
-An short list of stuff that might block the UI thread:
+A short list of stuff that might block the UI thread:
 
 - pulling a bitmap of any size into memory
 - **ANY NETWORK CALLS **(your app will crash on API 3+ if you try this)
-- downloading a file 10 MB file from your server
-- large (n>20 rows) DB operation
+- downloading a 10 MB file from your server
+- large (`LIMIT>20` rows) DB operation
 - using [ImageView.setImageResource(resId)](http://developer.android.com/reference/android/widget/ImageView.html#setImageResource(int))
 - recursively computing the first 200 digits of Fibonacci 
 
-If you're doing a short task that will involve a blocking operation, consider using a [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html). This kicks off a background thread (from a thread pool) using the initialization parameters you provide, does the computation, and returns back onto the UI thread with the result. Easy!
+If you're doing a short task that will involve a blocking operation, consider using an [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html). This kicks off a background thread (from a thread pool) using the initialization parameters you provide, does the computation, and returns back onto the UI thread with the result. Easy!
 
-For longer-running actions, consider a [Thread ](http://developer.android.com/reference/java/lang/Thread.html)or [Service](http://developer.android.com/reference/android/app/Service.html). For a more complete guide do worker threads, check out the developer docs [page on threading](http://developer.android.com/guide/components/processes-and-threads.html#WorkerThreads). 
+For longer-running actions, consider a [Thread](http://developer.android.com/reference/java/lang/Thread.html) or [Service](http://developer.android.com/reference/android/app/Service.html). For a more complete guide to worker threads, check out the developer docs [page on threading](http://developer.android.com/guide/components/processes-and-threads.html#WorkerThreads). 
 
 ###Strings and Object Creation
 
@@ -45,7 +45,7 @@ If `list` is 100 elements, suddenly, the GC has to collect 100 useless objects. 
 ```java
 //bonus points for initializing the StringBuilder with an appropriate size.
 StringBuilder container = new StringBuilder(); 
-	for (String item : list){
+    for (String item : list){
     container.append(item); // much better!
 }
 return container.toString();
@@ -55,10 +55,10 @@ Now, instead of creating 100 objects, we're creating 1.
 
 Another thing to note - most String methods, or many methods that involve Strings, are O(n) operations. 
 
-```java	
+```java 
 Set<String> set = new HashSet<String>();
-for(int i = 0; i<9999; i++){ //ignore how useless this for-loop is....
-	set.contains(aReallyLongString);
+for(int i = 0; i<9999; i++){ 
+    set.contains(aReallyLongString);
 }
 ```
 
@@ -72,9 +72,9 @@ While hardly a requirement, consider using Android's hand-written SparseArray cl
 
 These avoid the slightly costly problem of the JVM having to autobox/unbox primitives when inserting/obtaining them from Sets and Maps. The tradeoff is that these data structures are not random access - they use binary search, so access is O(log n) versus a HashMap's O(1).
 
-### []()Images and Bitmaps
+###Images and Bitmaps
 
-Images are a special beast in Android. [Developer.android.com](http://developer.android.com/training/displaying-bitmaps/index.html), accurately summarizing the problem, says:
+Images are a special beast in Android. [The Android Docs](http://developer.android.com/training/displaying-bitmaps/index.html), accurately summarizing the problem, says:
 
 >Mobile devices typically have constrained system resources. **Android devices can have as little as 16MB of memory available to a single application**. The [Android Compatibility Definition Document](http://source.android.com/compatibility/downloads.html) (CDD), _Section 3.7. Virtual Machine Compatibility_ gives the required minimum application memory for various screen sizes and densities. Applications should be optimized to perform under this minimum memory limit. However, keep in mind many devices are configured with higher limits.
 >
@@ -84,9 +84,9 @@ Images are a special beast in Android. [Developer.android.com](http://developer.
   
 (emphasis added)
 
-Loading _just one_ photo taken on a Galaxy Nexus could conceivably blow throw the app's entire heap! How do we protect against this?
+Loading _just one_ photo taken on a Galaxy Nexus could conceivably blow through the app's entire heap! How do we protect against this?
 
-In most cases, the best answer is not reinvent the wheel - [Ion](https://github.com/koush/ion), [Universal Image Uploader](https://github.com/nostra13/Android-Universal-Image-Loader), and most image loading libraries allow images/bitmaps to be dynamically resized prior to being pulled into memory and inserted into a view. There's no need to try to load a 1920x1080px image (8MB), just to put it into a 20x20dp (3KB) thumbnail! These libraries are written by some very talented devs, and there's a good chance that someone out there has already solved the problem you're facing. Check if the image-loading lib you're using can load your bitmap from disk for you - it saves you the headache of `OutOfMemory` errors without the hassle of having to code it yourself.
+In most cases, the best answer is to *not* reinvent the wheel - [Ion](https://github.com/koush/ion), [Universal Image Uploader](https://github.com/nostra13/Android-Universal-Image-Loader),  [Picasso](http://square.github.io/picasso/), and most image loading libraries allow images/bitmaps to be dynamically resized prior to being pulled into memory and inserted into a view. There's no need to try to load a 1920x1080px image (8MB), just to put it into a 20x20dp (3KB) thumbnail! These libraries are written by some very talented developers, and there's a good chance that someone out there has already solved the problem you're facing. Check if the image-loading lib you're using can load your bitmap from disk for you -- it saves you the headache of `OutOfMemory` errors without the hassle of having to code it yourself.
 
 If you find yourself absolutely required to manipulate images _sans_ library, remember to 
 
@@ -95,7 +95,7 @@ If you find yourself absolutely required to manipulate images _sans_ library, re
 
 ### Logs - Expensive and Insecure
 
-Logs are an incredibly useful debugging tool - you can see exactly what line fails, and even what the state of a variable was at that time. Logging, however, can take a toll on the system.
+Logs are an incredibly useful debugging tool -- you can see exactly what line fails, and even what the state of a variable was at that time. Logging, however, can take a toll on the system.
 
 Something you may not have realized is that unless you specifically turn it off (with a manual DEBUG flag or using ProGuard), your app will continue to generate logs in production!
 
@@ -105,9 +105,9 @@ Take the (slightly contrived) example:
 ```java
 //returns a JsonObject (with children) of all the lists associated with a user
 private String whyWouldYouDoThis(){
-	JsonObject result = API.getReallyBigComplexJsonList(authToken, url).asJsonObject().commit();
-	Log.d("OriginateTestClass", result.toString());
-	return result;
+    JsonObject result = API.getReallyBigComplexJsonList(authToken, url).asJsonObject().commit();
+    Log.d("OriginateTestClass", result.toString());
+    return result;
 }
 ```
 
@@ -117,16 +117,16 @@ Consider creating a LogUtility class that wraps the various Log levels (e.g., Lo
 
 ```java
 public static void LOGD(final String tag, String message) {
-	if(BuildConfig.DEBUG || Log.isLoggable(tag, Log.DEBUG)) {
-	    Log.d(tag, message);
-	}
+    if(BuildConfig.DEBUG || Log.isLoggable(tag, Log.DEBUG)) {
+        Log.d(tag, message);
+    }
 }
 ```
-By checking if you're in Prod, you could conceivably save a ton CPU cycles that could be better spent smoothly displaying your UI! :D
+By checking if you're in Prod, you could conceivably save a ton of CPU cycles that could be better spent smoothly displaying your UI! :D
 
 ####Logs can be a security risk!
 
-If you decide to ignore the previous section, at least **don't log any information that presents a security risk**. 
+If you decide to ignore the previous section, at the very least **don't log any information that presents a security risk**. 
 
 This includes
 
@@ -141,17 +141,17 @@ Yet another reason to only log in Debug mode.
 
 The following section may be filed under the heading "Everything you should already be doing with fragments, but probably aren't because you're lazy."
 
-####Fragment private constructor
+####The private constructor
 
 In order to facilitate passing information to a Fragment, you might be tempted to override the default private constructor:
 
 ```java
 public class MyFragment extends Fragment{
-	private String arg1;
-
-	public MyFragment (String arg1){ //everything about this is bad!
-		this.arg1 = arg1;
-	}
+    private String arg1;
+    
+    public MyFragment (String arg1){ //everything about this is bad!
+        this.arg1 = arg1;
+    }
 }
 ```
 
@@ -163,7 +163,7 @@ public class MyFragment extends Fragment{
     String arg1;
     private static final String key1 = "ARG_KEY_1";
 
-    publicstatic MyFragment newInstance(String arg1){
+    public static MyFragment newInstance(String arg1){
         Bundle b = new Bundle();
         b.putString(key1, arg1); //set using key1
         MyFragment fragment = new MyFragment(); //default constructor!
@@ -188,7 +188,7 @@ The Android runtime will remember the information that you sent in the Bundle. I
 
 Remember to access your Bundle in `Fragment.onCreate(...)` with `getArguments()`!
 
-####Fragment - Activity Communication
+####Fragment/Activity Communication
 
 Ideally, there should be little reason for a Fragment to call methods in the parent Activity. The Activity should merely handle lifecycle methods and the ActionBar, and leave all of the View logic to the Fragment. 
 
@@ -222,17 +222,17 @@ public class MyActivity implements MyFragmentInterface {
 ```java
 // inside MyFragment
 public class MyFragments extends Fragment {
-	private MyFragmentInterface interfaceToActivity;
-	
-	public interface MyFragmentInterface{
-		public void doSomething();
-	}
+    private MyFragmentInterface interfaceToActivity;
+    
+    public interface MyFragmentInterface{
+        public void doSomething();
+    }
 
-	@Override
-	public void onAttach(Activity activity){
-		if (activity instanceof MyFragmentInterface){
-			interfaceToActivity = (MyFragmentInterface) activity; //cast activity to Interface class
-		} else throw new ClassCastException(activity.getSimpleName().toString() + " doesn't implement MyFragmentInterface!");
+    @Override
+    public void onAttach(Activity activity){
+        if (activity instanceof MyFragmentInterface){
+            interfaceToActivity = (MyFragmentInterface) activity; //cast activity to Interface class
+        } else throw new ClassCastException(activity.getSimpleName().toString() + " doesn't implement MyFragmentInterface!");
     }
 }
 ```
@@ -246,24 +246,24 @@ public void fragmentMethod(){
 
 This way, _any _ Activity can use MyFragment - as long as it implements `MyFragmentInterface`! 
 
-#### The Fragment Lifecycle and OnSaveInstanceState
+#### The Fragment Lifecycle and `OnSaveInstanceState`
 
-Go read [this Android Design Patterns article](http://www.google.com/url?q=http%3A%2F%2Fwww.androiddesignpatterns.com%2F2013%2F04%2Fretaining-objects-across-config-changes.html&sa=D&sntz=1&usg=AFrqEzfYdusgFlKs7BVvEclj7_aoebj_aQ) about OnSaveInstanceState. 
+Go read [this Android Design Patterns article](http://www.google.com/url?q=http%3A%2F%2Fwww.androiddesignpatterns.com%2F2013%2F04%2Fretaining-objects-across-config-changes.html&sa=D&sntz=1&usg=AFrqEzfYdusgFlKs7BVvEclj7_aoebj_aQ) about `OnSaveInstanceState`. 
 
-### Layouts and ListViews
+### Layouts and `ListViews`
 
-You will be inflating a lot of XML - make sure you do it efficiently. Ensure that you're [optimizing your layouts](http://developer.android.com/training/improving-layouts/optimizing-layout.html) by not nesting too deeply; and remember to [reuse layouts when possible](http://developer.android.com/training/improving-layouts/reusing-layouts.html) with `<include>`; and `<merge>`. 
+You will be inflating a lot of XML - make sure you do it efficiently. Ensure that you're [optimizing your layouts](http://developer.android.com/training/improving-layouts/optimizing-layout.html) by not nesting too deeply; and remember to [reuse layouts when possible](http://developer.android.com/training/improving-layouts/reusing-layouts.html) with `<include>` and `<merge>`. 
 
-####Optimizing ListViews
+####Optimizing `ListViews`
 
-If you aren't already using the ViewHolder pattern, you should start. It's stupidly easy and make scrolling a lot faster, especially on phones that don't have quad-core 3.0GHz processors.
+If you aren't already using the ViewHolder pattern, you should start. It's incredibly easy and makes scrolling a lot faster, especially on phones that don't have quad-core 3.0GHz processors.
 
 (the following excellent code samples are, weirdly, from [developer.samsung.com](http://developer.samsung.com/android/technical-docs/Android-UI-Tips-and-Tricks), who managed to have better documentation than Google...)
 
-Take care when implementing [BaseAdapter.getView(...)](http://developer.android.com/reference/android/widget/Adapter.html#getView)....
+Take care when implementing [`BaseAdapter.getView(...)`](http://developer.android.com/reference/android/widget/Adapter.html#getView)....
 
 ```java
-//naive implementation of BaseAdapter#getView
+//naïve implementation of BaseAdapter#getView
 @Override
 public View getView(int position, View convertView, ViewGroup parent) {
     convertView = mInflater.inflate(R.layout.list_item, null);
@@ -275,7 +275,7 @@ public View getView(int position, View convertView, ViewGroup parent) {
 }
 ```
 
-In the naïve example, we are inflating the XML into convertView without regard for what already exists. This is unnecessary; ListView (and other container views, like GridView) is pretty smart about recycling Views to minimize superfluous XML inflation. We should be smart about it too!
+In the naïve example, we are inflating the XML into `convertView` without regard for what already exists. This is unnecessary; `ListView` (and other container views, like `GridView`) is pretty smart about recycling the `View` to minimize superfluous XML inflation. We should be smart about it too!
 ```java
 static class ViewHolder {
     TextView text;
@@ -305,12 +305,12 @@ Here, we check if the convertView has been recycled or if it needs to be initial
 
 This is performant for two reason:
 
-1. We avoid inflating XML on every call to Adapter.getView(). This is excellent because getView is called every time a particular row needs to be drawn OR redrawn! So we save lot of unnecessary inflation.
-2. We avoid unnecessary calls to view.findViewById(int), which unfortunately, is a recursive BFS. So if you have a deep layout (inadvisable for many reason), each findViewById() can be relatively expensive - and worse, slow!. 
+1. We avoid inflating XML on every call to `Adapter.getView()`. This is excellent because `getView` is called every time a particular row needs to be drawn OR redrawn! So we save lot of unnecessary inflation.
+2. We avoid unnecessary calls to `view.findViewById(int)`, which unfortunately, is a recursive [BFS](http://en.wikipedia.org/wiki/Breadth-first_search). So if you have a deep layout (inadvisable for many reason), each `findViewById()` can be relatively expensive - and worse, slow!. 
 
 _**Untested Alternative:**  _
 
-Creating a custom ViewGroup that always keeps references to its children
+Creating a custom `ViewGroup` that always keeps references to its children
 
 [http://blog.xebia.com/2013/07/22/viewholder-considered-harmful/ ](http://blog.xebia.com/2013/07/22/viewholder-considered-harmful/)  
 
@@ -324,13 +324,13 @@ For example...
 
 ```java
 public class Foo {
-	private String enclosingPrivateField = "sadness";
+    private String enclosingPrivateField = "sadness";
 
-	private class FooInner{
-		public String doSomething(){
-			return enclosingPrivateField; //this could be a problem
-		}
-	}
+    private class FooInner{
+        public String doSomething(){
+            return enclosingPrivateField; //this could be a problem
+        }
+    }
 }
 ```
 
@@ -354,23 +354,23 @@ In general, though, if you're using custom Typefaces and repeatedly shoving them
 
 ```java
 public class TypefaceCache {
-	private static final String TAG = "Typefaces";
-	private static final Hashtable<String, Typeface> cache = new Hashtable<String, Typeface>();
+    private static final String TAG = "Typefaces";
+    private static final Hashtable<String, Typeface> cache = new Hashtable<String, Typeface>();
 
-	public static Typeface get(Context c, String assetPath) {
-		synchronized (cache) {
-			if (!cache.containsKey(assetPath)) {
-				try {
-					Typeface t =  Typeface.createFromAsset(c.getApplicationContext().getAssets(), assetPath);
-					cache.put(assetPath, t);
-				} catch (Exception e) {
-					Log.e(TAG, "Could not get typeface '" + assetPath + "' because " + e.getMessage());
-					return null;
-				}
-			} 
-			return cache.get(assetPath);
-		}
-	}
+    public static Typeface get(Context c, String assetPath) {
+        synchronized (cache) {
+            if (!cache.containsKey(assetPath)) {
+                try {
+                    Typeface t =  Typeface.createFromAsset(c.getApplicationContext().getAssets(), assetPath);
+                    cache.put(assetPath, t);
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not get typeface '" + assetPath + "' because " + e.getMessage());
+                    return null;
+                }
+            } 
+            return cache.get(assetPath);
+        }
+    }
 }
 ```
 
