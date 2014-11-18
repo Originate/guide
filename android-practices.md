@@ -2,8 +2,8 @@
 
 Writing performant Javacode for Android essentially boils down to two main rules - 
 
-(1) Don't do work that you don't have to, and <br>
-(2) don't make the JVM do work that it doesn't have to. 
+1. Don't do work that you don't have to, and <br>
+1. don't make the JVM do work that it doesn't have to. 
 
 In this vein, read, learn, and memorize this page: [http://developer.android.com/training/articles/perf-tips.html](http://developer.android.com/training/articles/perf-tips.html)
 
@@ -14,7 +14,7 @@ Otherwise, look below for an inexhaustive compendium of ways you can make your A
 There are two simple rules for doing work on the UI thread:
 
 1. Don't block the UI thread.
-2. Don't do UI work when you aren't on the UI thread.
+1. Don't do UI work when you aren't on the UI thread.
 
 A short list of stuff that might block the UI thread:
 
@@ -91,7 +91,7 @@ In most cases, the best answer is to *not* reinvent the wheel - [Ion](https://gi
 If you find yourself absolutely required to manipulate images _sans_ library, remember to 
 
 1. always do the heavy lifting on a [background thread](http://developer.android.com/reference/android/os/AsyncTask.html)
-2. [downsample like your app depends on it](http://developer.android.com/training/displaying-bitmaps/load-bitmap.html)
+1. [downsample like your app depends on it](http://developer.android.com/training/displaying-bitmaps/load-bitmap.html)
 
 ### Logs - Expensive and Insecure
 
@@ -244,7 +244,7 @@ public void fragmentMethod(){
 }
 ```
 
-This way, _any _ Activity can use MyFragment - as long as it implements `MyFragmentInterface`! 
+This way, _any_ Activity can use MyFragment - as long as it implements `MyFragmentInterface`! 
 
 #### The Fragment Lifecycle and `OnSaveInstanceState`
 
@@ -254,9 +254,12 @@ Go read [this Android Design Patterns article](http://www.google.com/url?q=http%
 
 You will be inflating a lot of XML - make sure you do it efficiently. Ensure that you're [optimizing your layouts](http://developer.android.com/training/improving-layouts/optimizing-layout.html) by not nesting too deeply; and remember to [reuse layouts when possible](http://developer.android.com/training/improving-layouts/reusing-layouts.html) with `<include>` and `<merge>`. 
 
-####Optimizing `ListViews`
+####Optimizing `ListViews` (and other container views)
+There are a number of different options for optimizing your container views. The most basic of these is the ViewHolder pattern. More complex (and thus, useful) patterns follow below.
 
-If you aren't already using the ViewHolder pattern, you should start. It's incredibly easy and makes scrolling a lot faster, especially on phones that don't have quad-core 3.0GHz processors.
+#####Option 1: Viewholder
+
+If you aren't already familiar with the ViewHolder pattern, you should be. It's incredibly easy and makes scrolling a lot faster, especially on phones that don't have quad-core 3.0GHz processors.
 
 (the following excellent code samples are, weirdly, from [developer.samsung.com](http://developer.samsung.com/android/technical-docs/Android-UI-Tips-and-Tricks), who managed to have better documentation than Google...)
 
@@ -308,11 +311,58 @@ This is performant for two reason:
 1. We avoid inflating XML on every call to `Adapter.getView()`. This is excellent because `getView` is called every time a particular row needs to be drawn OR redrawn! So we save lot of unnecessary inflation.
 2. We avoid unnecessary calls to `view.findViewById(int)`, which unfortunately, is a recursive [BFS](http://en.wikipedia.org/wiki/Breadth-first_search). So if you have a deep layout (inadvisable for many reason), each `findViewById()` can be relatively expensive - and worse, slow!. 
 
-_**Untested Alternative:**  _
+#####Option 2: Custom View Groups
 
-Creating a custom `ViewGroup` that always keeps references to its children
+Creating a custom `ViewGroup` that keeps references to its children solves a few problems:
 
-[http://blog.xebia.com/2013/07/22/viewholder-considered-harmful/ ](http://blog.xebia.com/2013/07/22/viewholder-considered-harmful/)  
+1. cleanly extracts view-related logic from the `Adapter`
+1. separation of View vs. Controller
+
+Here is the `View` being inflated into a `FrameLayout`:
+```java
+public class AmazingItemView extends FrameLayout {
+	
+	private TextView label;
+    private ImageView icon;
+
+	/* 
+    Android-specific constructors here...
+	...init(context) is called from constructors...
+	... 
+    */
+
+	public void init(Context context) {
+		inflate(context, R.layout.custom_amazing_view, this);
+		label = (TextView)findViewById(R.id.label)
+		icon = (ImageView)findViewById(R.id.icon)
+	}
+
+	public void setAmazingItem(AmazingDataItem item) {
+		label.setText(item.getLabel());
+		setImageBitmap(item.getIconBitmap());
+	}
+}
+```
+
+The `Adapter.getView` is thus reduced to the following:
+```java
+@Override
+public View getView(int position, View convertView, ViewGroup parent) {
+    if (convertView == null) {
+     	//the recycled view is null, so create a new view.
+        convertView = new AmazingItemView();
+    }
+
+    // Update the contents of the view. 
+    ((AmazingItemView) convertView).setData(DATA[position]);
+    return convertView;
+}
+```
+(idea courtesy of [http://blog.xebia.com/2013/07/22/viewholder-considered-harmful](http://blog.xebia.com/2013/07/22/viewholder-considered-harmful))
+
+#####Option 3: The Whole Hog - Fragments and all
+In August 2014, Square published a blog post that detailed the creation of custom `ViewGroup`s and Square's decision to [move away from Fragments entirely](http://corner.squareup.com/2014/10/advocating-against-android-fragments.html) . At this time, we don't consider this a Best Practice, but it's worth reading and understanding. 
+
 
 ###Miscellaneous Tidbits and Android Gotchas
 
