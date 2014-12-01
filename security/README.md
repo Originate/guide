@@ -89,21 +89,22 @@ Mitigation
 
 - Prepared Statements
 
-Also known as _Parameterized Queries_, prepared statements separate the code (Fig 1) from the data (Fig 2) so the server never executes the portion of the query designated as data. In the above example, if prepared statements were used then the server would literally search for an id of ```13 or 1=1--``` instead of evaluating and executing it as part of the query.
+  Also known as _Parameterized Queries_, prepared statements separate the code (Fig 1) from the data (Fig 2) so the server never executes the portion of the query designated as data. In the above example, if prepared statements were used then the server would literally search for an id of ```13 or 1=1--``` instead of evaluating and executing it as part of the query.
 
--  How does it work?
+  -  How does it work?
 
-First, the query is written with placeholders (usually a '?') being used where user-given data would normally be present. That query will then be sent to the database where it waits for the placeholders to be replaced before executing. Now, data can be bound to the placeholders and a second request is sent to the database with the data. The database knows the second request contains **only** data and will never execute it as a query.
+     First, the query is written with placeholders (usually a '?') being used where user-given data would normally be present. That query will then be sent to the database where it waits for the placeholders to be replaced before executing. Now, data can be bound to the placeholders and a second request is sent to the database with the data. The database knows the second request contains **only** data and will never execute it as a query.
 
 - Stored Procedures
 
-Stored procedures are similar to prepared statements in that the SQL queries are defined and separated from the data. The main difference between the two is that queries in stored procedures are, as per their namesake, stored in the database. An application can call these procedures and send the data without first building a string with placeholders like in prepared statements.
+  Stored procedures are similar to prepared statements in that the SQL queries are defined and separated from the data. The main difference between the two is that queries in stored procedures are, as per their namesake, stored in the database. An application can call these procedures and send the data without first building a string with placeholders like in prepared statements.
 
-Prepared statements and stored procedures are supported by all major databases and languages. Look them up and learn how to use them before doing anything database-related.
+  Prepared statements and stored procedures are supported by all major databases and languages. Look them up and learn how to use them before doing anything database-related.
+
 
 - Database Libraries
 
-With a database library there's no need to directly write SQL queries. Using a library that handles turning function calls and objects into queries will be smart enough to protect against malicious input like ```13 or 1=1--``` by searching for that literal string instead of treating it as part of the query. [Slick](http://slick.typesafe.com/) for Scala is one such library.
+  With a database library there's no need to directly write SQL queries. Using a library that handles turning function calls and objects into queries will be smart enough to protect against malicious input like ```13 or 1=1--``` by searching for that literal string instead of treating it as part of the query. [Slick](http://slick.typesafe.com/) for Scala is one such library.
 
 
 
