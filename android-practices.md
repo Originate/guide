@@ -19,9 +19,9 @@ There are two simple rules for doing work on the UI thread:
 A short list of stuff that might block the UI thread:
 
 - pulling a bitmap of any size into memory
-- **ANY NETWORK CALLS **(your app will crash on API 3+ if you try this)
+- **ANY NETWORK CALLS** (your app will crash on API 3+ if you try this)
 - downloading a 10 MB file from your server
-- large (`LIMIT>20` rows) DB operation
+- large (`LIMIT>15` rows) DB operation
 - using [ImageView.setImageResource(resId)](http://developer.android.com/reference/android/widget/ImageView.html#setImageResource(int))
 - recursively computing the first 200 digits of Fibonacci 
 
@@ -46,7 +46,7 @@ If `list` is 100 elements, suddenly, the GC has to collect 100 useless objects. 
 //bonus points for initializing the StringBuilder with an appropriate size.
 StringBuilder container = new StringBuilder(); 
     for (String item : list){
-    container.append(item); // much better!
+        container.append(item); // much better!
 }
 return container.toString();
 ```
@@ -62,15 +62,15 @@ for(int i = 0; i<9999; i++){
 }
 ```
 
-Each of the 9,999 times you do the `set.contains(...)`, the JVM has to iterate over _the entire String_ in order to hash it. When your String is "hello world", that's not a problem. When your String is a 50KB JSON payload, it gets a bit more costly. 
+Each of the 9,999 times you do the `set.contains(...)`, the JVM has to iterate over _the entire String_ in order to generate a `hashCode()` for it. When your String is "hello world", that's not a problem. When your String is a 50KB JSON payload, it gets a bit more costly. 
 
 Obviously, use a `HashSet<String>` when necessary - but always be aware of the code that you write and the impact it has on the system. 
 
 ###Autoboxing/Unboxing
 
-While hardly a requirement, consider using Android's hand-written SparseArray classes ([SparseArray](http://developer.android.com/reference/android/util/SparseArray.html), [SparseBooleanArray](http://developer.android.com/reference/android/util/SparseBooleanArray.html), [SparseIntArray](http://developer.android.com/reference/android/util/SparseIntArray.html), and [SparseLongArray](http://developer.android.com/reference/android/util/SparseLongArray.html)). These classes map a primitive int to Objects, booleans, ints, and longs, respectively.
+While hardly a requirement, consider using Android's hand-written SparseArray classes ([SparseArray](http://developer.android.com/reference/android/util/SparseArray.html), [SparseBooleanArray](http://developer.android.com/reference/android/util/SparseBooleanArray.html), [SparseIntArray](http://developer.android.com/reference/android/util/SparseIntArray.html), and [SparseLongArray](http://developer.android.com/reference/android/util/SparseLongArray.html)). These classes map a primitive `int` to `Object`s, `boolean`s, `int`s, and `long`s, respectively.
 
-These avoid the slightly costly problem of the JVM having to autobox/unbox primitives when inserting/obtaining them from Sets and Maps. The tradeoff is that these data structures are not random access - they use binary search, so access is O(log n) versus a HashMap's O(1).
+These avoid the costly problem of the JVM having to autobox/unbox primitives when inserting/obtaining them from Sets and Maps. The tradeoff is that these data structures are not random access - they use binary search, so access is O(log n) versus a HashMap's O(1).
 
 ###Images and Bitmaps
 
@@ -131,7 +131,7 @@ If you decide to ignore the previous section, at the very least **don't log any 
 This includes
 
 - passwords (obvious, but easy to forget)
-- authTokens ([MITM](http://en.wikipedia.org/wiki/Man-in-the-middle_attack) potential)
+- server-genereated authTokens ([MITM](http://en.wikipedia.org/wiki/Man-in-the-middle_attack) potential)
 - credit card info (don't laugh - a major travel app did this for a while)
 - user's address, phone number, SSN, favorite ice cream flavor, etc.
 
@@ -139,7 +139,7 @@ Yet another reason to only log in Debug mode.
 
 ### Fragments
 
-The following section may be filed under the heading "Everything you should already be doing with fragments, but probably aren't because you're lazy."
+The following section may be filed under the heading *"Everything you should already be doing with fragments, but probably aren't because you're lazy."*
 
 ####The private constructor
 
@@ -155,7 +155,7 @@ public class MyFragment extends Fragment{
 }
 ```
 
-This is a **bad idea** - Android needs `MyFragment` to have a plain vanilla constructor. That way, if the system needs to kill and restore your instance of `MyFragment`, it has a clear path to do so.   
+This is a **bad idea** - Android **needs** `MyFragment` to have a plain vanilla constructor. That way, if the system needs to kill and restore your instance of `MyFragment`, it has a clear path to instantiate a new copy.
 
 Instead, set information in a Bundle using a static method in the Fragment:
 ```java
@@ -184,7 +184,7 @@ public void onCreate(Bundle instance){
     //add fragment to FragmentManager, etc.
 }
 ```
-The Android runtime will remember the information that you sent in the Bundle. In the case where your fragment is destroyed and recreated (e.g., the phone is rotated from portrait to landscape), the system will be able to provide the necessary initialization params to your fragment. 
+The Android runtime will remember the information that you sent in the `Bundle`. In the case where your fragment is destroyed and recreated (e.g., the phone is rotated from portrait to landscape), the system will be able to provide the necessary initialization params to your fragment, since `Bundle`s are persisted across different instances of the same Fragment/Activity.
 
 Remember to access your Bundle in `Fragment.onCreate(...)` with `getArguments()`!
 
@@ -368,7 +368,7 @@ In August 2014, Square published a blog post that detailed the creation of custo
 
 #### Bridge Methods
 
-Be aware that the Android Runtime (ART or Dalvik) is occasionally affected by the code you write. 
+Be aware that the Android Runtime (AART or Dalvik) is occasionally affected by the code you write. 
 
 For example...
 
