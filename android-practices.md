@@ -68,7 +68,7 @@ Obviously, use a `HashSet<String>` when necessary, but always be aware of the co
 
 ###Autoboxing/Unboxing
 
-While hardly a requirement, consider using Android's hand-written SparseArray classes ([SparseArray](http://developer.android.com/reference/android/util/SparseArray.html), [SparseBooleanArray](http://developer.android.com/reference/android/util/SparseBooleanArray.html), [SparseIntArray](http://developer.android.com/reference/android/util/SparseIntArray.html), and [SparseLongArray](http://developer.android.com/reference/android/util/SparseLongArray.html)). These classes map a primitive `int` to `Object`'s, `boolean`'s, `int`'s, and `long`'s, respectively.
+While hardly a requirement, consider using Android's hand-written SparseArray classes ([SparseArray](http://developer.android.com/reference/android/util/SparseArray.html), [SparseBooleanArray](http://developer.android.com/reference/android/util/SparseBooleanArray.html), [SparseIntArray](http://developer.android.com/reference/android/util/SparseIntArray.html), and [SparseLongArray](http://developer.android.com/reference/android/util/SparseLongArray.html)). These classes map a primitive `int` to `Object`s, `boolean`s, `int`s, and `long`s, respectively.
 
 These avoid the costly problem of the JVM having to autobox/unbox primitives when inserting/obtaining them from Sets and Maps. The tradeoff is that these data structures are not random access - they use binary search, so access is O(log n) versus a HashMap's O(1).
 
@@ -184,7 +184,7 @@ public void onCreate(Bundle instance){
     //add fragment to FragmentManager, etc.
 }
 ```
-The Android runtime will remember the information that you sent in the `Bundle`. In the case where your fragment is destroyed and recreated (e.g., the phone is rotated from portrait to landscape), the system will be able to provide the necessary initialization params to your fragment, since `Bundle`'s are persisted across different instances of the same Fragment/Activity.
+The Android runtime will remember the information that you sent in the `Bundle`. In the case where your fragment is destroyed and recreated (e.g., the phone is rotated from portrait to landscape), the system will be able to provide the necessary initialization params to your fragment, since `Bundle`s are persisted across different instances of the same Fragment/Activity.
 
 Remember to access your Bundle in `Fragment.onCreate(...)` with `getArguments()`!
 
@@ -363,7 +363,7 @@ public View getView(int position, View convertView, ViewGroup parent) {
 (idea courtesy of [http://blog.xebia.com/2013/07/22/viewholder-considered-harmful](http://blog.xebia.com/2013/07/22/viewholder-considered-harmful))
 
 #####Option 3: The Whole Hog - Fragments and all
-In August 2014, Square published a blog post that detailed the creation of custom `ViewGroup`'s and Square's decision to [move away from Fragments entirely](http://corner.squareup.com/2014/10/advocating-against-android-fragments.html) . At this time, we don't consider this a best practice, but it's worth reading and understanding.
+In August 2014, Square published a blog post that detailed the creation of custom `ViewGroup`s and Square's decision to [move away from Fragments entirely](http://corner.squareup.com/2014/10/advocating-against-android-fragments.html) . At this time, we don't consider this a best practice, but it's worth reading and understanding.
 
 
 ###Miscellaneous Tidbits and Android Gotchas
