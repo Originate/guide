@@ -65,7 +65,7 @@ extra benefits:
 
 Every now and then, two engineers will come to a standstill. At this point it’s important to take a step back and realize that the real goal is not to be
 right, but to find the best solution. If one person believes the other person to be getting out of hand, it’s useful to ping them outside of the PR and ask
-“Did i offend you?”. More often than not, this will lead to both parties realizing that there is a miscommunication.
+“Did I offend you?”. More often than not, this will lead to both parties realizing that there is a miscommunication.
 
 If the argument is over something arbitrary, you can ask your tech lead for help. If the reviewer insists, sometimes it’s helpful to continue the conversation in person or over the phone. Text-based conversation loses much of the subtleties of communication, and as such sometimes you need
 to hear someone's voice to come to an agreement. In this case, you will often find out that while you thought the reviewer was being harsh, it was actually a
