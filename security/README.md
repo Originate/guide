@@ -26,7 +26,7 @@ HTTPS Guidelines
 
 **Cross Site Scripting (XSS)**
 
-XSS is a vulnerability in a web application that allows an attacker to inject client-side scripts (usually Javascript) into webpages that can be viewed by other users. At best, the website gets defaced. At worst, session cookies are stolen, accounts get hijacked, and the browser turns into a [zombie](http://www.pcworld.com/article/2045944/researcher-builds-botnetpowered-distributed-file-storage-system-using-javascript.html). It is extremely prevalent and, according to Symantec, accounted for 84% of all web vulnerabilities in the last six months of 2007.
+XSS is a vulnerability in a web application that allows an attacker to inject client-side scripts (usually Javascript) into webpages that can be viewed by other users. At best, the website gets defaced. At worst, session cookies are stolen, accounts get hijacked, and the browser turns into a [zombie](http://www.pcworld.com/article/2045944/researcher-builds-botnetpowered-distributed-file-storage-system-using-javascript.html). It is still a prevalent attack in 2015, and according to a report by [whitehatsec](http://info.whitehatsec.com/rs/whitehatsecurity/images/statsreport2014-20140410.pdf) as of 2014 it is a significant issue across all languages, especially Java with 57% of it's vulnerabilities being XSS.
 
 **Non-Persistent**
 
