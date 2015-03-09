@@ -52,7 +52,10 @@ Exploited: `http://mysite.com/login.php?username=<script>window.onload=function(
 
 Mitigation
 
-- Don't output un-encoded user input. Sanitize potentially dangerous user-given data by html encoding it before placing it in the DOM.
+- Always validate any user-facing parameters and assume every parameter could be potentially compromised
+- Sanitize all user inputs to prevent the execution of code in script tags
+- Regularly run web vulnerability scanners such as [Acunetix](http://www.acunetix.com/vulnerability-scanner/download/)
+
 
 **Persistent**
 
