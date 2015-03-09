@@ -30,13 +30,17 @@ XSS is a vulnerability in a web application that allows an attacker to inject cl
 
 **Non-Persistent**
 
-Non-persistent XSS occurs when the server echos back raw user input immediately after it's submitted. This usually happens on insecure search pages that contain the search query the user made. For example, if a user searched for ```<script>alert(0)</script>``` and the search page contains ```Found 0 results for _%userQuery%_``` where ```_%userQuery%_``` is the search query, then the script tags will be injected directly into the DOM and executed by the browser.
+Non-persistent XSS is the single most commonly performed XSS attack to date. 
 
-Possible Attack Vector
+Non-persistent XSS is carried out by getting a website to execute attacker-controlled code on the victim's browser. For this reason it is also known as "reflected XSS", because the site simply reflects the attacker-controlled code onto the user's browser. Non-persistent XSS is different than other forms of XSS in that non-persistent XSS does not store the payload anywhere. It is sent without the user knowing (usually through a doctored URL) and the payload is returnedin the HTML response. 
+
+
+Possible Attack Vectors
 
 - Attacker crafts a URL with the malicious search query (ie. ```http://search.com/?q=<script> /*malicious javascript*/ </script>```)
 - Attacker sends the URL to an administrator or posts it somewhere online
 - All the victim(s) has to do is click the link to have the malicious code executed
+
 
 Mitigation
 
