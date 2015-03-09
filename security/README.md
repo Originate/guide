@@ -38,10 +38,7 @@ Typically a hacker will test the site for vulnerabilities with a fuzzer, or by h
 
 Possible Attack Vectors
 
-Sites that can be vulnerable to non-persistent XSS include:
-- Sites with exposed search GET variables
-- Sites with exposed login GET variables
-- In general, any site with an exposed GET variable that will get rendered to the user's browser
+- Any site that is using endpoints with GET parameters that are inserted directly into the DOM is vulnerable to non-persistent XSS
 
 Example Attack
 
