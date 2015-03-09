@@ -37,9 +37,10 @@ Non-persistent XSS is carried out by getting a website to execute attacker-contr
 
 Possible Attack Vectors
 
-- Attacker crafts a URL with the malicious search query (ie. ```http://search.com/?q=<script> /*malicious javascript*/ </script>```)
-- Attacker sends the URL to an administrator or posts it somewhere online
-- All the victim(s) has to do is click the link to have the malicious code executed
+Sites that can be vulnerable to non-persistent XSS include:
+- Sites with exposed search GET variables
+- Sites with exposed login GET variables
+- In general, any site with an exposed GET variable that will get rendered to the user's browser
 
 
 Mitigation
