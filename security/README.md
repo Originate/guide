@@ -54,8 +54,8 @@ In the below example, we will override an enticing link on a site we have determ
 
 Mitigation
 
-- Always validate any user-facing parameters and assume every parameter could be potentially compromised
-- Sanitize all user inputs to prevent the execution of code in script tags
+- Always assume every parameter could be potentially compromised and validate accordingly
+- Make sure to HTML encode any output to the screen, this way any tags that are displayed will be safe
 - Regularly run web vulnerability scanners such as [Acunetix](http://www.acunetix.com/vulnerability-scanner/download/)
 
 
