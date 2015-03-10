@@ -28,10 +28,10 @@ HTTPS Guidelines
 
 XSS is a vulnerability in a web application that allows an attacker to inject client-side scripts (usually Javascript) into webpages that can be viewed by other users. At best, the website gets defaced. At worst, session cookies are stolen, accounts get hijacked, and the browser turns into a [zombie](http://www.pcworld.com/article/2045944/researcher-builds-botnetpowered-distributed-file-storage-system-using-javascript.html). It is still a prevalent attack in 2015, and according to a report by [whitehatsec](http://info.whitehatsec.com/rs/whitehatsecurity/images/statsreport2014-20140410.pdf) as of 2014 it is a significant issue across all languages. Some notable examples include: 
 
- - Java (Web Applications): 57% of vulnerabilities
- - Perl (CGI): 67% of vulnerabilities
- - PHP: 56% of vulnerabilities
- - ASP: 49% of vulnerabilities
+ - Java (Web Applications): 57% of Java web app vulnerabilities are XSS
+ - Perl (CGI): 67% of Perl web app vulnerabilities are XSS
+ - PHP: 56% of PHP web app vulnerabilities are XSS
+ - ASP: 49% of ASP web app vulnerabilities are XSS
 
 **Non-Persistent**
 
