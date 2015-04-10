@@ -34,7 +34,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 0. Use upper camel case for `ConstantName`, `ClassName`, `ObjectName`, `TypeParameter`.
 0. No `UPPERCASE_UNDERSCORE`, not even for constants or type parameters!
 0. No `get`/`set` prefixes for accessors and mutators.
-0. Always use empty parentheses when (and only when) declaring or calling methods with side-effects.
+0. Always use empty parentheses when, and only when, declaring or calling methods with side-effects.
 0. Unless a clear convention already exists (e.g, mathematical symbols), avoid symbolic method names (*"operators"*).
 0. Use type inference where possible. But put clarity first and favor explicitness when an inferred type may not be obvious.
 0. Public methods must always have explicit return types.
@@ -52,8 +52,29 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. Favor short, single-expression, single-line method bodies.
 0. No procedure syntax.
+        ```scala
+        def bad() { ??? }
+        def worse { ??? }
+
+        def good() = { ??? }
+        def better(): Unit = { ??? }
+        ```
+
 0. Postfix operator notation is unsafe and shall not be used. Consider it deprecated. Do not `import scala.language.postfix`.
+
+        ```scala
+        val bad = seq mkString
+
+        val good = seq.mkString
+        ```
+
 0. Always use infix notation for methods with symbolic names or higher-order functions (`map`, `foreach`, etc.).
+
+        ```scala
+        val bad = seq.map(_ * 2)
+
+        val good = seq map {_ * 2}
+        ```
 
 ### Additions and Deviations from the Official Style Guide
 
@@ -62,7 +83,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 0. One blank line between method, class, and object definitions.
 0. Avoid vertical alignment.
 0. Put imports at the top of the file, sorted alphabetically.
-0. Do not use `return`.
+0. Do not use `return`: http://tpolecat.github.io/2014/05/09/return.html
 0. The bigger the scope, the more descriptive the name. Only for very small, local scopes may single-letter mnemonics be used.
 0. The formatting rules for constructors also apply to method declarations.
 0. Use infix notation for single argument methods on monadic types (`contains`, `getOrElse`, etc.)
