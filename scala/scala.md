@@ -95,18 +95,45 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
 0. [_Implicits_](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Implicits)
 0. [_Collections_](http://twitter.github.io/effectivescala/#Collections) - Pay special attention to [performance](http://twitter.github.io/effectivescala/#Collections-Performance)
 0. [_Functional programming_](http://twitter.github.io/effectivescala/#Functional%20programming)
+0. [_Pattern matching_](http://twitter.github.io/effectivescala/#Functional%20programming-Pattern%20matching)
 
 ### Additional recommendations
 
-- [Error handling](http://tersesystems.com/2012/12/27/error-handling-in-scala/)
-- Using [Options](http://blog.originate.com/blog/2014/06/15/idiomatic-scala-your-options-do-not-match/)
-- use Seq, not List (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another... the most common exception is that Play form mappers require List, so you have to use it there
-- use _ for small simple functions, as in: Seq(1, 2, 3, 4, 5, 6) filter (_ % 2 == 0)
-- single space after method names, before brackets, as in: someSequence map { item => ... }
-- do not commit your comments/TODO's, but leave them in your working tree if you'd like
-- when passing function blocks, use { arg1 => ... } over (arg1 => { ... }) (avoid "inner block" syntax)
-- when passing function blocks, for single line, prefer parens: something map (_.name) and something map (a => a + a) ...for multiline, prefer brackets (shown above)
-- Avoid structural types. Structural types are implemented with reflection at runtime, and are inherently less performant than nominal types.
+0. [Error handling](http://tersesystems.com/2012/12/27/error-handling-in-scala/)
+0. Using [Options](http://blog.originate.com/blog/2014/06/15/idiomatic-scala-your-options-do-not-match/)
+0. Use `Seq`, not `List` (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another... The most common exception is that Play form mappers require `List`, so you have to use it there
+0. Use `_` for small simple functions, as in: `Seq(1, 2, 3, 4, 5, 6) filter (_ % 2 == 0)`
+0. When passing function blocks, avoid "inner block" syntax:
+    ```scala
+    (bad => {
+      ???
+    })
+
+    { good =>
+      ???
+    }
+    ```
+0. When passing single line function blocks, use parens. For multiline, prefer brackets:
+    ```scala
+    seq map (_ * 2)
+
+    seq map {
+    	_ * 2
+    }
+
+    seq map { a =>
+    	a * 2
+    }
+    ```
+0. Avoid structural types. Structural types are implemented with reflection at runtime, and are inherently less performant than nominal types.
+0. Secondary constructors: with default parameters, secondary constructors are a lot less frequently needed in Scala than in Java. But they can still be quite useful, use them when needed. Just avoid pathological cases:
+    ```scala
+    class Bad(a: Int, b: Int) {
+      def this(a: Int) = this(a, 0)
+    }
+
+    class Good(a: Int, b: Int = 0)
+    ```
 
 Static Analysis Tools & Configuration
 -------------------------------------
