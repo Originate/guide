@@ -18,17 +18,13 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. Use **two spaces** indentation.
 0. Omit unnecessary blocks to reduce excessive nesting:
+    ```scala
+    if (condition) {
+     bad()
+    }
 
-        ```scala
-        // Wrong
-        if (condition) {
-          magic()
-        }
-
-        // Better
-        if (condition) magic()
-        ```
-
+    if (condition) good()
+    ```
 0. Avoid wrapping lines. Split long lines into multiple expressions, assigning intermediate results to `val`s. When inevitable, indent wrapped lines once (two spaces).
 0. Use lower camel case for `valName`, `varName`, `methodName`, `functionObject`, `packageObject`, and `annotationName`.
 0. Use upper camel case for `ConstantName`, `ClassName`, `ObjectName`, `TypeParameter`.
@@ -41,40 +37,34 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 0. Opening curly braces (`{`) must be on the same line as the declaration.
 0. Constructors should be declared all on one line. If not possible, put each constructor argument on its own line, indented **four** spaces.
 0. Extensions follow the same rule above, but indent **two** spaces to provide visual separation between constructor arguments and extensions:
-
-        ```scala
-        class Platypus (
-            name: String,
-            age: Int)
-          extends Beaver
-          with Duck
-        ```
-
+    ```scala
+    class Platypus (
+        name: String,
+        age: Int)
+      extends Beaver
+      with Duck
+    ```
 0. Favor short, single-expression, single-line method bodies.
 0. No procedure syntax.
-        ```scala
-        def bad() { ??? }
-        def worse { ??? }
+    ```scala
+    def bad() { ??? }
+    def worse { ??? }
 
-        def good() = { ??? }
-        def better(): Unit = { ??? }
-        ```
-
+    def good() = { ??? }
+    def better(): Unit = { ??? }
+    ```
 0. Postfix operator notation is unsafe and shall not be used. Consider it deprecated. Do not `import scala.language.postfix`.
+    ```scala
+    val bad = seq mkString
 
-        ```scala
-        val bad = seq mkString
-
-        val good = seq.mkString
-        ```
-
+    val good = seq.mkString
+    ```
 0. Always use infix notation for methods with symbolic names or higher-order functions (`map`, `foreach`, etc.).
+    ```scala
+    val bad = seq.map(_ * 2)
 
-        ```scala
-        val bad = seq.map(_ * 2)
-
-        val good = seq map {_ * 2}
-        ```
+    val good = seq map (_ * 2)
+    ```
 
 ### Additions and Deviations from the Official Style Guide
 
