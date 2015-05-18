@@ -8,3 +8,4 @@ A starting point for Originate engineers. This guide includes best practices and
 ### Stack Guides
 
 * [Android](https://github.com/Originate/origin/blob/master/android-practices.md)
+* [Node.js](https://github.com/Originate/origin/blob/master/node-practices.md)
