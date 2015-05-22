@@ -130,8 +130,65 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
 0. [Error handling](http://tersesystems.com/2012/12/27/error-handling-in-scala/).
 0. Using [Options](http://blog.originate.com/blog/2014/06/15/idiomatic-scala-your-options-do-not-match/).
 0. Do not use `return`: http://tpolecat.github.io/2014/05/09/return.html
-0. Use `Seq`, not `List` (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another... The most common exception is that Play form mappers require `List`, so you have to use it there
-0. No "stringly" typed code. Use `Enumerations` or `sealed` types and `case object`s. In many cases, `Enumerations` and `sealed` types are interchangeable, but they do not fully overlap. `Enumerations`, for instance, do not check for exhaustive matching while `sealed` types do not, well, enumerate.
+0. Always use the most generic collection type possible, typically one of: `Iterable[T]`, `Seq[T]`, `Set[T]`, or `Map[T]`.
+0. Use `Seq[T]`, not `List[T]` (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another. The most common exception is that Play form mappers require `List[T]`, so you have to use it there. `Seq` is the interface, `List` the implementation, analoguous to `Map` and `HashMap` in Java.
+0. Do not overuse tuples, decompose them or better, use case classes:
+    ```scala
+    val paul = Some(("Paul", 42))
+
+    // Bad
+    paul map { p => s"Name: ${p._1}, Age: ${p._2}")
+
+    // Better
+    paul map { case (name, age) => s"Name: $name, Age: $age")
+
+    // Best
+    case class Person(name: String, age: Int)
+
+    val paul = Some(Person("Paul", 42))
+
+    paul map { p => s"Name: ${p.name}, Age: ${p.age}")
+    ```
+0. Do not overdo method chaining, use `val`s to name intermediate steps:
+    ```scala
+    val bad = a.filter(...).map(...).exists(...)
+
+    val good = a.filter(...)
+    val better = good.map(...)
+    val best = better.exists(...)
+    ```
+0. Avoid wildcard-importing entire packages: `import package._`
+0. Avoid matching on `case _`. Be specific and thorough, favor exhaustive matches. Do not let unforeseen conditions simply and silently fall through.
+0. Never use `null`, use `Option` instead. If dealing with legacy APIs, encapsulate it: `Option(OldJava.mayBeNull())`
+0. Avoid `Some.apply`, use `Option.apply` instead. `Option.apply` protects against `null`, while `Some.apply` is perfectly happy to return `Some(null)`, eventually raising your code an NPE:
+    ```scala
+    val bad = Some(null) // NPE waiting to happen
+
+    val good = Option(null) // returns None
+    ```
+By the principle of least astonishment, use `Option.apply` even if you "know" your reference can never be null. By being consistent, we avoid wondering whether a `Some.apply` in the code was intentional or something the developer overlooked.
+0. Instead of throwing exceptions, return a more suitable type: `Option`, `Either`, or `Try`. Exceptions are not functional. Functions that throw exceptions are not total functions, they do not return a value for all possible inputs.
+0. Do not `try` to `catch` exceptions, `Try` to catch exceptions!
+0. Make ample and liberal use of `require` in constructors, do not allow invalid state to ever be created:
+    ```scala
+    case class Person(name: String, age: Int) {
+      require(name.trim.nonEmpty)
+      require(age >= 0)
+      require(age <= 130)
+    }
+    ```
+Please note that even though `require` throws `IllegalArgumentException`, this is not a violation of the previous two principles. Constructors are not methods, we cannot have constructors returning `Try[Person]`.
+0. Use the `mutable` namespace explicitly. Do not import `scala.collection.mutable._`!
+    ```scala
+    // Bad
+    import scala.collection.mutable.Set
+    val set = Set()
+
+    // Good
+    import scala.collection.mutable
+    val set = mutable.Set()
+    ```
+0. No "stringly" typed code. Use `Enumeration` or `sealed` types and `case object`s. In many cases, `Enumeration` and `sealed` types are interchangeable, but they do not fully overlap. `Enumeration`, for instance, does not check for exhaustive matching while `sealed` types do not, well, enumerate.
 0. Whenever possible, simplify pattern matching expressions by ommiting the `match` keyword and using partial functions:
     ```scala
     bad map {
@@ -146,6 +203,19 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
       case _ => "not one"
     }
     ```
+0. Do not model any arbitrary two possible states as booleans:
+    ```scala
+    // Bad
+    case class Person(male: Boolean)
+    case class Car(isAutomatic: Boolean, isEletric: Boolean, isFourDoor: Boolean)
+
+    // Good
+    sealed trait Gender
+    case object Male extends Gender
+    case object Female extends Gender
+
+    case class Person(gender: Gender)
+    ```
 0. Do not define abstract `val`s in traits and abstract classes. Abstract `val`s are a source of headaches and unexpected behavior in Scala:
     ```scala
     trait Bad {
@@ -153,11 +223,12 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
       val worse = bad + bad
     }
 
-    object Bad extends Bad {
+    object ImBad extends Bad {
       val bad = 1
     }
 
-    assert(Bad.worse == 2)
+    assert(ImBad.worse == 2)
+    assert(ImBad.worse == 0)
     ```
 
     Always prefer abstract `def`: they are more general, abstract, and safer:
@@ -167,11 +238,11 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
       val better = good + good
     }
 
-    object Good extends Good {
+    object ImGood extends Good {
       def good = 1
     }
 
-    assert(Good.better == 2)
+    assert(ImGood.better == 2)
     ```
 0. Avoid `lazy val`. `lazy val` is *not* free, or even cheap. Use it only if you absolutely need laziness semantics for correctness, not for "optimization". The init of a `lazy val` is super-expensive due to monitor acquisition cost, while every access is expensive due to `volatile`. Worse, `lazy val` [may deadlock](http://axel22.github.io/2013/06/10/on-lazy-vals.html).
 
@@ -184,6 +255,12 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
 
     class Good(a: Int, b: Int = 0)
     ```
+0. If you need to wrap a value that can be imediately computed into a `Future`, use `Future.successful`, which returns an already completed `Future`. Calling `Future.apply` incurs all the overhead of starting an asynchronous computation, no matter if the computation is a simple, immediate result:
+    ```scala
+    if (bad) Future(0)
+
+    if (good) Future.successful(str.trim)
+    ```
 0. Avoid structural types. Structural types are implemented with reflection at runtime, and are inherently less performant than nominal types.
 
 Static Analysis Tools & Configuration
@@ -194,6 +271,26 @@ Tips & Tricks
 
 Additional Remarks
 ------------------
+
+0. Program in Scala. You are not writing Java, nor Haskell, nor Python, nor...
+0. Leverage type safety. Let the compiler and the type system do the grunt work for you.
+0. Favor immutability, avoid mutability whenever possible. Mutability encapsulated in small scopes internal to functions is acceptable.
+0. Obey the principle of least astonishment.
+0. Always favor readability.
+0. Brevity enhances clarity.
+0. Favor generic code but not at the expensive of clarity.
+0. Be always aware of the trade offs you make.
+0. Premature optimization yada yada is not an excuse to do stupid things on purpose!
+0. Take advantage of simple language features that afford great power but avoid the esoteric ones, especially in the type system.
+0. Functions should communicate purpose and intention.
+
+    Kent Beck tells the history of a piece of code, a single line method in a word processor, that astonished him the first time he saw it, something like `def highlight(x: X) = underline(x)`. Why write a straightforward alias for the `underline` function, he asked himself? Then he realized the power of this simple abstraction.
+
+    It just so happened that highlights, at that particular point in time, were implemented with underlinings, but that does not mean that highlights and underlines are the same thing, serve the same purpose. Highlights are semantic, underlines are presentational.
+
+    It could be that, in the future, it were decided a highlight should have, say, a yellow background. That would be a trivial change using the method above, taking only but a few seconds. Had they instead used `underline(x)` interchangeably everywhere across the code, one could spend hours looking at each usage site, trying to infer whether the intention of that particular `underline` call was to underline or to highlight.
+
+    That is one of the reasons why simple methods like `def isEmpty = this.length == 0` are extremely valuable. No matter how short the equivalent code they capture may be, abstractions that better express intent and purpose are invaluable.
 
 Reference
 ---------
@@ -219,9 +316,9 @@ Reference
 [Scalastyle]: http://www.scalastyle.org/
 [WartRemover]: http://github.com/typelevel/wartremover
 [HairyFotr Linter]: http://github.com/HairyFotr/linter
-[abide]: https://github.com/scala/scala-abide
 [Scapegoat]: http://github.com/sksamuel/scalac-scapegoat-plugin
 [Snif]: http://github.com/arosien/sniff
 [Linter]: http://github.com/jorgeortiz85/linter
+[abide]: https://github.com/scala/scala-abide
 [cpd4sbt]: https://github.com/sbt/cpd4sbt
 [obey]: https://github.com/aghosn/Obey
