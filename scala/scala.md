@@ -20,7 +20,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 0. Omit unnecessary blocks to reduce excessive nesting:
     ```scala
     if (condition) {
-     bad()
+      bad()
     }
 
     if (condition) good()
@@ -131,7 +131,51 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
 0. Using [Options](http://blog.originate.com/blog/2014/06/15/idiomatic-scala-your-options-do-not-match/).
 0. Do not use `return`: http://tpolecat.github.io/2014/05/09/return.html
 0. Use `Seq`, not `List` (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another... The most common exception is that Play form mappers require `List`, so you have to use it there
-0. Avoid structural types. Structural types are implemented with reflection at runtime, and are inherently less performant than nominal types.
+0. No "stringly" typed code. Use `Enumerations` or `sealed` types and `case object`s. In many cases, `Enumerations` and `sealed` types are interchangeable, but they do not fully overlap. `Enumerations`, for instance, do not check for exhaustive matching while `sealed` types do not, well, enumerate.
+0. Whenever possible, simplify pattern matching expressions by ommiting the `match` keyword and using partial functions:
+    ```scala
+    bad map {
+      _ match {
+        case 1 => "one"
+        case _ => "not one"
+      }
+    }
+
+    good map {
+      case 1 => "one"
+      case _ => "not one"
+    }
+    ```
+0. Do not define abstract `val`s in traits and abstract classes. Abstract `val`s are a source of headaches and unexpected behavior in Scala:
+    ```scala
+    trait Bad {
+      val bad: Int
+      val worse = bad + bad
+    }
+
+    object Bad extends Bad {
+      val bad = 1
+    }
+
+    assert(Bad.worse == 2)
+    ```
+
+    Always prefer abstract `def`: they are more general, abstract, and safer:
+    ```scala
+    trait Good {
+      def good: Int
+      val better = good + good
+    }
+
+    object Good extends Good {
+      def good = 1
+    }
+
+    assert(Good.better == 2)
+    ```
+0. Avoid `lazy val`. `lazy val` is *not* free, or even cheap. Use it only if you absolutely need laziness semantics for correctness, not for "optimization". The init of a `lazy val` is super-expensive due to monitor acquisition cost, while every access is expensive due to `volatile`. Worse, `lazy val` [may deadlock](http://axel22.github.io/2013/06/10/on-lazy-vals.html).
+
+    > `lazy val`s are compiled into a double-checked locking instance with a dedicated `volatile` guard. Notably, this compilation template yields a source of significant performance woes: we need to pass through the `volatile` read on the guard boolean for every read of the `lazy val`. This creates write barriers, cache invalidation and general mayhem with a lot of the optimizations that HotSpot tries to perform. All for a value that may or may not even care about asynchronous access, and even more importantly, is guaranteed to be true only once and is false indefinitely thereafter (baring hilarious tricks with reflection). Contrary to what is commonly believed, this guard isn't simply optimized away by HotSpot (evidence for this comes from benchmarks on warm code and assembly dumps).
 0. Secondary constructors: with default parameters, secondary constructors are a lot less frequently needed in Scala than in Java. But they can still be quite useful, use them when needed. Just avoid pathological cases:
     ```scala
     class Bad(a: Int, b: Int) {
@@ -140,6 +184,7 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
 
     class Good(a: Int, b: Int = 0)
     ```
+0. Avoid structural types. Structural types are implemented with reflection at runtime, and are inherently less performant than nominal types.
 
 Static Analysis Tools & Configuration
 -------------------------------------
