@@ -166,27 +166,63 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
 
     val good = Option(null) // returns None
     ```
-By the principle of least astonishment, use `Option.apply` even if you "know" your reference can never be null. By being consistent, we avoid wondering whether a `Some.apply` in the code was intentional or something the developer overlooked.
-0. Instead of throwing exceptions, return a more suitable type: `Option`, `Either`, or `Try`. Exceptions are not functional. Functions that throw exceptions are not total functions, they do not return a value for all possible inputs.
-0. Do not `try` to `catch` exceptions, `Try` to catch exceptions!
-0. Make ample and liberal use of `require` in constructors, do not allow invalid state to ever be created:
+By the principle of least astonishment, use `Option.apply` even if you "know" your reference can never be null. By being consistent, we avoid wondering whether a `Some.apply` in the code was intentional or something the developer overlooked:
     ```scala
-    case class Person(name: String, age: Int) {
-      require(name.trim.nonEmpty)
-      require(age >= 0)
-      require(age <= 130)
+    val bad = Some(1)
+
+    val good = Option(1)
+    ```
+0. Avoid [`JavaConversions`](http://www.scala-lang.org/api/current/scala/collection/JavaConversions$.html), use [`JavaConverters`](http://www.scala-lang.org/api/current/scala/collection/JavaConverters$.html) and its multiple `asScala` and `asJava` methods. You can even transparently use Java collections as if they were Scala collections (usually, for performance reasons):
+    ```scala
+    import scala.collection.JavaConversions.mapAsScalaMap
+    import scala.collection.mutable
+
+    val map: mutable.Map[String, String] = new java.util.HashMap[String, String]
+    map += "foo" -> "bar"
+    assert(map("foo") == "bar")
+    ```
+0. Instead of throwing exceptions, return a more suitable type: `Option`, `Either`, or `Try`. Exceptions are not functional. Functions that throw exceptions are not total functions, they do not return a value for all possible inputs.
+0. Do not `try` to `catch` exceptions, `Try` to catch exceptions! `Try` does for exceptions what `Option` does for `null`.
+0. No matter what, never use a "catch-all" exception handler. Some features in Scala are implemented relying on exceptions. Use `NonFatal` instead:
+    ```scala
+    import scala.util.control.NonFatal
+
+    try {
+      1 / 0
+    } catch {
+      case e: Exception => // Bad
+      case _: Throwable => // Worse
+      case _ =>            // Worst! Compiler will warn and "recommend" the line above.
+      case NonFatal(e) =>  // The only acceptable way to catch all exceptions.
     }
     ```
-Please note that even though `require` throws `IllegalArgumentException`, this is not a violation of the previous two principles. Constructors are not methods, we cannot have constructors returning `Try[Person]`.
-0. Use the `mutable` namespace explicitly. Do not import `scala.collection.mutable._`!
-    ```scala
-    // Bad
-    import scala.collection.mutable.Set
-    val set = Set()
+0. Make judicious use of the various assertion types offered by Scala. See http://www.scala-lang.org/api/current/index.html#scala.Predef$ for the complete reference.
+    0. Assertions (`assert(1 > 0)`) are used to document and check design-by-contract invariants in code. They can be disabled at runtime with the `-Xdisable-assertions` command line option.
+    0. `require` is used to check pre-conditions, blaming the caller of a method for violating them. Unlike other assertions, `require` throws `IllegalArgumentException` instead of `AssertionError` and can never be disabled at runtime.
 
-    // Good
+        Make ample and liberal use of `require`, specially in constructors. Do not allow invalid state to ever be created:
+        ```scala
+        case class Person(name: String, age: Int) {
+          require(name.trim.nonEmpty)
+          require(age >= 0)
+          require(age <= 130)
+        }
+        ```
+
+        Please note that even though `require` throws an exception, this is not a violation of the previous recommendations. Constructors are not methods, they cannot return `Try[Person]`.
+    0. `ensuring` is used on a method's return value to check post-conditions:
+        ```scala
+        def square(a: Int) = {a * a} ensuring(_ > 0)
+        ```
+0. Do not import `scala.collection.mutable._` or even a single mutable collection directly. Instead, import the `mutable` package and use it explicitly as a namespace prefix to denote mutability:
+    ```scala
+    // Bad, too subtle and risky for the inattentive reader.
+    import scala.collection.mutable.Set
+    val set = Set(1, 2, 3)
+
+    // Better
     import scala.collection.mutable
-    val set = mutable.Set()
+    val set = mutable.Set(1, 2, 3)
     ```
 0. No "stringly" typed code. Use `Enumeration` or `sealed` types and `case object`s. In many cases, `Enumeration` and `sealed` types are interchangeable, but they do not fully overlap. `Enumeration`, for instance, does not check for exhaustive matching while `sealed` types do not, well, enumerate.
 0. Whenever possible, simplify pattern matching expressions by ommiting the `match` keyword and using partial functions:
@@ -261,6 +297,26 @@ Please note that even though `require` throws `IllegalArgumentException`, this i
 
     if (good) Future.successful(str.trim)
     ```
+0. When combining `Future`s in for-comprehensions, do not use the following idiom:
+    ```scala
+    for {
+      a <- futureA
+      b <- futureB
+      c <- futureC
+    } yield a + b + c
+    ```
+Unless `futureB` depends on `a` and `futureC` depends on `b`, that will unecessarily chain the `Future`s, only starting one after the previous one has finished, which most likely defeats its purpose. To properly combine the results of `Future`s started in parallel, using the following idiom:
+    ```scala
+    val fa = futureA
+    val fb = futureB
+    val fc = futureC
+
+    for {
+      a <- fa
+      b <- fb
+      c <- fc
+    } yield a + b + c
+    ```
 0. Avoid structural types. Structural types are implemented with reflection at runtime, and are inherently less performant than nominal types.
 
 Static Analysis Tools & Configuration
@@ -269,11 +325,15 @@ Static Analysis Tools & Configuration
 Tips & Tricks
 -------------
 
+0. Make plentiful use of value classes to enforce stronger typing. Combine them with implicit classes to define extension methods.
+0. Leverage parallel collections, use `.par` judiciously.
+0. Use the `@tailrec` annotation to ensure the compiler can recognize a recursive method is tail-recursive.
+
 Additional Remarks
 ------------------
 
 0. Program in Scala. You are not writing Java, nor Haskell, nor Python, nor...
-0. Leverage type safety. Let the compiler and the type system do the grunt work for you.
+0. Leverage type safety. Let the compiler and the type system do the grunt work for you. Type early, type often.
 0. Favor immutability, avoid mutability whenever possible. Mutability encapsulated in small scopes internal to functions is acceptable.
 0. Obey the principle of least astonishment.
 0. Always favor readability.
@@ -291,6 +351,11 @@ Additional Remarks
     It could be that, in the future, it were decided a highlight should have, say, a yellow background. That would be a trivial change using the method above, taking only but a few seconds. Had they instead used `underline(x)` interchangeably everywhere across the code, one could spend hours looking at each usage site, trying to infer whether the intention of that particular `underline` call was to underline or to highlight.
 
     That is one of the reasons why simple methods like `def isEmpty = this.length == 0` are extremely valuable. No matter how short the equivalent code they capture may be, abstractions that better express intent and purpose are invaluable.
+0. A word about _thin_ models. In object-oriented design, a object is an implementation of an abstract data type (ADT)[TODO: link to wikipedia]. Objects are not Pascal records or C structs!
+
+    "Domain Model: An object model of the domain that incorporates both **behavior and data**. [...] there is hardly any behavior on [thin] objects, making them little more than bags of getters and setters. The fundamental horror of this anti-pattern is that it's so contrary to the basic idea of object-oriented design; which is to combine data and process together. The anemic domain model is really just a procedural style design."
+
+    [Martin Fowler](http://www.martinfowler.com/bliki/AnemicDomainModel.html)
 
 Reference
 ---------
