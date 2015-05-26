@@ -359,7 +359,7 @@ Additional Remarks
     It could be that, in the future, it were decided a highlight should have, say, a yellow background. That would be a trivial change using the method above, taking only but a few seconds. Had they instead used `underline(x)` interchangeably everywhere across the code, one could spend hours looking at each usage site, trying to infer whether the intention of that particular `underline` call was to underline or to highlight.
 
     That is one of the reasons why simple methods like `def isEmpty = this.length == 0` are extremely valuable. No matter how short the equivalent code they capture may be, abstractions that better express intent and purpose are invaluable.
-0. A word about _thin_ models. In object-oriented design, a object is an implementation of an abstract data type (ADT)[http://en.wikipedia.org/wiki/Abstract_data_type]. Objects are not Pascal records or C structs glorified with getters and setters, and classes are not just namespaces for methods!
+0. A word about _thin_ models. In object-oriented design, a object is an implementation of an abstract data type [ADT](http://en.wikipedia.org/wiki/Abstract_data_type). Objects are not Pascal records or C structs glorified with getters and setters, and classes are not just namespaces for methods!
 
     "Domain Model: An object model of the domain that incorporates both **behavior and data**. [...] there is hardly any behavior on [thin] objects, making them little more than bags of getters and setters. The fundamental horror of this anti-pattern is that it's so contrary to the basic idea of object-oriented design; which is to combine data and process together. The anemic domain model is really just a procedural style design."
 
