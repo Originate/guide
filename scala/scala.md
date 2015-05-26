@@ -77,6 +77,8 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 0. Text file format: UTF-8, no BOM, Unix line endings (LF, '\n'), newline at EOF.
 0. 100 characters maximum line length.
 0. One blank line between method, class, and object definitions.
+0. No double blank lines, anywhere.
+0. No trailing whitespace at the end of lines, they cause problems when diffing between files or between versions.
 0. Avoid vertical alignment, they make commit diffs longer.
 0. Put imports at the top of the file, sorted alphabetically.
 0. The bigger the scope, the more descriptive the name. Only for very small, local scopes may single-letter mnemonics be used.
@@ -131,7 +133,7 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
 0. Using [Options](http://blog.originate.com/blog/2014/06/15/idiomatic-scala-your-options-do-not-match/).
 0. Do not use `return`: http://tpolecat.github.io/2014/05/09/return.html
 0. Always use the most generic collection type possible, typically one of: `Iterable[T]`, `Seq[T]`, `Set[T]`, or `Map[T]`.
-0. Use `Seq[T]`, not `List[T]` (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another. The most common exception is that Play form mappers require `List[T]`, so you have to use it there. `Seq` is the interface, `List` the implementation, analoguous to `Map` and `HashMap` in Java.
+0. Use `Seq[T]`, not `List[T]` (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another. The most common exception is that Play form mappers require `List[T]`, so you have to use it there. `Seq` is the interface, `List` the implementation, analogous to `Map` and `HashMap` in Java.
 0. Do not overuse tuples, decompose them or better, use case classes:
     ```scala
     val paul = Some(("Paul", 42))
@@ -214,6 +216,10 @@ By the principle of least astonishment, use `Option.apply` even if you "know" yo
         ```scala
         def square(a: Int) = {a * a} ensuring(_ > 0)
         ```
+0. Know well and make good use of the standard Scala collections library classes and methods:
+    0. Never test if `c.length == 0` (may be O(n)), use `c.isEmpty` instead.
+    0. Instead of `c.find(_ > 0).isDefined`, use `c.exists(_ > 0)`.
+    0. Instead of `c.exists(_ == 0)`, use `c.contains(0)`.
 0. Do not import `scala.collection.mutable._` or even a single mutable collection directly. Instead, import the `mutable` package and use it explicitly as a namespace prefix to denote mutability:
     ```scala
     // Bad, too subtle and risky for the inattentive reader.
@@ -225,7 +231,7 @@ By the principle of least astonishment, use `Option.apply` even if you "know" yo
     val set = mutable.Set(1, 2, 3)
     ```
 0. No "stringly" typed code. Use `Enumeration` or `sealed` types and `case object`s. In many cases, `Enumeration` and `sealed` types are interchangeable, but they do not fully overlap. `Enumeration`, for instance, does not check for exhaustive matching while `sealed` types do not, well, enumerate.
-0. Whenever possible, simplify pattern matching expressions by ommiting the `match` keyword and using partial functions:
+0. Whenever possible, simplify pattern matching expressions by omitting the `match` keyword and using partial functions:
     ```scala
     bad map {
       _ match {
@@ -291,7 +297,7 @@ By the principle of least astonishment, use `Option.apply` even if you "know" yo
 
     class Good(a: Int, b: Int = 0)
     ```
-0. If you need to wrap a value that can be imediately computed into a `Future`, use `Future.successful`, which returns an already completed `Future`. Calling `Future.apply` incurs all the overhead of starting an asynchronous computation, no matter if the computation is a simple, immediate result:
+0. If you need to wrap a value that can be immediately computed into a `Future`, use `Future.successful`, which returns an already completed `Future`. Calling `Future.apply` incurs all the overhead of starting an asynchronous computation, no matter if the computation is a simple, immediate result:
     ```scala
     if (bad) Future(0)
 
@@ -305,7 +311,7 @@ By the principle of least astonishment, use `Option.apply` even if you "know" yo
       c <- futureC
     } yield a + b + c
     ```
-Unless `futureB` depends on `a` and `futureC` depends on `b`, that will unecessarily chain the `Future`s, only starting one after the previous one has finished, which most likely defeats its purpose. To properly combine the results of `Future`s started in parallel, using the following idiom:
+Unless `futureB` depends on `a` and `futureC` depends on `b`, that will unnecessarily chain the `Future`s, only starting one after the previous one has finished, which most likely defeats its purpose. To properly combine the results of `Future`s started in parallel, using the following idiom:
     ```scala
     val fa = futureA
     val fb = futureB
@@ -321,6 +327,8 @@ Unless `futureB` depends on `a` and `futureC` depends on `b`, that will unecessa
 
 Static Analysis Tools & Configuration
 -------------------------------------
+
+See skeleton project files.
 
 Tips & Tricks
 -------------
@@ -351,11 +359,12 @@ Additional Remarks
     It could be that, in the future, it were decided a highlight should have, say, a yellow background. That would be a trivial change using the method above, taking only but a few seconds. Had they instead used `underline(x)` interchangeably everywhere across the code, one could spend hours looking at each usage site, trying to infer whether the intention of that particular `underline` call was to underline or to highlight.
 
     That is one of the reasons why simple methods like `def isEmpty = this.length == 0` are extremely valuable. No matter how short the equivalent code they capture may be, abstractions that better express intent and purpose are invaluable.
-0. A word about _thin_ models. In object-oriented design, a object is an implementation of an abstract data type (ADT)[TODO: link to wikipedia]. Objects are not Pascal records or C structs!
+0. A word about _thin_ models. In object-oriented design, a object is an implementation of an abstract data type (ADT)[http://en.wikipedia.org/wiki/Abstract_data_type]. Objects are not Pascal records or C structs glorified with getters and setters, and classes are not just namespaces for methods!
 
     "Domain Model: An object model of the domain that incorporates both **behavior and data**. [...] there is hardly any behavior on [thin] objects, making them little more than bags of getters and setters. The fundamental horror of this anti-pattern is that it's so contrary to the basic idea of object-oriented design; which is to combine data and process together. The anemic domain model is really just a procedural style design."
 
     [Martin Fowler](http://www.martinfowler.com/bliki/AnemicDomainModel.html)
+0. Always remember Tip 4: "Don't Live with Broken Windows: Fix each as soon as it is discovered." - The Pragmatic Programmer, Andrew Hunt and David Thomas.
 
 Reference
 ---------
