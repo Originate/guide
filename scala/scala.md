@@ -43,7 +43,6 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 0. Opening curly braces (`{`) must be on the same line as the declaration.
 0. Constructors should be declared all on one line. If not possible, put each constructor argument on its own line, indented **four** spaces.
 0. Extensions follow the same rule above, but indent **two** spaces to provide visual separation between constructor arguments and extensions:
-
     ```scala
     class Platypus (
         name: String,
@@ -51,6 +50,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
       extends Beaver
       with Duck
     ```
+
 0. Favor short, single-expression, single-line method bodies.
 0. No procedure syntax.
     ```scala
