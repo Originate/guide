@@ -8,6 +8,14 @@ organizationName := " Originate, Inc."
 
 organizationHomepage := Some(url("http://originate.com"))
 
+// homepage := Some(url("http://"))
+
+// startYear := Some(2015)
+
+// description := ""
+
+// licenses += "GPLv2" -> url("http://www.gnu.org/licenses/gpl-2.0.html")
+
 scalaVersion := "2.11.6"
 
 scalacOptions ++= Seq(
@@ -31,6 +39,8 @@ scalacOptions ++= Seq(
   , "-Xfuture"
   // Enable or disable specific warnings (see list below)
   , "-Xlint:_"
+  // Emit inlining warnings
+  , "-Yinline-warnings"
   // Do not adapt an argument list to match the receiver
   , "-Yno-adapted-args"
   // Compile without importing scala.*, java.lang.*, or Predef
@@ -86,7 +96,7 @@ libraryDependencies ++= Seq(
     "commons-codec"                     % "commons-codec"                    % "1.10"
   , "commons-io"                        % "commons-io"                       % "2.4"
   , "commons-validator"                 % "commons-validator"                % "1.4.1"
-  , "joda-time"                         % "joda-time"                        % "2.7"
+  , "joda-time"                         % "joda-time"                        % "2.8"
   , "mysql"                             % "mysql-connector-java"             % "5.1.35"
   , "ch.qos.logback"                    % "logback-classic"                  % "1.1.3"
   , "com.github.t3hnar"                %% "scala-bcrypt"                     % "2.4"
@@ -116,6 +126,8 @@ updateOptions := updateOptions.value.withCachedResolution(true)
 
 // Create a default Scala style task to run with tests
 scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
+
+scalastyleFailOnError := true
 
 lazy val testScalastyle = taskKey[Unit]("testScalastyle")
 

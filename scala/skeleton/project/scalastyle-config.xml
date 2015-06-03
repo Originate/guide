@@ -16,9 +16,9 @@
   <check class="org.scalastyle.file.HeaderMatchesChecker" enabled="false" level="error">
     <parameters>
       <parameter name="regex">true</parameter>
-      <parameter name="header">/*
- * Copyright (?:20\d{2}-)?20\d{2} Originate
- */</parameter>
+      <parameter name="header">/\*
+ \* Copyright (?:20\d{2}-)?20\d{2} Originate
+ \*/</parameter>
     </parameters>
   </check>
   <check class="org.scalastyle.file.IndentationChecker" enabled="true" level="error">
@@ -39,7 +39,7 @@
     </parameters>
   </check>
   <check class="org.scalastyle.file.WhitespaceEndOfLineChecker" enabled="true" level="error"/>
-  <check class="org.scalastyle.scalariform.BlockImportChecker" enabled="true" level="error"/>
+  <check class="org.scalastyle.scalariform.BlockImportChecker" enabled="false" level="error"/>
   <check class="org.scalastyle.scalariform.ClassNamesChecker" enabled="true" level="error">
     <parameters>
       <parameter name="regex">^[A-Z][A-Za-z]*$</parameter>
