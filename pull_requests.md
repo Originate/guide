@@ -67,7 +67,7 @@ In summary, the code review process serves the following purposes:
 * when you get the LGTM ("looks good to me"), merge your branch and delete it from both your local machine and from Github
 
 
-## Giving Effective Feedback
+## Guidelines for reviewers
 
 Since the goal of pull requests is to help people improve and learn from each other, there are some simple rules we can follow to make this more efficient.
 The most important thing is that you have to realize that nobody is perfect, neither reviewer nor reviewee. When a reviewer sees something that is questionable,
@@ -80,10 +80,10 @@ best in __Refactoring: Improving the Design of Existing Code__:
 
 > “Any fool can write code that a computer can understand. Good programmers write code that humans can understand.“
 
-* Make in you comments concrete improvement suggestions with a clear rationale for the suggested change.
-  Keep comments polite and free of possibly insulting statements.
+* be polite and constructive, make concrete suggestions.
   Remember that written language lacks emotional context and body language, and is easily misunderstood.
-* Keep discussions of suggested changes short, avoid more than 2-3 cycles of request-response; if the suggested change is controversial consider a direct discussion of the topic
+* do the code review within half a day of when you are tagged. The other person is waiting for your feedback!
+* Keep discussions short, if the conversation goes back and forth more than 2 times, its probably better to talk in person
 * the tech lead has the last word in disagreements
 * things to look out for in a code review
   * Is every piece of code in the right place, i.e. model code in a model, controller logic in a controller, app-specific helper code in a helper, generic helper code in a library?
