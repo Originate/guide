@@ -49,7 +49,7 @@ In summary, the code review process serves the following purposes:
   * how do others solve interesting problems?
 
 
-## Guidelines for people submitting a code review
+## Guidelines submitting a code review
 
 * Limit the total amount of code for a review to a single logical change.
   Submit several pull requests for independent changes.
@@ -58,16 +58,20 @@ In summary, the code review process serves the following purposes:
 * Review your code yourself before sending off the pull request, and clean it up as much as possible.
 * Add missing documentation/tests
 * Tag at least one person to do the review. Significant changes need approval from at least two reviewers before they can get merged.
+  You can tag more people, but be mindful of people's time and productivity.
+  If you tag them, they will have to spend time looking at your PR.
 * You must address all comments, by either
   * implementing them (and acknowledge that through a comment)
   * complex changes coming out of a comment can be implemented separately, but that must be tracked through a separate JIRA ticket (and you gave your word to do it)
   * convincing the reviewer why your version is better
-  * defering to a face-to-face conversation in case there is a lot of back and forth
-  * if you can't agree with your reviewer, the tech lead has the last word
+  * deferring to a face-to-face conversation in case there is a lot of back and forth
+  * if you and your reviewer both have valid opinions and can't agree which one to choose here,
+    even after musing about it over lunch or a beer, seek a third party to resolve this and avoid lengthy debates.
+    The tech lead is a good default person for this, and has the last word in code reviews anyways.
 * when you get the LGTM ("looks good to me"), merge your branch and delete it from both your local machine and from Github
 
 
-## Guidelines for reviewers
+## Guidelines for reviewing a code review
 
 Since the goal of pull requests is to help people improve and learn from each other, there are some simple rules we can follow to make this more efficient.
 The most important thing is that you have to realize that nobody is perfect, neither reviewer nor reviewee. When a reviewer sees something that is questionable,
@@ -82,7 +86,8 @@ best in __Refactoring: Improving the Design of Existing Code__:
 
 * be polite and constructive, make concrete suggestions.
   Remember that written language lacks emotional context and body language, and is easily misunderstood.
-* do the code review within half a day of when you are tagged. The other person is waiting for your feedback!
+* If you are tagged, you have to look at the code. You can still look at other pull requests if you want to
+* Do the code review within half a day of when you are tagged. The other person cannot ship their feature without your feedback!
 * Keep discussions short, if the conversation goes back and forth more than 2 times, its probably better to talk in person
 * the tech lead has the last word in disagreements
 * things to look out for in a code review
@@ -99,7 +104,7 @@ best in __Refactoring: Improving the Design of Existing Code__:
   * Is everything tested? Is each thing tested enough? Is it not over-tested?
   * Are there tests for private methods? This shouldn't happen, it is a code smell.
   * Every class should have a small comment describing what it represents/does. Public methods should have comments describing what they are for, or when to call them, if this isn’t obvious from the code. Comments shouldn’t describe what the method does (this is visible from looking at the code).
-  * Are there any obvious performance-stupidities, like making a database query for each loop iteration, rather than using a more optimized query that loads all data at once?
+  * Are there any obvious performance-problems, like making a database query for each loop iteration, rather than using a more optimized query that loads all data at once?
   * Spacing errors like no empty line between methods, or too many empty lines
   * There shouldn’t be any commented-out code.
   * There should be no debug statements like `console.log` or the likes.
@@ -127,15 +132,15 @@ miscommunication. These things happen.
 
 In order to avoid situations like this, always remember that we review the code, not the other person. Criticism should be taken professionally and not personally.
 
+
 ## Workflow
 
 * Submit PR
 * Tag relevant parties (using GitHub’s `@username`)
-  * Try to avoid tagging too many people in pull requests (in most cases 2 is the max).
   * If your pull request contains changes to both frontend and backend code, tag someone from each team and tell them what to review.
 * Describe changes
 * Add comments about parts you need help with/are unsure about/etc.
-* If reviewers are neglecting you, you can bump the PR or send them a message.
+* Its your responsibility to get your code reviewed and submitted. If reviewers neglect you, bump the PR or send them a (friendly) reminder.
 * People review
 * Discuss/make changes per review
 * If people sign off/you get LGTM, then you can merge and delete the branch
