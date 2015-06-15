@@ -12,6 +12,20 @@ In this guide, we leverage mainly two documents which contain the bulk of our re
 
 We will highlight any cases where we diverge from the original documents and include reasons for doing so.
 
+### Organization
+
+This guide is organized as follows:
+
+0. The first section, "[Code Formatting](#code-formatting)", covers only formatting style, i.e., guidelines that should not produce any different bytecode:
+    1. The section itself is a highlight of the main points of the official Scala Style Guide.Reading the official guide completely is still required.
+    1. The subsection "[Additions and Deviations from the Official Style Guide](#additions-and-deviations-from-the-official-style-guide)" contains the points were we differ from the official guide, plus some topics that are not covered by it. To ease onboarding and favor consistency, we tried to deviate as little as possible from the official guide.
+0. The second section, "[Best Practices](#best-practices)" cover rules that usually produce different bytecode:
+    1. "[Additional recommendations](#additional-recommendations)" are, for the most part, required to be followed, unless there is a very good reason not to.
+    1. "[Tips & Tricks](#tips--tricks)" are mostly "reminders", they do not apply everywhere. Keep them in mind and use your best judgement.
+    1. "[Additional Remarks](#additional-remarks)" are more general, broad, and subjective remarks. It is a little of boiler plate advice.
+
+A skeleton project accompanies this guide. It encodes and enforces as many best practices as currently available tools allow. Try to use as much of the companion configuration as you can on your Scala projects.
+
 Code Formatting
 ---------------
 
@@ -79,7 +93,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     def good(): Unit = { ??? }
     ```
 
-0. Postfix operator notation is unsafe and shall not be used. Consider it deprecated. Never `import scala.language.postfix`!
+0. Postfix operator notation is unsafe and shall not be used. Consider it deprecated. Never import `scala.language.postfix`!
 
     ```scala
     val bad = seq mkString
@@ -135,6 +149,17 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
     The script `fix-imports.go` in the skeleton project folder can be used to help you organize your imports.
 
+0. Avoid relative imports. Full imports are easier to search, and never ambiguous:
+
+    ```scala
+    package foo.bar
+
+    // bad
+    import baz.Qux
+
+    // good
+    import foo.bar.baz.Qux
+
 0. The bigger the scope, the more descriptive the name. Only for very small, local scopes may single-letter mnemonics be used.
 
 0. Use `_` for simple, single line functions:
@@ -157,7 +182,9 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     def delta(
         a: Int,
         b: Int,
-        c: Int): Int = b * b - 4 * a * c
+        c: Int): Int = {
+      b * b - 4 * a * c
+    }
     ```
 
 0. Use infix notation for single argument methods on monadic types (`contains`, `getOrElse`, etc.)
@@ -258,11 +285,13 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
 
 0. Avoid wildcard-importing entire packages: `import package._`
 
+0. Avoid implicit conversions (`implicit def`), use implicit classes instead. In other words, do not import `scala.language.implicitConversions`.
+
 0. Avoid matching on `case _`. Be specific and thorough, favor exhaustive matches. Do not let unforeseen conditions simply and silently fall through.
 
 0. Never use `null`, use `Option` instead. If dealing with legacy APIs, encapsulate it: `Option(OldJava.mayBeNull())`
 
-0. Avoid `Some#apply`, use `Option#apply` instead. `Option#apply` protects against `null`, while `Some#apply` is perfectly happy to return `Some(null)`, eventually raising your code an NPE. Also note that `Some#apply` is type-inferred as `Some[T]`, not `Option[T]`.
+0. Avoid `Some.apply`, use `Option.apply` instead. `Option.apply` protects against `null`, while `Some.apply` is perfectly happy to return `Some(null)`, eventually raising your code an NPE. Also note that `Some.apply` is type-inferred as `Some[T]`, not `Option[T]`.
 
     ```scala
     val bad = Some(System.getenv("a")) // NPE waiting to happen
@@ -270,7 +299,7 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
     val good = Option(System.getenv("a")) // Would return None
     ```
 
-    By the principle of least astonishment, use `Option#apply` even if you "know" your reference can never be null. By being consistent, we avoid wondering whether a `Some#apply` in the code was intentional or something the developer overlooked:
+    By the principle of least astonishment, use `Option.apply` even if you "know" your reference can never be null. By being consistent, we avoid wondering whether a `Some.apply` in the code was intentional or something the developer overlooked:
 
     ```scala
     val bad = Some(math.random())
@@ -495,12 +524,7 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
     } yield a + b + c
     ```
 
-0. Avoid structural types. Structural types are implemented with reflection at runtime, and are inherently less performant than nominal types.
-
-Static Analysis Tools & Configuration
--------------------------------------
-
-See skeleton project files.
+0. Avoid structural types, do not import `scala.language.reflectiveCalls`. Structural types are implemented with reflection at runtime, and are inherently less performant than nominal types.
 
 Tips & Tricks
 -------------
@@ -550,6 +574,10 @@ Additional Remarks
 
 0. Premature optimization yada yada is not an excuse to do stupid things on purpose!
 
+0. Do not leave unreachable ("dead") code behind.
+
+0. Do not comment out code, that is what version control is for.
+
 0. Take advantage of simple language features that afford great power but avoid the esoteric ones, especially in the type system.
 
 0. Learn and use the most advanced features of your favorite text editor. Make sure to configure it to perform as many formatting functions for you as possible, so that you do not have to think about it: remove whitespace at end of lines, add a newline at end of file, etc. If your editor does not support even those "basic" advanced features, find yourself a better one. :-)
@@ -571,6 +599,11 @@ Additional Remarks
     [Martin Fowler](http://www.martinfowler.com/bliki/AnemicDomainModel.html)
 
 0. Always remember Tip 4: "Do not Live with Broken Windows: Fix each as soon as it is discovered." - The Pragmatic Programmer, Andrew Hunt and David Thomas.
+
+Static Analysis Tools & Configuration
+-------------------------------------
+
+See skeleton project files.
 
 Reference
 ---------
