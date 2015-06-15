@@ -10,3 +10,4 @@ A starting point for Originate engineers. This guide includes best practices and
 
 * [Android](https://github.com/Originate/origin/blob/master/android-practices.md)
 * [Node](https://github.com/Originate/origin/blob/master/node-practices.md)
+* [Scala](https://github.com/Originate/guide/blob/master/scala/scala.md)
