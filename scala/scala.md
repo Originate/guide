@@ -159,6 +159,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
     // good
     import foo.bar.baz.Qux
+    ```
 
 0. The bigger the scope, the more descriptive the name. Only for very small, local scopes may single-letter mnemonics be used.
 
