@@ -224,6 +224,16 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. For documentation comments, use Javadoc left-hand margin style. Scaladoc convention is silly.
 
+    ```scala
+    /** Bad
+      * convention
+      */
+
+    /**
+     * Good
+     */
+    ```
+
 0. **Optimize for readability.** Readability trumps consistency (but not by much). Consistency trumps everything else.
 
 Best Practices
@@ -286,7 +296,18 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
 
 0. Avoid wildcard-importing entire packages: `import package._`
 
-0. Avoid implicit conversions (`implicit def`), use implicit classes instead. In other words, do not import `scala.language.implicitConversions`.
+0. Avoid implicit conversions, use implicit value classes (extension methods) instead. In other words, do not import `scala.language.implicitConversions`:
+
+    ```scala
+    class Bad(n: Int) {
+      def stars = "*" * n
+    }
+    implicit def bad(n: Int) = new Bad(n)
+
+    implicit class Good(val n: Int) extends AnyVal {
+      def stars = "*" * n
+    }
+    ```
 
 0. Avoid matching on `case _`. Be specific and thorough, favor exhaustive matches. Do not let unforeseen conditions simply and silently fall through.
 
@@ -444,7 +465,7 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
     def findFemales: Seq[People]
     ```
 
-0. Do not define abstract `val`s in traits and abstract classes. Abstract `val`s are a source of headaches and unexpected behavior in Scala:
+0. Do not define abstract `val`s in traits or classes. Abstract `val`s are a source of headaches and unexpected behavior in Scala:
 
     ```scala
     trait Bad {
@@ -460,7 +481,7 @@ It is definitely recommended to read the full Twitter's "[Effective Scala]" guid
     assert(ImBad.worse == 0)
     ```
 
-    Always prefer abstract `def`: they are more general, abstract, and safer:
+    Always prefer abstract `def`: they are more general and safer:
 
     ```scala
     trait Good {
