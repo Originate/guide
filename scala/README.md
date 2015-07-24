@@ -67,6 +67,8 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. Public methods must always have explicit return types.
 
+    While it is not required to annotate non-public members, remember that explicitly declaring the return type allows the compiler to verify correctness.
+
 0. Opening curly braces (`{`) must be on the same line as the declaration.
 
 0. Constructors should be declared all on one line. If not possible, put each constructor argument on its own line, indented **four** spaces.
@@ -280,7 +282,13 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
 0. Never use `return`: [http://tpolecat.github.io/2014/05/09/return.html](http://tpolecat.github.io/2014/05/09/return.html)
 
+0. Parentheses in Scala are not optional. Be aware of extraneous parentheses:
 
+    ```scala
+    val bad = Set.empty() // expands to Set.empty.apply(), equals to Boolean false
+
+    val evil = Seq(1,2,3).toSet() // same as above
+    ```
 
 0. Always use the most generic collection type possible, typically one of: `Iterable[T]`, `Seq[T]`, `Set[T]`, or `Map[T]`.
 
@@ -456,6 +464,13 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     case object Female extends Gender
     ```
 
+0. When creating new `Enumeration`s, always define a type alias (as above). Never use `MyEnum.Value` to refer to the type of enumeration values:
+
+    ```scala
+    def bad(a: Season.Value) = ???
+
+    import Season.Season
+    def good(a: Season) = ???
     ```
 
 0. If an API is not fully "typesafe" (for instance, all parameters are of type `Int` or `String`), always use named parameters to disambiguate:
@@ -567,6 +582,25 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     } yield a + b + c
     ```
 
+0. Avoid `isInstanceOf` or `asInstanceOf`. Safe casting is actually one of the best use cases for pattern matching. It is more flexible and allows you, for instance, to use different branches to carry out multiple conditional casts at the same time for various types, perform conversions, or fallback to a default value instead of throwing an exception:
+
+    ```scala
+    val bad = if (a.isInstanceOf[Int]) x else y
+
+    val good = a match {
+      case _: Int => x
+      case _ => y
+    }
+
+    val bad = a.asInstanceOf[Int]
+
+    val good = a match {
+      case i: Int => i
+      case d: Double => d.toInt
+      case _ => 0 // Or just throw new ClassCastException
+    }
+    ```
+
 0. Avoid structural types, do not import `scala.language.reflectiveCalls`. Structural types are implemented with reflection at runtime, and are inherently less performant than nominal types.
 
 Tips & Tricks
@@ -591,6 +625,55 @@ Tips & Tricks
 0. Leverage parallel collections, use `.par` judiciously.
 
 0. Use the `@tailrec` annotation to ensure the compiler can recognize a recursive method is tail-recursive.
+
+0. You can use the `@scala.beans.BeanProperty` and `@BooleanBeanProperty` annotations to automatically generate JavaBeans style getter and setter methods.
+
+0. Use this syntax to pass a sequence as parameter to a variable length argument list method:
+
+    ```scala
+    def foo(args: Int*) = ???
+
+    val seq = Seq(1, 2, 3)
+
+    foo(seq:_*)
+    ```
+
+0. There are some really neat tricks we can do with pattern matching:
+
+    ```scala
+    val tuple = ("foo", 1, false)
+    val (x, y, z) = tuple
+    assert((x, y, z) == (("foo", 1, false)))
+
+    case class Foo(x: String, y: Int)
+    val foo = Foo("foo", 1)
+    val Foo(a, b) = foo
+    assert((a, b) == (("foo", 1)))
+
+    val seq = Seq(1, 2, 3, 4, 5, 6)
+    val x :: xs = seq
+    assert((x, xs) == ((1, Seq(2, 3, 4, 5, 6))))
+
+    // Same as above
+    val Seq(y, ys@_*) = seq
+    assert((y, ys) == ((1, Seq(2, 3, 4, 5, 6))))
+
+    // Skipping elements
+    val _ :: a :: b :: _ :: zs = seq
+    assert((a, b, zs) == ((2, 3, Seq(5, 6))))
+
+    // Works with other collections, too
+    val vector = Vector(1, 2, 3, 4, 5, 6)
+    val Vector(_, a, b, _, ws@_*) = vector
+    assert((a, b, ws) == ((2, 3, Vector(5, 6))))
+
+    // Regular expressions
+    val regex = """(.)(.)(.)""".r
+    val regex(a, b, c) = "xyz" // Matches and extracts regex against "xyz"
+    assert((a, b, c) == (("x", "y", "z")))
+    ```
+
+0. Instead of running sbt tasks from your command shell (`$ sbt compile`, for instance), it is better to open an sbt prompt (just type `$ sbt`) and never leave it. Running all your sbt tasks (`clean`, `update`, `compile`, `test`, etc.) directly inside the sbt prompt is a lot faster since you only have to start sbt, load the JVM, and wait for it to warm up (if ever) once. If your `build.sbt` file changes, just run the `reload` task and you are good to go again.
 
 0. Whenever possible, prefer `private[this]` over `private` and `final val` over `val` as they enable the Scala compiler and the JVM to perform additional optimizations. (If `final val` surprised you, remember that it is not redundant, as in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
 
@@ -622,6 +705,20 @@ Additional Remarks
 0. Do not comment out code, that is what version control is for.
 
 0. Take advantage of simple language features that afford great power but avoid the esoteric ones, especially in the type system.
+
+0. Java `enum`s are very powerful and flexible. Enumeration types in Java can include methods and fields, and enum constants are able to specialize their behavior. For more information, refer to the awesome "Effective Java, 2nd Edition" by Joshua Bloch, in particular Chapter 6, "Enums and Annotations", Item 30: "Use enums instead of int constants".
+
+    Unfortunately, Scala enums are not at feature parity with their Java counterparts. They do not, by default, offer the same flexibility and power. They do not interoperate with Java. They have the same type after erasure (see below). Pattern matching is not exhaustively checked. Play JSON and Scala Pickling do not support enumerations. [Do not expect](https://groups.google.com/forum/#!msg/scala-internals/8RWkccSRBxQ/U4y0XpRJfdQJ) the [situation to change](https://www.reddit.com/r/scala/comments/3aqlhu/is_there_a_voting_mechanism_for_new_scala_features/csgy8i0).
+
+    ```scala
+    object A extends Enumeration { val Abc = Value }
+    object X extends Enumeration { val Xyz = Value }
+
+    object DoesNotCompile {
+      def f(v: A.Value) = "I'm A"
+      def f(v: X.Value) = "I'm X"
+    }
+    ```
 
 0. Learn and use the most advanced features of your favorite text editor. Make sure to configure it to perform as many formatting functions for you as possible, so that you do not have to think about it: remove whitespace at end of lines, add a newline at end of file, etc. If your editor does not support even those "basic" advanced features, find yourself a better one. :-)
 
