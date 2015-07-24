@@ -185,6 +185,38 @@ coverageOutputHTML := true
 
 coverageOutputXML := false
 
+/*
+ * Scalariform
+ */
+
+import scalariform.formatter.preferences._
+
+defaultScalariformSettings
+
+ScalariformKeys.preferences := ScalariformKeys.preferences.value
+  .setPreference(AlignParameters, false)
+  .setPreference(AlignArguments, false)
+  .setPreference(AlignSingleLineCaseStatements, false)
+  .setPreference(AlignSingleLineCaseStatements.MaxArrowIndent, 12)
+  .setPreference(CompactControlReadability, false)
+  .setPreference(CompactStringConcatenation, false)
+  .setPreference(DoubleIndentClassDeclaration, true)
+  .setPreference(FormatXml, false)
+  .setPreference(IndentLocalDefs, false)
+  .setPreference(IndentPackageBlocks, true)
+  .setPreference(IndentSpaces, 2)
+  .setPreference(IndentWithTabs, false)
+  .setPreference(MultilineScaladocCommentsStartOnFirstLine, false)
+  .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, false)
+  .setPreference(PreserveDanglingCloseParenthesis, true)
+  .setPreference(PreserveSpaceBeforeArguments, false)
+  .setPreference(RewriteArrowSymbols, false)
+  .setPreference(SpaceBeforeColon, false)
+  .setPreference(SpaceInsideBrackets, false)
+  .setPreference(SpaceInsideParentheses, false)
+  .setPreference(SpacesWithinPatternBinders, true)
+  .setPreference(SpacesAroundMultiImports, false)
+
 // Uncomment to enable offline mode
 // offline := true
 
