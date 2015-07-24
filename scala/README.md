@@ -130,6 +130,16 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. No trailing whitespace at the end of lines, they cause problems when diffing between files or between versions. Configure your text editor to do this for you automatically.
 
+0. In general, obey English rules and mathematical conventions for punctuation:
+
+    1. A single space after and no space before `,`, `:`, `;`, `)`, etc.
+
+    1. A single space before and no space after `(`, except for method invocation or declaration.
+
+    1. Single spaces around `=`, `+`, `-`, `*`, `{`, `}`, `=>`, `<-`, etc.
+
+    1. No spaces between consecutive `(` or `)`.
+
 0. Avoid vertical alignment, they make commit diffs longer.
 
 0. Modifiers should be declared in the following order: `override`, `abstract`, `private` or `protected`, `final`, `sealed`, `implicit`, `lazy`.
@@ -159,6 +169,8 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     // Good
     import foo.bar.baz.Qux
     ```
+
+0. Avoid wildcard-importing entire packages: `import package._`
 
 0. The bigger the scope, the more descriptive the name. Only for very small, local scopes may single-letter mnemonics be used.
 
@@ -191,6 +203,33 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. Use infix notation for single argument methods on monadic types (`contains`, `getOrElse`, etc.)
 
+0. For single-line function blocks and for-comprehensions, use parentheses. For multiline ones, use brackets:
+
+    ```scala
+    seq map (_ * 2)
+
+    seq map { a =>
+      if (a < 0) -a
+      else a
+    }
+    ```
+
+0. Whenever possible, simplify pattern matching expressions by omitting the `match` keyword and using partial functions:
+
+    ```scala
+    bad map {
+      _ match {
+        case 1 => "one"
+        case _ => "not one"
+      }
+    }
+
+    good map {
+      case 1 => "one"
+      case _ => "not one"
+    }
+    ```
+
 0. When passing function blocks, avoid "inner block" syntax:
 
     ```scala
@@ -202,26 +241,6 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
       ???
     }
     ```
-
-0. When passing single line function blocks, use parens. For multiline, use brackets:
-
-    ```scala
-    seq map (_ * 2)
-
-    seq map { a =>
-      a * 2
-    }
-    ```
-
-0. In general, obey English rules and mathematical conventions for punctuation:
-
-    1. A single space after (no space before) `,`, `:`, `;`, `)`, etc.
-
-    1. A single space before (no space after) `(`, except for method invocation or declaration.
-
-    1. Single spaces around `=`, `+`, `-`, `*`, `{`, `}`, `=>`, `<-`, etc.
-
-    1. No spaces between consecutive `(` or `)`.
 
 0. For documentation comments, use Javadoc left-hand margin style. Scaladoc convention is silly:
 
@@ -297,8 +316,6 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     val ys = filteredXs map xToY
     val answer = ys exists (...)
     ```
-
-0. Avoid wildcard-importing entire packages: `import package._`
 
 0. Avoid implicit conversions, use implicit value classes (extension methods) instead. In other words, do not import `scala.language.implicitConversions`:
 
