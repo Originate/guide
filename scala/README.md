@@ -4,27 +4,21 @@ Originate's Scala Style Guide
 Introduction
 ------------
 
-In this guide, we leverage mainly two documents which contain the bulk of our recommendations:
-
-0. The official [Scala Style Guide] for formatting conventions.
-
-0. Twitter's "[Effective Scala]" for coding style and best practices.
-
-We will highlight any cases where we diverge from the original documents and include reasons for doing so.
+Welcome to Originate's Scala Style Guide. This guide contains recommendations for formatting conventions, coding style, and best practices based on men-decades of experience gathered across innumerous Scala projects.
 
 ### Organization
 
-This guide is organized as follows:
+The guide is organized as follows:
 
-0. The first section, "[Code Formatting](#code-formatting)", covers only formatting style, i.e., guidelines that should not produce any different bytecode:
-    1. The section itself is a highlight of the main points of the official Scala Style Guide.Reading the official guide completely is still required.
-    1. The subsection "[Additions and Deviations from the Official Style Guide](#additions-and-deviations-from-the-official-style-guide)" contains the points were we differ from the official guide, plus some topics that are not covered by it. To ease onboarding and favor consistency, we tried to deviate as little as possible from the official guide.
-0. The second section, "[Best Practices](#best-practices)" cover rules that usually produce different bytecode:
-    1. "[Additional recommendations](#additional-recommendations)" are, for the most part, required to be followed, unless there is a very good reason not to.
-    1. "[Tips & Tricks](#tips--tricks)" are mostly "reminders", they do not apply everywhere. Keep them in mind and use your best judgement.
-    1. "[Additional Remarks](#additional-remarks)" are more general, broad, and subjective remarks. It is a little of boiler plate advice.
+0. The first section, "[Code Formatting](#code-formatting)", covers layout conventions, guidelines that do not alter the meaning of your program nor should cause the Scala compiler to produce different bytecode:
+    1. The section itself is a highlight of the main points of the official [Scala Style Guide]. Reading the official guide completely is required.
+    1. The subsection "[Additions and Deviations from the Official Style Guide](#additions-and-deviations-from-the-official-style-guide)" contains the points were we differ from the official guide, plus some topics that are not covered by it. To ease on-boarding and favor consistency, we tried to deviate as little as possible from the official guide.
+0. The second section, "[Best Practices](#best-practices)" covers directives that may change the meaning of your code, producing different bytecode:
+    1. "[Additional recommendations](#additional-recommendations)", for the most part, are required rules that must be followed unless there is a very good reason not to. Failure to fully obey these conventions may **introduce errors**, degrade performance, or create maintenance headaches.
+    1. "[Tips & Tricks](#tips--tricks)" are mostly "friendly reminders" that may not apply in all situations. Always keep them in mind and use your best judgement.
+    1. "[Additional Remarks](#additional-remarks)" are somewhat general, broad, and subjective in nature, a little of boiler plate advice that does not hurt to remember.
 
-A skeleton project accompanies this guide. It encodes and enforces as many best practices as currently available tools allow. Try to use as much of the companion configuration as you can on your Scala projects.
+A skeleton project accompanies the guide. It encodes and enforces as many best practices as currently available tools allow us. Try to use as much of its default configuration as you can on your Scala projects.
 
 Code Formatting
 ---------------
