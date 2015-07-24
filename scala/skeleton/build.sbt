@@ -16,7 +16,7 @@ organizationHomepage := Some(url("http://originate.com"))
 
 // licenses += "GPLv2" -> url("http://www.gnu.org/licenses/gpl-2.0.html")
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
 scalacOptions ++= Seq(
   // Emit warning and location for usages of deprecated APIs
