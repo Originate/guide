@@ -1,4 +1,6 @@
-resolvers += Resolver.sonatypeRepo("releases")
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases")
+)
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.7.0")
 
