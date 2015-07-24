@@ -170,6 +170,117 @@ wartremoverErrors ++= Seq(
 )
 
 /*
+ * Linter (experimental)
+ */
+
+resolvers += "Linter Repository" at "https://hairyfotr.github.io/linteRepo/releases"
+
+addCompilerPlugin("com.foursquare.lint" %% "linter" % "0.1.11")
+
+scalacOptions += "-P:linter:enable-only:" +
+  "AssigningOptionToNull+" +
+  "AvoidOptionCollectionSize+" +
+  "AvoidOptionMethod+" +
+  "AvoidOptionStringSize+" +
+  "BigDecimalNumberFormat+" +
+  "BigDecimalPrecisionLoss+" +
+  "CloseSourceFile+" +
+  "ContainsTypeMismatch+" +
+  "DecomposingEmptyCollection+" +
+  "DivideByOne+" +
+  "DivideByZero+" +
+  "DuplicateIfBranches+" +
+  "DuplicateKeyInMap+" +
+  "EmptyStringInterpolator+" +
+  "FilterFirstThenSort+" +
+  "FuncFirstThenMap+" +
+  "IdenticalCaseBodies+" +
+  "IdenticalCaseConditions+" +
+  "IdenticalIfCondition+" +
+  "IdenticalIfElseCondition+" +
+  "IdenticalStatements+" +
+  "IfDoWhile+" +
+  "IndexingWithNegativeNumber+" +
+  "InefficientUseOfListSize+" +
+  "IntDivisionAssignedToFloat+" +
+  "InvalidParamToRandomNextInt+" +
+  "InvalidStringConversion+" +
+  "InvalidStringFormat+" +
+  "InvariantCondition+" +
+  "InvariantExtrema+" +
+  "InvariantReturn+" +
+  "JavaConverters+" +
+  "LikelyIndexOutOfBounds+" +
+  "MalformedSwap+" +
+  "MergeMaps+" +
+  "MergeNestedIfs+" +
+  "ModuloByOne+" +
+  "NumberInstanceOf+" +
+  "OnceEvaluatedStatementsInBlockReturningFunction+" +
+  "OperationAlwaysProducesZero+" +
+  "OptionOfOption+" +
+  "PassPartialFunctionDirectly+" +
+  "PatternMatchConstant+" +
+  "PossibleLossOfPrecision+" +
+  "PreferIfToBooleanMatch+" +
+  "ProducesEmptyCollection+" +
+  "ReflexiveAssignment+" +
+  "ReflexiveComparison+" +
+  "RegexWarning+" +
+  "StringMultiplicationByNonPositive+" +
+  "SuspiciousMatches+" +
+  "TransformNotMap+" +
+  "TypeToType+" +
+  "UndesirableTypeInference+" +
+  "UnextendedSealedTrait+" +
+  "UnitImplicitOrdering+" +
+  "UnlikelyEquality+" +
+  "UnlikelyToString+" +
+  "UnnecessaryMethodCall+" +
+  "UnnecessaryReturn+" +
+  "UnnecessaryStringIsEmpty+" +
+  "UnnecessaryStringNonEmpty+" +
+  "UnsafeAbs+" +
+  "UnthrownException+" +
+  "UnusedForLoopIteratorValue+" +
+  "UnusedParameter+" +
+  "UseAbsNotSqrtSquare+" +
+  "UseCbrt+" +
+  "UseConditionDirectly+" +
+  "UseContainsNotExistsEquals+" +
+  "UseCountNotFilterLength+" +
+  "UseExistsNotCountCompare+" +
+  "UseExistsNotFilterEmpty+" +
+  "UseExistsNotFilterIsEmpty+" +
+  "UseExistsNotFindIsDefined+" +
+  "UseExp+" +
+  "UseExpm1+" +
+  "UseFilterNotFlatMap+" +
+  "UseFindNotFilterHead+" +
+  "UseFlattenNotFilterOption+" +
+  "UseFuncNotFold+" +
+  "UseFuncNotReduce+" +
+  "UseGetOrElseOnOption+" +
+  "UseHypot+" +
+  "UseIfExpression+" +
+  "UseIsNanNotNanComparison+" +
+  "UseIsNanNotSelfComparison+" +
+  "UseLog10+" +
+  "UseLog1p+" +
+  "UseMapNotFlatMap+" +
+  "UseMinOrMaxNotSort+" +
+  "UseOptionGetOrElse+" +
+  "UseOptionOrNull+" +
+  "UseQuantifierFuncNotFold+" +
+  "UseSignum+" +
+  "UseSqrt+" +
+  "UseUntilNotToMinusOne+" +
+  "VariableAssignedUnusedValue+" +
+  "WrapNullWithOption+" +
+  "YodaConditions+" +
+  "ZeroDivideBy"
+
+/*
  * scoverage
  */
 
