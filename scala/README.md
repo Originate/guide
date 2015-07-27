@@ -10,12 +10,12 @@ Welcome to Originate's Scala Style Guide. This guide contains recommendations fo
 
 The guide is organized as follows:
 
-0. The first section, "[Code Formatting](#code-formatting)", covers layout conventions, guidelines that do not alter the meaning of your program nor should cause the Scala compiler to produce different bytecode:
+0. The first section, "[Code Formatting](#code-formatting)", covers layout conventions, guidelines that do not alter the meaning of your program:
     1. The section itself is a highlight of the main points of the official [Scala Style Guide]. Reading the official guide completely is required.
-    1. The subsection "[Additions and Deviations from the Official Style Guide](#additions-and-deviations-from-the-official-style-guide)" contains the points were we differ from the official guide, plus some topics that are not covered by it. To ease on-boarding and favor consistency, we tried to deviate as little as possible from the official guide.
-0. The second section, "[Best Practices](#best-practices)" covers directives that may change the meaning of your code, producing different bytecode:
+    1. The subsection "[Additions and Deviations from the Official Style Guide](#additions-and-deviations-from-the-official-style-guide)" contains the points were we differ from the official guide, plus some topics that are not covered by it. To ease on-boarding and favor consistency, we try to deviate as little as possible from the official guide.
+0. The second section, "[Best Practices](#best-practices)" covers rules that may change the meaning of your code:
     1. "[Additional recommendations](#additional-recommendations)", for the most part, are required rules that must be followed unless there is a very good reason not to. Failure to fully obey these conventions may **introduce errors**, degrade performance, or create maintenance headaches.
-    1. "[Tips & Tricks](#tips--tricks)" are mostly "friendly reminders" that may not apply in all situations. Always keep them in mind and use your best judgement.
+    1. "[Tips & Tricks](#tips--tricks)" are mostly friendly reminders that may not apply in all situations. Always keep them in mind and use your best judgement.
     1. "[Additional Remarks](#additional-remarks)" are somewhat general, broad, and subjective in nature, a little of boiler plate advice that does not hurt to remember.
 
 A skeleton project accompanies the guide. It encodes and enforces as many best practices as currently available tools allow us. Try to use as much of its default configuration as you can on your Scala projects.
@@ -205,9 +205,11 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. Use infix notation for single argument methods on monadic types (`contains`, `getOrElse`, etc.)
 
-0. For single-line function blocks and for-comprehensions, use parentheses. For multiline ones, use brackets:
+0. For single-line functions and for-comprehensions, use parentheses. For multiline ones, use brackets:
 
     ```scala
+    for (i <- 1 to 3) println(i)
+
     seq map (_ * 2)
 
     seq map { a =>
@@ -232,7 +234,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     }
     ```
 
-0. When passing function blocks, avoid "inner block" syntax:
+0. When passing functions, avoid inner block syntax:
 
     ```scala
     (bad => {
@@ -294,7 +296,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
 0. Use `Seq[T]`, not `List[T]` (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another. The most common exception is that Play form mappers require `List[T]`, so you have to use it there. `Seq` is the interface, `List` the implementation, analogous to `Map` and `HashMap` in Java.
 
-0. Do not overuse tuples, decompose them or use case classes:
+0. Do not overuse tuples, decompose them or better, use case classes:
 
     ```scala
     val paul = Some(("Paul", 42))
@@ -325,7 +327,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     val answer = ys exists (...)
     ```
 
-0. Avoid implicit conversions, use implicit value classes (extension methods) instead. In other words, do not import `scala.language.implicitConversions`:
+0. Avoid implicit conversions, use implicit value classes ([extension methods](http://docs.scala-lang.org/overviews/core/value-classes.html#extension-methods)) instead. In other words, do not import `scala.language.implicitConversions`:
 
     ```scala
     class Bad(n: Int) {
@@ -439,9 +441,9 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
     1. Instead of `c exists (_ == 0)`, use `c contains 0`.
 
-    This is not only a matter of style: each of these recommendations is algorithmically more efficient that the naive approach.
+    This is not only a matter of style: for some collections, the recommendations above can be algorithmically more efficient than the naive approach.
 
-0. Do not import `scala.collection.mutable._` or even any single mutable collection directly. Instead, import the `mutable` package itself and use it explicitly as a namespace prefix to denote mutability:
+0. Do not import `scala.collection.mutable._` or even any single mutable collection directly. Instead, import the `mutable` package itself and use it explicitly as a namespace prefix to denote mutability, which also avoids name conflicts if using both mutable and immutable structures in the same scope:
 
     ```scala
     import scala.collection.mutable.Set
@@ -473,7 +475,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     def good(a: Season) = ???
     ```
 
-0. If an API is not fully "typesafe" (for instance, all parameters are of type `Int` or `String`), always use named parameters to disambiguate:
+0. If an API does not differentiate its function parameters with proper typing (for instance, multiple parameters are `Int` or `String`), always use named parameters to disambiguate:
 
     ```scala
     def geo(latitude: Double, longitude: Double) = ???
@@ -481,6 +483,14 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     val bad = geo(a, b)
 
     val good = geo(latitude = a, longitude = b)
+    ```
+
+0. Always pass named `Boolean` parameters to functions, even when they are the only parameter:
+
+    ```scala
+    bad(false)
+
+    good(isThisClear = true)
     ```
 
 0. Avoid boolean arguments or "magic booleans". Do not model any arbitrary two possible states as booleans:
@@ -501,7 +511,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     def findFemales: Seq[People]
     ```
 
-0. Do not define abstract `val`s in traits or classes. Abstract `val`s are a source of headaches and unexpected behavior in Scala:
+0. Do not define abstract `val`s in traits or abstract classes. Abstract `val`s are a source of headaches and unexpected behavior in Scala:
 
     ```scala
     trait Bad {
@@ -534,7 +544,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
     Note: beware that overriding the abstract `def` with a concrete `val` also suffers from the problem above.
 
-0. Avoid `lazy val`. `lazy val` is *not* free, or even cheap. Use it only when you absolutely need laziness semantics for correctness, never for "optimization". The initialization of a `lazy val` is super-expensive due to monitor acquisition cost, while every access is expensive due to `volatile`. Worse, `lazy val` [may deadlock](http://axel22.github.io/2013/06/10/on-lazy-vals.html) even when there are not circular dependencies between them.
+0. Avoid `lazy val`. `lazy val` is *not* free, or even cheap. Use it only when you absolutely need laziness semantics for correctness, never for "optimization". The initialization of a `lazy val` is super-expensive due to monitor acquisition cost, while every access is expensive due to `volatile`. Worse, `lazy val` [may deadlock](http://axel22.github.io/2013/06/10/on-lazy-vals.html) even when there are no circular dependencies between them.
 
     > `lazy val`s are compiled into a double-checked locking instance with a dedicated `volatile` guard. Notably, this compilation template yields a source of significant performance woes: we need to pass through the `volatile` read on the guard boolean for every read of the `lazy val`. This creates write barriers, cache invalidation and general mayhem with a lot of the optimizations that HotSpot tries to perform. All for a value that may or may not even care about asynchronous access, and even more importantly, is guaranteed to be true only once and is false indefinitely thereafter (baring hilarious tricks with reflection). Contrary to what is commonly believed, this guard isn't simply optimized away by HotSpot (evidence for this comes from benchmarks on warm code and assembly dumps). - Daniel Spiewak
 
@@ -582,7 +592,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     } yield a + b + c
     ```
 
-0. Avoid `isInstanceOf` or `asInstanceOf`. Safe casting is actually one of the best use cases for pattern matching. It is more flexible and allows you, for instance, to use different branches to carry out multiple conditional casts at the same time for various types, perform conversions, or fallback to a default value instead of throwing an exception:
+0. Avoid `isInstanceOf` or `asInstanceOf`. Safe casting is actually one of the best use cases for pattern matching. It is more flexible, guarantees that a cast will only happen if it can succeed, and allows you, for instance, to use different branches to carry out multiple conditional casts at the same time for various types, perform conversions, or fallback to a default value instead of throwing an exception:
 
     ```scala
     val bad = if (a.isInstanceOf[Int]) x else y
@@ -673,7 +683,9 @@ Tips & Tricks
     assert((a, b, c) == (("x", "y", "z")))
     ```
 
-0. Instead of running sbt tasks from your command shell (`$ sbt compile`, for instance), it is better to open an sbt prompt (just type `$ sbt`) and never leave it. Running all your sbt tasks (`clean`, `update`, `compile`, `test`, etc.) directly inside the sbt prompt is a lot faster since you only have to start sbt, load the JVM, and wait for it to warm up (if ever) once. If your `build.sbt` file changes, just run the `reload` task and you are good to go again.
+0. Instead of running sbt tasks directly from the command shell (`$ sbt compile`, for instance), it is better to open an sbt prompt (just type `$ sbt`) and never leave it. Running all your sbt tasks (`clean`, `update`, `compile`, `test`, etc.) inside the sbt prompt is a lot faster since you only have to start sbt, load the JVM, and wait for it to warm up (if ever) once. If your `build.sbt` file changes, just run the `reload` task and you are good to go again.
+
+    Having an sbt instance running `~test` in the background is one of the best way to develop in Scala. You can run some sbt tasks and be left inside the prompt by using the `shell` task: `$ sbt clean update compile test:compile shell`.
 
 0. Whenever possible, prefer `private[this]` over `private` and `final val` over `val` as they enable the Scala compiler and the JVM to perform additional optimizations. (If `final val` surprised you, remember that it is not redundant, as in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
 
