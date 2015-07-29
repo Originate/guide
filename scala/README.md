@@ -4,19 +4,19 @@ Originate's Scala Style Guide
 Introduction
 ------------
 
-Welcome to Originate's Scala Style Guide. This guide contains recommendations for formatting conventions, coding style, and best practices based on men-decades of experience gathered across innumerous Scala projects.
+Welcome to Originate's Scala Style Guide. This guide contains recommendations for formatting conventions, coding style, and best practices based on person-decades of experience gathered across innumerous Scala projects.
 
 ### Organization
 
 The guide is organized as follows:
 
-0. The first section, "[Code Formatting](#code-formatting)", covers layout conventions, guidelines that do not alter the meaning of your program:
-    1. The section itself is a highlight of the main points of the official [Scala Style Guide]. Reading the official guide completely is required.
+0. The first section, "[Code Formatting](#code-formatting)", covers only code layout conventions, i.e., guidelines that do not alter the meaning of a program:
+    1. The section itself highlights the main points of the official [Scala Style Guide]. Reading the official guide completely is required.
     1. The subsection "[Additions and Deviations from the Official Style Guide](#additions-and-deviations-from-the-official-style-guide)" contains the points were we differ from the official guide, plus some topics that are not covered by it. To ease on-boarding and favor consistency, we try to deviate as little as possible from the official guide.
 0. The second section, "[Best Practices](#best-practices)" covers rules that may change the meaning of your code:
     1. "[Additional recommendations](#additional-recommendations)", for the most part, are required rules that must be followed unless there is a very good reason not to. Failure to fully obey these conventions may **introduce errors**, degrade performance, or create maintenance headaches.
     1. "[Tips & Tricks](#tips--tricks)" are mostly friendly reminders that may not apply in all situations. Always keep them in mind and use your best judgement.
-    1. "[Additional Remarks](#additional-remarks)" are somewhat general, broad, and subjective in nature, a little of boiler plate advice that does not hurt to remember.
+    1. "[Additional Remarks](#additional-remarks)" are general hints that are always helpful to remember.
 
 A skeleton project accompanies the guide. It encodes and enforces as many best practices as currently available tools allow us. Try to use as much of its default configuration as you can on your Scala projects.
 
@@ -64,10 +64,6 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     val bad = config.get("key") // What does it return?
     val better: Option[String] = config.get("key")
     ```
-
-0. Public methods must always have explicit return types.
-
-    While it is not required to annotate non-public members, remember that explicitly declaring the return type allows the compiler to verify correctness.
 
 0. Opening curly braces (`{`) must be on the same line as the declaration.
 
@@ -136,31 +132,41 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
     1. A single space after and no space before `,`, `:`, `;`, `)`, etc.
 
-    1. A single space before and no space after `(`, except for method invocation or declaration.
+    1. A single space before `(`, except for method invocation or declaration. Never a space after.
 
     1. Single spaces around `=`, `+`, `-`, `*`, `{`, `}`, `=>`, `<-`, etc.
 
     1. No spaces between consecutive `(` or `)`.
 
-0. Avoid vertical alignment, they make commit diffs longer.
+0. Do not align vertically: it requires constant realignments, making diffs longer.
+
+0. Methods must always have explicit return types. Explicitly declaring the return type allows the compiler to verify correctness.
 
 0. Modifiers should be declared in the following order: `override`, `abstract`, `private` or `protected`, `final`, `sealed`, `implicit`, `lazy`.
 
-0. Put imports at the top of the file. Imports should be grouped in the following order:
+0. Put imports at the top of the file. Imports should be grouped from most to least specific:
     1. The project own classes
-    1. Main framework (e.g, Play, Spray, etc.)
-    1. Secondary frameworks (e.g, Slick, Akka, etc.)
+    1. Frameworks and libraries: `com.*`, `net.*`, `org.*`, etc.
     1. `scala.*`
     1. `java.*` and `javax.*`
-    1. Third-party libraries: `com.*`, `net.*`, `org.*`, etc.
 
-    Inside each group, packages and classes must be sorted alphabetically. Separate groups with blank lines.
+    Inside each group, packages and classes must be sorted alphabetically. Separate groups with blank lines:
 
-    Use the following mnemonic to remember package order: your project is built on top of the frameworks, which are built on Scala, which is built on top of Java. Third-party libraries are less important, therefore come last.
+    ```scala
+    import myapp.util.StringUtils
+
+    import play.api.Configuration
+
+    import org.joda.time.DateTime
+
+    import scala.concurrent.Future
+
+    import java.net.URI
+    ```
 
     The script `fix-imports.go` in the skeleton project folder can be used to help you organize your imports.
 
-0. Avoid relative imports. Full imports are easier to search, and never ambiguous:
+0. Do not use relative imports. Full imports are easier to search, and never ambiguous:
 
     ```scala
     package foo.bar
@@ -172,7 +178,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     import foo.bar.baz.Qux
     ```
 
-0. Avoid wildcard-importing entire packages: `import package._`
+0. Do not wildcard-import entire packages: `import bad._`
 
 0. The bigger the scope, the more descriptive the name. Only for very small, local scopes may single-letter mnemonics be used.
 
@@ -234,7 +240,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     }
     ```
 
-0. When passing functions, avoid inner block syntax:
+0. When passing functions, do not use inner block syntax:
 
     ```scala
     (bad => {
@@ -327,7 +333,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     val answer = ys exists (...)
     ```
 
-0. Avoid implicit conversions, use implicit value classes ([extension methods](http://docs.scala-lang.org/overviews/core/value-classes.html#extension-methods)) instead. In other words, do not import `scala.language.implicitConversions`:
+0. Avoid implicit conversions. Instead, use implicit value classes ([extension methods](http://docs.scala-lang.org/overviews/core/value-classes.html#extension-methods)), they are more efficient:
 
     ```scala
     class Bad(n: Int) {
@@ -350,7 +356,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     javaClass.takesNull(opt.orNull)
     ```
 
-0. Avoid `Some.apply`, use `Option.apply` instead. `Option.apply` protects against `null`, while `Some.apply` is perfectly happy to return `Some(null)`, eventually raising your code an NPE. Also note that `Some.apply` is type-inferred as `Some[T]`, not `Option[T]`.
+0. Avoid `Some.apply`, use `Option.apply` instead. `Option.apply` protects against `null`, while `Some.apply` is perfectly happy to return `Some(null)`, eventually raising an NPE. Also note that `Some.apply` is type-inferred as `Some[T]`, not `Option[T]`.
 
     ```scala
     val bad = Some(System.getenv("a")) // NPE waiting to happen
@@ -366,7 +372,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     val good = Option(math.random()) // And never have to worry about it again
     ```
 
-0. Avoid [`JavaConversions`](http://www.scala-lang.org/api/current/scala/collection/JavaConversions$.html), use [`JavaConverters`](http://www.scala-lang.org/api/current/scala/collection/JavaConverters$.html) and its multiple `asScala` and `asJava` methods. While `JavaConversions` may happen "automagically" at unexpected times, usually masquerading type errors, `JavaConverters` gives you explicit control of when conversions happen (only as dangerous as you want). You can then transparently use Java collections as if they were Scala collections, usually for performance or interoperability reasons:
+0. Do not use [`JavaConversions`](http://www.scala-lang.org/api/current/scala/collection/JavaConversions$.html), use [`JavaConverters`](http://www.scala-lang.org/api/current/scala/collection/JavaConverters$.html) and its multiple `asScala` and `asJava` methods. While `JavaConversions` may happen "automagically" at unexpected times, usually masquerading type errors, `JavaConverters` gives you explicit control of when conversions happen (only as dangerous as you want). You can then transparently use Java collections as if they were Scala collections, usually for performance or interoperability reasons:
 
     ```scala
     import scala.collection.JavaConverters.mapAsScalaMapConverter
@@ -390,7 +396,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
 0. Do not `try` to `catch` exceptions, `Try` to catch exceptions! `Try` does for exceptions what `Option` does for `null`.
 
-0. Remember that `Future` already encapsulates a `Try`. Avoid `Future[Try[T]]`, instead use `Future.failed`, `Future.fromTry`, and `Future.successful`.
+0. Remember that `Future` already encapsulates a `Try`. Instead of `Future[Try[T]]`, use `Future.failed`, `Future.fromTry`, and `Future.successful`.
 
 0. No matter what, never use a "catch-all" exception handler. Some features in Scala are implemented relying on exceptions. Use `NonFatal` instead:
 
@@ -475,7 +481,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     def good(a: Season) = ???
     ```
 
-0. If an API does not differentiate its function parameters with proper typing (for instance, multiple parameters are `Int` or `String`), always use named parameters to disambiguate:
+0. If a function takes multiple arguments of the same type, use named parameters to ensure values are not passed in the wrong order:
 
     ```scala
     def geo(latitude: Double, longitude: Double) = ???
@@ -485,7 +491,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     val good = geo(latitude = a, longitude = b)
     ```
 
-0. Always pass named `Boolean` parameters to functions, even when they are the only parameter:
+0. Always use named parameters with booleans, even when they are the only parameter:
 
     ```scala
     bad(false)
@@ -493,7 +499,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     good(isThisClear = true)
     ```
 
-0. Avoid boolean arguments or "magic booleans". Do not model any arbitrary two possible states as booleans:
+0. Avoid declaring functions with boolean arguments ("magic booleans"). Do not model any two possible states as boolean:
 
     ```scala
     // Bad
@@ -527,7 +533,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     assert(ImBad.worse == 0)
     ```
 
-    Always prefer abstract `def`: they are more general and safer:
+    Always define abstract `def`s, they are more general and safer:
 
     ```scala
     trait Good {
@@ -645,7 +651,7 @@ Tips & Tricks
 
     val seq = Seq(1, 2, 3)
 
-    foo(seq:_*)
+    foo(seq: _*)
     ```
 
 0. There are some really neat tricks we can do with pattern matching:
@@ -683,11 +689,13 @@ Tips & Tricks
     assert((a, b, c) == (("x", "y", "z")))
     ```
 
-0. Instead of running sbt tasks directly from the command shell (`$ sbt compile`, for instance), it is better to open an sbt prompt (just type `$ sbt`) and never leave it. Running all your sbt tasks (`clean`, `update`, `compile`, `test`, etc.) inside the sbt prompt is a lot faster since you only have to start sbt, load the JVM, and wait for it to warm up (if ever) once. If your `build.sbt` file changes, just run the `reload` task and you are good to go again.
+    Please note that the extra parentheses are needed due to the `-Yno-adapted-args` compiler option.
 
-    Having an sbt instance running `~test` in the background is one of the best way to develop in Scala. You can run some sbt tasks and be left inside the prompt by using the `shell` task: `$ sbt clean update compile test:compile shell`.
+0. Instead of running sbt tasks directly from the command line (`$ sbt compile`, for instance), it is better to open an sbt prompt (just type `$ sbt`) and never leave it. Running all your sbt tasks (`clean`, `update`, `compile`, `test`, etc.) inside the sbt prompt is a lot faster since you only have to start sbt, load the JVM, and wait for it to warm up (if ever) once. If your `build.sbt` file changes, just run the `reload` task and you are good to go again.
 
-0. Whenever possible, prefer `private[this]` over `private` and `final val` over `val` as they enable the Scala compiler and the JVM to perform additional optimizations. (If `final val` surprised you, remember that it is not redundant, as in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
+    Having an sbt instance running `~test` in the background is one of the best ways to develop in Scala. You can run some sbt tasks and be left inside the prompt by using the `shell` task: `$ sbt clean update compile test:compile shell`.
+
+0. Whenever possible, use `private[this]` over `private` and `final val` over `val` as they enable the Scala compiler and the JVM to perform additional optimizations. (If `final val` surprised you, remember that it is not redundant, as in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
 
 0. `import System.{currentTimeMillis => now}` or `import System.{nanoTime => now}` are very useful to have around.
 
@@ -729,6 +737,47 @@ Additional Remarks
     object DoesNotCompile {
       def f(v: A.Value) = "I'm A"
       def f(v: X.Value) = "I'm X"
+    }
+    ```
+
+    The following idioms bring a little more power to Scala enums:
+
+    ```scala
+    // Custom properties
+    object Suit extends Enumeration {
+      import scala.language.implicitConversions
+
+      type Suit = SuitVal
+
+      implicit def toVal(v: Value) = v.asInstanceOf[SuitVal]
+
+      case class SuitVal private[Suit] (symbol: Char) extends Val
+
+      val Spades   = SuitVal('♠')
+      val Hearts   = SuitVal('♥')
+      val Diamonds = SuitVal('♦')
+      val Clubs    = SuitVal('♣')
+    }
+
+    // Behaviour specialization and exhaustiveness checking
+    object Lang extends Enumeration {
+      import scala.language.implicitConversions
+
+      type Lang = LangVal
+
+      implicit def toVal(v: Value) = v.asInstanceOf[LangVal]
+
+      sealed abstract class LangVal extends Val {
+        def greet(name: String): String
+      }
+
+      case object English extends LangVal {
+        def greet(name: String) = s"Welcome, $name."
+      }
+
+      case object French extends LangVal {
+        def greet(name: String) = s"Bienvenue, $name."
+      }
     }
     ```
 
