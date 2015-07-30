@@ -12,7 +12,7 @@ The guide is organized as follows:
 
 0. The first section, "[Code Formatting](#code-formatting)", covers only code layout conventions, i.e., guidelines that do not alter the meaning of a program:
     1. The section itself highlights the main points of the official [Scala Style Guide]. Reading the official guide completely is required.
-    1. The subsection "[Additions and Deviations from the Official Style Guide](#additions-and-deviations-from-the-official-style-guide)" contains the points were we differ from the official guide, plus some topics that are not covered by it. To ease on-boarding and favor consistency, we try to deviate as little as possible from the official guide.
+    1. The subsection "[Additions and Deviations from the Official Style Guide](#additions-and-deviations-from-the-official-style-guide)" contains the points where we differ from the official guide, plus some topics that are not covered by it. To ease on-boarding and favor consistency, we try to deviate as little as possible from the official guide.
 0. The second section, "[Best Practices](#best-practices)" covers rules that may change the meaning of your code:
     1. "[Additional recommendations](#additional-recommendations)", for the most part, are required rules that must be followed unless there is a very good reason not to. Failure to fully obey these conventions may **introduce errors**, degrade performance, or create maintenance headaches.
     1. "[Tips & Tricks](#tips--tricks)" are mostly friendly reminders that may not apply in all situations. Always keep them in mind and use your best judgement.
@@ -145,7 +145,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 0. Modifiers should be declared in the following order: `override`, `abstract`, `private` or `protected`, `final`, `sealed`, `implicit`, `lazy`.
 
 0. Put imports at the top of the file. Imports should be grouped from most to least specific:
-    1. The project own classes
+    1. The project's own classes
     1. Frameworks and libraries: `com.*`, `net.*`, `org.*`, etc.
     1. `scala.*`
     1. `java.*` and `javax.*`
@@ -155,9 +155,9 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     ```scala
     import myapp.util.StringUtils
 
-    import play.api.Configuration
-
     import org.joda.time.DateTime
+
+    import play.api.Configuration
 
     import scala.concurrent.Future
 
@@ -252,7 +252,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
     }
     ```
 
-0. For documentation comments, use Javadoc left-hand margin style. Scaladoc convention is silly:
+0. For documentation comments, use Javadoc left-hand margin style instead of the Scaladoc convention:
 
     ```scala
     /** Bad
@@ -644,7 +644,7 @@ Tips & Tricks
 
 0. You can use the `@scala.beans.BeanProperty` and `@BooleanBeanProperty` annotations to automatically generate JavaBeans style getter and setter methods.
 
-0. Use this syntax to pass a sequence as parameter to a variable length argument list method:
+0. Use this syntax to pass a sequence as a parameter to a variable length argument list method:
 
     ```scala
     def foo(args: Int*) = ???
@@ -695,7 +695,7 @@ Tips & Tricks
 
     Having an sbt instance running `~test` in the background is one of the best ways to develop in Scala. You can run some sbt tasks and be left inside the prompt by using the `shell` task: `$ sbt clean update compile test:compile shell`.
 
-0. Whenever possible, use `private[this]` over `private` and `final val` over `val` as they enable the Scala compiler and the JVM to perform additional optimizations. (If `final val` surprised you, remember that it is not redundant, as in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
+0. Whenever possible, use `private[this]` instead of `private` and `final val` instead of `val` as they enable the Scala compiler and the JVM to perform additional optimizations: direct field access vs. accessor method, or inlined constant vs. field access, respectively. (If `final val` surprised you, remember that it is not redundant, as in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
 
 0. `import System.{currentTimeMillis => now}` or `import System.{nanoTime => now}` are very useful to have around.
 

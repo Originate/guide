@@ -15,9 +15,7 @@ It is not recommended to make the `compile` task dependent on Scalastyle. Since 
 scoverage
 ---------
 
-To execute tests with code coverage enabled run the following sbt tasks: `clean` `coverage` `test` `coverageReport`. Coverage reports are saved to `target/scala-2.11/scoverage-report/`.
-
-TODO: If you're running the coverage reports from within an sbt console session (as opposed to one command per sbt launch), then the coverage command is sticky. To turn it back off when you're done running reports, use the coverageOff command or reset coverageEnabled with set coverageEnabled := false.
+To execute tests with code coverage enabled run the following sbt tasks in order: `clean` `coverage` `test` `coverageReport`. Coverage reports are saved to `target/scala-2.11/scoverage-report/`.
 
 Scalariform
 -----------
