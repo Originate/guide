@@ -818,7 +818,6 @@ Reference
 0. [Linter]
 0. [Scapegoat]
 0. [abide]
-0. [Snif]
 0. [obey]
 0. [cpd4sbt]
 
