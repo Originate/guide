@@ -293,7 +293,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 0. Parentheses in Scala are not optional. Be aware of extraneous parentheses:
 
     ```scala
-    val bad = Set.empty() // expands to Set.empty.apply(), equals to Boolean false
+    val bad = Set.empty() // expands to Set.empty.apply(), evaluates to false
 
     val evil = Seq(1,2,3).toSet() // same as above
     ```
@@ -372,6 +372,29 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     val good = Option(math.random()) // And never have to worry about it again
     ```
 
+0. Never extend a case class. Extending a case class with another case class is forbidden by the compiler. Extending a case class with a regular class, while permitted, produces nasty results:
+
+    ```scala
+    case class A(a: Int)
+
+    // error: case class B has case ancestor A, but case-to-case inheritance is prohibited.
+    case class B(a: Int, val b: String) extends A(a)
+
+    class C(a: Int, c: Int) extends A(a)
+
+    val a = A(1)
+    val c = new C(1, 2)
+    assert(a == c)
+    assert(a.hashCode == c.hashCode)
+    assert(c.toString == "A(1)") // Wat
+
+    val d = new C(1, 3)
+    assert(c.hashCode == d.hashCode)
+
+    val e = c.copy(4) // note there is no C#copy(Int, Int) method
+    assert(!e.isInstanceOf[C]) // e is a proper instance of A
+    ```
+
 0. Do not use [`JavaConversions`](http://www.scala-lang.org/api/current/scala/collection/JavaConversions$.html), use [`JavaConverters`](http://www.scala-lang.org/api/current/scala/collection/JavaConverters$.html) and its multiple `asScala` and `asJava` methods. While `JavaConversions` may happen "automagically" at unexpected times, usually masquerading type errors, `JavaConverters` gives you explicit control of when conversions happen (only as dangerous as you want). You can then transparently use Java collections as if they were Scala collections, usually for performance or interoperability reasons:
 
     ```scala
@@ -423,9 +446,9 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
         ```scala
         case class Person(name: String, age: Int) {
-          require(name.trim.nonEmpty)
-          require(age >= 0)
-          require(age <= 130)
+          require(name.trim.nonEmpty, "name cannot be empty")
+          require(age >= 0, "age cannot be negative")
+          require(age <= 130, "oldest unambiguously documented human was 122")
         }
         ```
 
@@ -494,9 +517,11 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 0. Always use named parameters with booleans, even when they are the only parameter:
 
     ```scala
-    bad(false)
+    // Bad
+    Utils.delete(true)
 
-    good(isThisClear = true)
+    // Good
+    Utils.delete(recursively = true)
     ```
 
 0. Avoid declaring functions with boolean arguments ("magic booleans"). Do not model any two possible states as boolean:
@@ -644,14 +669,17 @@ Tips & Tricks
 
 0. You can use the `@scala.beans.BeanProperty` and `@BooleanBeanProperty` annotations to automatically generate JavaBeans style getter and setter methods.
 
-0. Use this syntax to pass a sequence as a parameter to a variable length argument list method:
+0. If a method takes a parameter of type `Seq[A]`, put that parameter last and make it a variable-length argument (_vararg_). Use the syntax below to pass a sequence as a parameter to the method, if needed:
 
     ```scala
-    def foo(args: Int*) = ???
+    def bad(prefix: String, seq: Seq[Int]): Seq[String] = seq map (prefix + _)
+    bad("a", Seq(1, 2, 3))
+
+    def good(prefix: String, seq: Int*): Seq[String] = seq map (prefix + _)
+    good("a", 1, 2, 3)
 
     val seq = Seq(1, 2, 3)
-
-    foo(seq: _*)
+    good("a", seq: _*)
     ```
 
 0. There are some really neat tricks we can do with pattern matching:
