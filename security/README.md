@@ -1,4 +1,4 @@
-Best Practices for Security
+Best Practices for App Security
 ========================
 
 Hello! This document will give a general guideline on best practices in building a secure application as well as list and describe commonly used application exploits and how to defend against them.
@@ -265,7 +265,7 @@ Web Application Penetration Testing Tools
 - Pentesting Suites
   - [Burp Suite](http://portswigger.net/burp/)
   - [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)
-  - Both Burp and ZAP are pretty identical in their feature sets – and there are a lot. The most useful feature though would probably be the proxy that lets you view and modify data sent between the client and server in real time. 
+  - Both Burp and ZAP are pretty identical in their feature sets – and there are a lot. The most useful feature though would probably be the proxy that lets you view and modify data sent between the client and server in real time.
 
 - SQL Injection
   - [sqlmap](http://sqlmap.org/)

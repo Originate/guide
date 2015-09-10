@@ -16,47 +16,32 @@ organizationHomepage := Some(url("http://originate.com"))
 
 // licenses += "GPLv2" -> url("http://www.gnu.org/licenses/gpl-2.0.html")
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
 scalacOptions ++= Seq(
-  // Emit warning and location for usages of deprecated APIs
-    "-deprecation"
-  // Specify character encoding used by source files
-  , "-encoding", "UTF-8"
-  // Emit warning and location for usages of features that should be imported explicitly
-  , "-feature"
-  // Enable or disable language features (see list below)
-  //, "-language:_"
-  // Generates faster bytecode by applying optimisations to the program
-  //, "-optimise"
-  // Target platform for object files
-  , "-target:jvm-1.8"
-  // Enable additional warnings where generated code depends on assumptions
-  , "-unchecked"
-  // Fail the compilation if there are any warnings
-  , "-Xfatal-warnings"
-  // Turn on future language features
-  , "-Xfuture"
-  // Enable or disable specific warnings (see list below)
-  , "-Xlint:_"
-  // Emit inlining warnings
-  , "-Yinline-warnings"
-  // Do not adapt an argument list to match the receiver
-  , "-Yno-adapted-args"
-  // Compile without importing scala.*, java.lang.*, or Predef
-  //, "-Yno-imports"
-  // Compile without importing Predef
-  //, "-Yno-predef"
-  // Warn when dead code is identified
-  , "-Ywarn-dead-code"
-  // Warn when numerics are widened
-  //, "-Ywarn-numeric-widen"          // Not really useful
-  // Warn when local and private vals, vars, defs, and types are are unused
-  , "-Ywarn-unused"
-  // Warn when imports are unused
-  , "-Ywarn-unused-import"
-  // Warn when non-Unit expression results are unused
-  , "-Ywarn-value-discard"
+  "-deprecation", // Emit warning and location for usages of deprecated APIs
+  "-encoding", "UTF-8", // Specify character encoding used by source files
+  "-feature", // Emit warning and location for usages of features that should be imported explicitly
+  "-g:vars", // Set level of generated debugging info: none, source, line, vars, notailcalls
+//"-language:_", // Enable or disable language features (see list below)
+  "-optimise", // Generates faster bytecode by applying optimisations to the program
+  "-target:jvm-1.8", // Target platform for object files
+  "-unchecked", // Enable additional warnings where generated code depends on assumptions
+  "-Xexperimental", // Enable experimental extensions
+  "-Xfatal-warnings", // Fail the compilation if there are any warnings
+  "-Xfuture", // Turn on future language features
+  "-Xlint:_", // Enable or disable specific warnings (see list below)
+  "-Xstrict-inference", // Don't infer known-unsound types
+  "-Yinline-warnings", // Emit inlining warnings
+  "-Yno-adapted-args", // Do not adapt an argument list to match the receiver
+//"-Yno-imports", // Compile without importing scala.*, java.lang.*, or Predef
+//"-Yno-predef", // Compile without importing Predef
+  "-Yopt:_", // Enable optimizations
+  "-Ywarn-dead-code", // Warn when dead code is identified
+//"-Ywarn-numeric-widen", // Warn when numerics are widened (Not really useful)
+  "-Ywarn-unused", // Warn when local and private vals, vars, defs, and types are unused
+  "-Ywarn-unused-import", // Warn when imports are unused
+  "-Ywarn-value-discard" // Warn when non-Unit expression results are unused
 )
 
 /*
@@ -69,9 +54,9 @@ higherKinds          Allow higher-kinded types
 implicitConversions  Allow definition of implicit functions called views
 postfixOps           Allow postfix operator notation, such as `1 to 10 toList'
 reflectiveCalls      Allow reflective access to members of structural types
-*/
 
-/*
+*//*
+
 scalac -Xlint:help
 
 adapted-args               Warn if an argument list is modified to match the receiver
@@ -87,35 +72,55 @@ option-implicit            Option.apply used implicit view
 package-object-classes     Class or object defined in package object
 poly-implicit-overload     Parameterized overloaded implicit methods are not visible as view bounds
 private-shadow             A private field (or class parameter) shadows a superclass field
+stars-align                Pattern sequence wildcard must align with sequence component
 type-parameter-shadow      A local type parameter shadows a type already in scope
 unsound-match              Pattern match may not be typesafe
+
+*//*
+
+scalac -Yopt:help
+
+compact-locals      Eliminate empty slots in the sequence of local variables
+empty-labels        Eliminate and collapse redundant labels in the bytecode
+empty-line-numbers  Eliminate unnecessary line number information
+inline-global       Inline methods from any source, including classfiles on the compile classpath
+inline-project      Inline only methods defined in the files being compiled
+nullness-tracking   Track nullness / non-nullness of local variables and apply optimizations
+simplify-jumps      Simplify branching instructions, eliminate unnecessary ones
+unreachable-code    Eliminate unreachable code, exception handlers protecting no instructions, debug information of eliminated variables
+l:none              Don't enable any optimizations
+l:default           Enable default optimizations: unreachable-code
+l:method            Enable intra-method optimizations: unreachable-code,simplify-jumps,empty-line-numbers,empty-labels,compact-locals,nullness-tracking
+l:project           Enable cross-method optimizations within the current project: l:method,inline-project
+l:classpath         Enable cross-method optimizations across the entire classpath: l:project,inline-global
 */
 
 // Commonly used libraries. Remove what is not needed.
 libraryDependencies ++= Seq(
-    "commons-codec"                     % "commons-codec"                    % "1.10"
-  , "commons-io"                        % "commons-io"                       % "2.4"
-  , "commons-validator"                 % "commons-validator"                % "1.4.1"
-  , "joda-time"                         % "joda-time"                        % "2.8"
-  , "mysql"                             % "mysql-connector-java"             % "5.1.35"
-  , "ch.qos.logback"                    % "logback-classic"                  % "1.1.3"
-  , "com.github.t3hnar"                %% "scala-bcrypt"                     % "2.4"
-  , "com.google.guava"                  % "guava"                            % "18.0"
-  , "com.ibm.icu"                       % "icu4j"                            % "55.1"
-  , "com.typesafe"                      % "config"                           % "1.3.0"
-  , "com.typesafe.scala-logging"       %% "scala-logging"                    % "3.1.0"
-  , "com.typesafe.slick"               %% "slick"                            % "3.0.0"
-  , "com.univocity"                     % "univocity-parsers"                % "1.5.5"
-  , "org.apache.commons"                % "commons-compress"                 % "1.9"
-  , "org.apache.commons"                % "commons-lang3"                    % "3.4"
-  , "org.apache.commons"                % "commons-math3"                    % "3.5"
-  , "org.apache.httpcomponents"         % "httpclient"                       % "4.5"
-  , "org.joda"                          % "joda-money"                       % "0.10.0"
-  , "org.jsoup"                         % "jsoup"                            % "1.8.2"
-  , "org.mockito"                       % "mockito-core"                     % "1.10.19"      % Test
-  , "org.scalamock"                    %% "scalamock-scalatest-support"      % "3.2.2"        % Test
-  , "org.scalatest"                    %% "scalatest"                        % "2.2.5"        % Test
-  , "org.seleniumhq.selenium"           % "selenium-java"                    % "2.46.0"       % Test
+  "commons-codec"                     % "commons-codec"                    % "1.10",
+  "commons-io"                        % "commons-io"                       % "2.4",
+  "commons-validator"                 % "commons-validator"                % "1.4.1",
+  "joda-time"                         % "joda-time"                        % "2.8.1",
+  "mysql"                             % "mysql-connector-java"             % "5.1.36",
+  "ch.qos.logback"                    % "logback-classic"                  % "1.1.3",
+  "com.github.t3hnar"                %% "scala-bcrypt"                     % "2.4",
+  "com.google.guava"                  % "guava"                            % "18.0",
+  "com.ibm.icu"                       % "icu4j"                            % "55.1",
+  "com.typesafe"                      % "config"                           % "1.3.0",
+  "com.typesafe.scala-logging"       %% "scala-logging"                    % "3.1.0",
+  "com.typesafe.slick"               %% "slick"                            % "3.0.0",
+  "com.univocity"                     % "univocity-parsers"                % "1.5.6",
+  "org.apache.commons"                % "commons-compress"                 % "1.9",
+  "org.apache.commons"                % "commons-lang3"                    % "3.4",
+  "org.apache.commons"                % "commons-math3"                    % "3.5",
+  "org.apache.httpcomponents"         % "httpclient"                       % "4.5",
+  "org.joda"                          % "joda-money"                       % "0.10.0",
+  "org.jsoup"                         % "jsoup"                            % "1.8.2",
+  "org.scalactic"                    %% "scalactic"                        % "2.2.5",
+  "org.mockito"                       % "mockito-core"                     % "1.10.19"      % Test,
+  "org.scalamock"                    %% "scalamock-scalatest-support"      % "3.2.2"        % Test,
+  "org.scalatest"                    %% "scalatest"                        % "2.2.5"        % Test,
+  "org.seleniumhq.selenium"           % "selenium-java"                    % "2.46.0"       % Test
 )
 
 // Improved incremental compilation
@@ -124,44 +129,204 @@ incOptions := incOptions.value.withNameHashing(true)
 // Improved dependency management
 updateOptions := updateOptions.value.withCachedResolution(true)
 
-// Create a default Scala style task to run with tests
+/*
+ * Scalastyle
+ */
+
 scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
 scalastyleFailOnError := true
 
+// Create a default Scalastyle task to run with tests
+lazy val mainScalastyle = taskKey[Unit]("mainScalastyle")
 lazy val testScalastyle = taskKey[Unit]("testScalastyle")
 
+mainScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Compile).toTask("").value
 testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Test).toTask("").value
 
+(test in Test) <<= (test in Test) dependsOn mainScalastyle
 (test in Test) <<= (test in Test) dependsOn testScalastyle
 
+/*
+ * WartRemover
+ */
+
 wartremoverErrors ++= Seq(
-    Wart.Any
-  , Wart.Any2StringAdd
-  , Wart.AsInstanceOf
-  , Wart.EitherProjectionPartial
-  , Wart.IsInstanceOf
-  , Wart.ListOps
-  //, Wart.NonUnitStatements
-  , Wart.Nothing
-  , Wart.Null
-  , Wart.OptionPartial
-  , Wart.Product
-  , Wart.Return
-  , Wart.Serializable
-  , Wart.Throw
-  , Wart.Var
+  Wart.Any,
+  Wart.Any2StringAdd,
+  Wart.AsInstanceOf,
+  Wart.EitherProjectionPartial,
+  Wart.IsInstanceOf,
+  Wart.ListOps,
+  // Wart.NonUnitStatements,
+  Wart.Nothing,
+  Wart.Null,
+  Wart.OptionPartial,
+  Wart.Product,
+  Wart.Return,
+  Wart.Serializable,
+  Wart.Throw,
+  Wart.Var
 )
 
-ScoverageSbtPlugin.ScoverageKeys.coverageMinimum := 90
+/*
+ * Linter (experimental)
+ */
 
-ScoverageSbtPlugin.ScoverageKeys.coverageFailOnMinimum := true
+resolvers += "Linter Repository" at "https://hairyfotr.github.io/linteRepo/releases"
 
-ScoverageSbtPlugin.ScoverageKeys.coverageOutputCobertua := false
+addCompilerPlugin("com.foursquare.lint" %% "linter" % "0.1.11")
 
-ScoverageSbtPlugin.ScoverageKeys.coverageOutputHTML := true
+scalacOptions += "-P:linter:enable-only:" +
+  "AssigningOptionToNull+" +
+  "AvoidOptionCollectionSize+" +
+  "AvoidOptionMethod+" +
+  "AvoidOptionStringSize+" +
+  "BigDecimalNumberFormat+" +
+  "BigDecimalPrecisionLoss+" +
+  "CloseSourceFile+" +
+  "ContainsTypeMismatch+" +
+  "DecomposingEmptyCollection+" +
+  "DivideByOne+" +
+  "DivideByZero+" +
+  "DuplicateIfBranches+" +
+  "DuplicateKeyInMap+" +
+  "EmptyStringInterpolator+" +
+  "FilterFirstThenSort+" +
+  "FuncFirstThenMap+" +
+  "IdenticalCaseBodies+" +
+  "IdenticalCaseConditions+" +
+  "IdenticalIfCondition+" +
+  "IdenticalIfElseCondition+" +
+  "IdenticalStatements+" +
+  "IfDoWhile+" +
+  "IndexingWithNegativeNumber+" +
+  "InefficientUseOfListSize+" +
+  "IntDivisionAssignedToFloat+" +
+  "InvalidParamToRandomNextInt+" +
+  "InvalidStringConversion+" +
+  "InvalidStringFormat+" +
+  "InvariantCondition+" +
+  "InvariantExtrema+" +
+  "InvariantReturn+" +
+  "JavaConverters+" +
+  "LikelyIndexOutOfBounds+" +
+  "MalformedSwap+" +
+  "MergeMaps+" +
+  "MergeNestedIfs+" +
+  "ModuloByOne+" +
+  "NumberInstanceOf+" +
+  "OnceEvaluatedStatementsInBlockReturningFunction+" +
+  "OperationAlwaysProducesZero+" +
+  "OptionOfOption+" +
+  "PassPartialFunctionDirectly+" +
+  "PatternMatchConstant+" +
+  "PossibleLossOfPrecision+" +
+  "PreferIfToBooleanMatch+" +
+  "ProducesEmptyCollection+" +
+  "ReflexiveAssignment+" +
+  "ReflexiveComparison+" +
+  "RegexWarning+" +
+  "StringMultiplicationByNonPositive+" +
+  "SuspiciousMatches+" +
+  "TransformNotMap+" +
+  "TypeToType+" +
+  "UndesirableTypeInference+" +
+  "UnextendedSealedTrait+" +
+  "UnitImplicitOrdering+" +
+  "UnlikelyEquality+" +
+  "UnlikelyToString+" +
+  "UnnecessaryMethodCall+" +
+  "UnnecessaryReturn+" +
+  "UnnecessaryStringIsEmpty+" +
+  "UnnecessaryStringNonEmpty+" +
+  "UnsafeAbs+" +
+  "UnthrownException+" +
+  "UnusedForLoopIteratorValue+" +
+  "UnusedParameter+" +
+  "UseAbsNotSqrtSquare+" +
+  "UseCbrt+" +
+  "UseConditionDirectly+" +
+  "UseContainsNotExistsEquals+" +
+  "UseCountNotFilterLength+" +
+  "UseExistsNotCountCompare+" +
+  "UseExistsNotFilterEmpty+" +
+  "UseExistsNotFilterIsEmpty+" +
+  "UseExistsNotFindIsDefined+" +
+  "UseExp+" +
+  "UseExpm1+" +
+  "UseFilterNotFlatMap+" +
+  "UseFindNotFilterHead+" +
+  "UseFlattenNotFilterOption+" +
+  "UseFuncNotFold+" +
+  "UseFuncNotReduce+" +
+  "UseGetOrElseOnOption+" +
+  "UseHypot+" +
+  "UseIfExpression+" +
+  "UseIsNanNotNanComparison+" +
+  "UseIsNanNotSelfComparison+" +
+  "UseLog10+" +
+  "UseLog1p+" +
+  "UseMapNotFlatMap+" +
+  "UseMinOrMaxNotSort+" +
+  "UseOptionGetOrElse+" +
+  "UseOptionOrNull+" +
+  "UseQuantifierFuncNotFold+" +
+  "UseSignum+" +
+  "UseSqrt+" +
+  "UseUntilNotToMinusOne+" +
+  "VariableAssignedUnusedValue+" +
+  "WrapNullWithOption+" +
+  "YodaConditions+" +
+  "ZeroDivideBy"
 
-ScoverageSbtPlugin.ScoverageKeys.coverageOutputXML := false
+/*
+ * scoverage
+ */
+
+import ScoverageSbtPlugin.ScoverageKeys._
+
+coverageMinimum := 90
+
+coverageFailOnMinimum := true
+
+coverageOutputCobertua := false
+
+coverageOutputHTML := true
+
+coverageOutputXML := false
+
+/*
+ * Scalariform
+ */
+
+import scalariform.formatter.preferences._
+
+defaultScalariformSettings
+
+ScalariformKeys.preferences := ScalariformKeys.preferences.value
+  .setPreference(AlignParameters, false)
+  .setPreference(AlignArguments, false)
+  .setPreference(AlignSingleLineCaseStatements, false)
+  .setPreference(AlignSingleLineCaseStatements.MaxArrowIndent, 12)
+  .setPreference(CompactControlReadability, false)
+  .setPreference(CompactStringConcatenation, false)
+  .setPreference(DoubleIndentClassDeclaration, true)
+  .setPreference(FormatXml, false)
+  .setPreference(IndentLocalDefs, false)
+  .setPreference(IndentPackageBlocks, true)
+  .setPreference(IndentSpaces, 2)
+  .setPreference(IndentWithTabs, false)
+  .setPreference(MultilineScaladocCommentsStartOnFirstLine, false)
+  .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, false)
+  .setPreference(PreserveDanglingCloseParenthesis, true)
+  .setPreference(PreserveSpaceBeforeArguments, false)
+  .setPreference(RewriteArrowSymbols, false)
+  .setPreference(SpaceBeforeColon, false)
+  .setPreference(SpaceInsideBrackets, false)
+  .setPreference(SpaceInsideParentheses, false)
+  .setPreference(SpacesWithinPatternBinders, true)
+  .setPreference(SpacesAroundMultiImports, false)
 
 // Uncomment to enable offline mode
 // offline := true

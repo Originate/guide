@@ -3,6 +3,9 @@
 # sbt
 target/
 
+# Java
+*.class
+
 # Logs
 *.log
 log/
@@ -32,6 +35,7 @@ tmp/
 .project
 .scala_dependencies
 .settings/
+*.sc
 
 # Mac OS X
 ._*
