@@ -1,6 +1,6 @@
 # Cucumber
 
-Cucumber allows to create feature specs
+Cucumber offers the capability to create feature specs
 with the same high level end-user perspective
 with which we think about products and their features
 in real life.
@@ -51,8 +51,10 @@ after reading a Cucumber spec for it.
 Each feature should be in its own file or folder.
 Each epic should have its own folder,
 which contains the features for that epic.
-Features can optionally contain the user story
-as a comment on top of it.
+Features should optimally contain the user story 
+as a comment on top of it either 
+using [persona user story](http://www.boost.co.nz/blog/2010/09/acceptance-criteria/)
+or [feature injection syntax](http://lizkeogh.com/2008/09/10/feature-injection-and-handling-technical-stories/).
 
 ```cucumber
 Feature: logging in
@@ -72,7 +74,8 @@ in a particular situation.
 A good structure is to have one scenario describe the happy path of the feature,
 and then a number of scenarios to cover optional edge cases.
 
-The scenario title should describe the situation that is tested.
+The scenario title should describe the situation that is tested
+and should be easily understood.
 
 __example__
 
