@@ -5,7 +5,6 @@ A starting point for Originate engineers. This guide includes best practices and
 * [Git](https://github.com/Originate/guide/blob/master/git.md)
 * [Code Reviews](https://github.com/Originate/guide/blob/master/pull_requests.md)
 * [Security](https://github.com/Originate/guide/blob/master/security)
-* [Feature Specs](https://github.com/Originate/guide/blob/master/cucumber.md)
 
 ### Stack Guides
 
