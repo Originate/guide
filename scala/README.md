@@ -72,7 +72,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 0. Extensions follow the same rule above, but indent **two** spaces to provide visual separation between constructor arguments and extensions:
 
     ```scala
-    class Platypus (
+    class Platypus(
         name: String,
         age: Int)
       extends Beaver
