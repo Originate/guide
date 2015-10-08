@@ -122,7 +122,9 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. One blank line between method, class, and object definitions.
 
-0. Use blank lines between fields to create logical groupings.
+0. Use blank lines between statements and declarations to create logical groupings.
+
+0. Use blank lines only to separate lines that are at the same indentation level. Lines at different indentation levels do not need blanks between them. Most computer screens have relatively limited vertical real estate; excessive scrolling is counter-productive.
 
 0. No double blank lines, anywhere.
 
