@@ -125,7 +125,7 @@ Link: [persona user story](http://www.boost.co.nz/blog/2010/09/acceptance-criter
 *As a Model Researcher, I want to log into the platform, so that I can test the new model(s).*
 
 #### Feature Injection Story
-*Good format for describing features especially ones more technical in nature.*
+*Good format for describing features especially requests that are more technical in nature.*
 Link: [feature injection syntax](http://lizkeogh.com/2008/09/10/feature-injection-and-handling-technical-stories/)
 
 | In order to [DELIVER BUSINESS BENEFIT/VALUE], | As a [ROLE], | I want [FEATURE]          |
