@@ -68,6 +68,7 @@ Stories are made more complete by following these guidelines:
 ### Order of PM Events
 
 Product Managers work to follow a flow such as:
+
 1. Identify Epics
 2. Estimate Epics
 3. Prioritize Epics
@@ -77,7 +78,7 @@ Product Managers work to follow a flow such as:
 7. Estimate stories
 8. Finalize scope of sprint #1 with stories
 9. Development begins
-10. Pick Epic(s) for Sprint #2*
+10. Pick Epic(s) for Sprint #2 *
 
 ***Rinse and repeat!***
 
