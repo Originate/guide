@@ -1,5 +1,7 @@
 # Storywriting Best Practices
 
+Good user stories create efficient development processes.
+
 At Originate, we strive to be enable engineers and solutions through our product management, especially including our Storywriting practices.
 
 **It is a Product Manager’s job to determine what to build, it’s an engineer’s job to determine how to build it.**
@@ -8,15 +10,13 @@ At Originate, we strive to be enable engineers and solutions through our product
 
 ### PM Toolkit - Epics and Stories
 
-**Product Management is often less about feature design and more about ensuring the whole is greater than the sum of it’s parts.**
-
 **Epics contextualize and group requests:**
 * PMs are problem-solvers of Epics, developers are problem-solvers of stories
 * 80% of prioritization should be done at the Epic level
 * More than just a collection of stories, Epics should holistically solve a problem YOU identify
 
 **Storywriting is your best friend:**
-* Forces you to think through and document every detail of every feature as the story matures
+* Storywriting fleshes out the details as the story matures
 * Uncover edge cases not immediately obvious
 * Developers should only bother you if they have questions or are confused
 * AC can be negotiable
@@ -27,29 +27,21 @@ At Originate, we strive to be enable engineers and solutions through our product
 
 ### What is a user story?
 
-**Definition:  An empirical unit of development work that delivers tangible value to the end user or consuming system.**
+*Definition:  An empirical unit of development work that delivers tangible value to the end user or consuming system.*
 
-The “user” in user story:  Refers specifically to the user or system CONSUMING the functionality being built
+The “user” in user story refers specifically to the user or system CONSUMING the functionality in the feature being built.
 
-Recommended size: *Smallest amount that delivers value (but use your judgement)*
+Recommended size: *Smallest amount that delivers value*
 
------
-
-### PM Toolkit - Story tracking system (JIRA, Pivotal, etc.)
-
-**Reasons for Story tracking system:**
-* JIRA/Pivotal stories > post-it notes
-* Easy to maintain, super flexible, accessible from anywhere
-* Easily map dependencies, move stories around, add, delete, split up
-* Comment history & conversations
+There should be some room for PMs to "use their judgement" in terms of sizing a story properly. Sometimes its easier for all parties just to lump a couple of really really small things into one story, or break out a big story into two even if each one independently doesn't really deliver value. It should be the exception, not the rule though.
 
 -----
 
 ### Storywriting Criteria & Best Practices
 
 Stories are made more complete by following these guidelines:
-* Epics are clearly defined and represent holistic problems that need solving
-* Epics and stories are appropriately sized
+* Epics are clearly defined and represent a complete problem that need solving
+* *Twitter example: "Logged Out User Experience" is a better Epic than "Redesign Homepage". The latter might be the solution for the former problem, but keeping it broader/holistic allows the team to come up with different solutions that might not include a redesigned home page.*
 * Stories are written in an appropriate format to convey the desired user behavior
   * A consuming user or system is specified
   * An action is specified
