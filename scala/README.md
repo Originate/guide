@@ -72,7 +72,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 0. Extensions follow the same rule above, but indent **two** spaces to provide visual separation between constructor arguments and extensions:
 
     ```scala
-    class Platypus (
+    class Platypus(
         name: String,
         age: Int)
       extends Beaver
@@ -122,7 +122,7 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. One blank line between method, class, and object definitions.
 
-0. Use blank lines between fields to create logical groupings.
+0. Use blank lines between statements and declarations to create logical groupings.
 
 0. No double blank lines, anywhere.
 
@@ -293,7 +293,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 0. Parentheses in Scala are not optional. Be aware of extraneous parentheses:
 
     ```scala
-    val bad = Set.empty() // expands to Set.empty.apply(), equals to Boolean false
+    val bad = Set.empty() // expands to Set.empty.apply(), evaluates to false
 
     val evil = Seq(1,2,3).toSet() // same as above
     ```
@@ -372,6 +372,31 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     val good = Option(math.random()) // And never have to worry about it again
     ```
 
+0. Do not abuse `Option`. Some types already provide a good default to represent "nothing". For instance, before declaring an `Option[Seq[T]]`, ask yourself whether there is any semantic difference between `Some(Nil)` and `None`. If not (and usually, there isn't), use `Seq[T]` and return the empty list.
+
+0. Never extend a case class. Extending a case class with another case class is forbidden by the compiler. Extending a case class with a regular class, while permitted, produces nasty results:
+
+    ```scala
+    case class A(a: Int)
+
+    // error: case class B has case ancestor A, but case-to-case inheritance is prohibited.
+    case class B(a: Int, val b: String) extends A(a)
+
+    class C(a: Int, c: Int) extends A(a)
+
+    val a = A(1)
+    val c = new C(1, 2)
+    assert(a == c)
+    assert(a.hashCode == c.hashCode)
+    assert(c.toString == "A(1)") // Wat
+
+    val d = new C(1, 3)
+    assert(c.hashCode == d.hashCode)
+
+    val e = c.copy(4) // note there is no C#copy(Int, Int) method
+    assert(!e.isInstanceOf[C]) // e is a proper instance of A
+    ```
+
 0. Do not use [`JavaConversions`](http://www.scala-lang.org/api/current/scala/collection/JavaConversions$.html), use [`JavaConverters`](http://www.scala-lang.org/api/current/scala/collection/JavaConverters$.html) and its multiple `asScala` and `asJava` methods. While `JavaConversions` may happen "automagically" at unexpected times, usually masquerading type errors, `JavaConverters` gives you explicit control of when conversions happen (only as dangerous as you want). You can then transparently use Java collections as if they were Scala collections, usually for performance or interoperability reasons:
 
     ```scala
@@ -423,9 +448,9 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
         ```scala
         case class Person(name: String, age: Int) {
-          require(name.trim.nonEmpty)
-          require(age >= 0)
-          require(age <= 130)
+          require(name.trim.nonEmpty, "name cannot be empty")
+          require(age >= 0, "age cannot be negative")
+          require(age <= 130, "oldest unambiguously documented human was 122")
         }
         ```
 
@@ -457,6 +482,20 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
     import scala.collection.mutable
     val good = mutable.Set(1, 2, 3)
+    ```
+
+0. Prefer a mutable `val` over an immutable `var`:
+
+    ```scala
+    import scala.collection.mutable
+
+    var bad = Set(1, 2, 3)
+    bad += 4
+
+    val good = mutable.Set(1, 2, 3)
+    good += 4
+
+    assert(good.sameElements(bad))
     ```
 
 0. No "stringly" typed code. Use `Enumeration` or `sealed` types with `case` objects. `Enumeration` and `sealed` types have similar purpose and usage, but they do not fully overlap. `Enumeration`, for instance, does not check for exhaustive matching while `sealed` types do not, well, enumerate.
@@ -494,9 +533,11 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 0. Always use named parameters with booleans, even when they are the only parameter:
 
     ```scala
-    bad(false)
+    // Bad
+    Utils.delete(true)
 
-    good(isThisClear = true)
+    // Good
+    Utils.delete(recursively = true)
     ```
 
 0. Avoid declaring functions with boolean arguments ("magic booleans"). Do not model any two possible states as boolean:
@@ -622,15 +663,17 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 Tips & Tricks
 -------------
 
-0. Make plentiful use of value classes to enforce stronger typing. Combine them with implicit classes to define extension methods.
+0. Avoid naked base types, such as `String`, `Int`, or `Date`. Those unwrapped "primitive" types have no semantic meaning and provide little type safety (e.g., mixing `firstName` and `lastName`). Instead, make plentiful use of value classes to enforce stronger typing:
 
     ```scala
-    // Value classes
     case class Email(email: String) extends AnyVal // No extra object allocation at runtime
 
     val email = Email("joe@example.com") // Never gets mixed with other strings
+    ```
 
-    // Extension methods
+0. Combine value classes with implicit classes to define extension methods:
+
+    ```scala
     implicit class IntOps(val n: Int) extends AnyVal {
       def stars = "*" * n
     }
@@ -638,13 +681,17 @@ Tips & Tricks
     5.stars // Equivalent to a static method call, no implicit conversion actually takes place
     ```
 
+0. Whenever possible, use `private[this]` instead of `private` and `final val` instead of `val` as they enable the Scala compiler and the JVM to perform additional optimizations: direct field access vs. accessor method, or inlined constant vs. field access, respectively. (If `final val` surprised you, remember that it is not redundant, because in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
+
 0. Leverage parallel collections, use `.par` judiciously.
+
+0. `import System.{currentTimeMillis => now}` or `import System.{nanoTime => now}` are very useful to have around.
 
 0. Use the `@tailrec` annotation to ensure the compiler can recognize a recursive method is tail-recursive.
 
 0. You can use the `@scala.beans.BeanProperty` and `@BooleanBeanProperty` annotations to automatically generate JavaBeans style getter and setter methods.
 
-0. Use this syntax to pass a sequence as a parameter to a variable length argument list method:
+0. You can use the following syntax to pass a sequence as a parameter to a variable length argument list method:
 
     ```scala
     def foo(args: Int*) = ???
@@ -683,6 +730,8 @@ Tips & Tricks
     val Vector(_, a, b, _, ws@_*) = vector
     assert((a, b, ws) == ((2, 3, Vector(5, 6))))
 
+    val Array(key, value) = "key:value".split(':')
+
     // Regular expressions
     val regex = """(.)(.)(.)""".r
     val regex(a, b, c) = "xyz" // Matches and extracts regex against "xyz"
@@ -695,9 +744,29 @@ Tips & Tricks
 
     Having an sbt instance running `~test` in the background is one of the best ways to develop in Scala. You can run some sbt tasks and be left inside the prompt by using the `shell` task: `$ sbt clean update compile test:compile shell`.
 
-0. Whenever possible, use `private[this]` instead of `private` and `final val` instead of `val` as they enable the Scala compiler and the JVM to perform additional optimizations: direct field access vs. accessor method, or inlined constant vs. field access, respectively. (If `final val` surprised you, remember that it is not redundant, as in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
+0. The following shorthand trick works in the Scala REPL:
 
-0. `import System.{currentTimeMillis => now}` or `import System.{nanoTime => now}` are very useful to have around.
+    ```scala
+    scala> "The quick brown fox jumps over the lazy dog!"
+    res0: String = The quick brown fox jumps over the lazy dog!
+
+    scala> .toLowerCase
+    res1: String = the quick brown fox jumps over the lazy dog!
+
+    scala> .distinct
+    res2: String = the quickbrownfxjmpsvlazydg!
+
+    scala> .filter(_.isLetter)
+    res3: String = thequickbrownfxjmpsvlazydg
+
+    scala> .sorted
+    res4: String = abcdefghijklmnopqrstuvwxyz
+
+    scala> .size
+    res5: Int = 26
+    ```
+
+0. Learn you a few Scala tricks for great good: https://github.com/marconilanna/ScalaUpNorth2015
 
 Additional Remarks
 ------------------
