@@ -124,8 +124,6 @@ Please read the [Scala Style Guide] carefully. The main points to consider are:
 
 0. Use blank lines between statements and declarations to create logical groupings.
 
-0. Use blank lines only to separate lines that are at the same indentation level. Lines at different indentation levels do not need blanks between them. Most computer screens have relatively limited vertical real estate; excessive scrolling is counter-productive.
-
 0. No double blank lines, anywhere.
 
 0. No trailing whitespace at the end of lines, they cause problems when diffing between files or between versions. Configure your text editor to do this for you automatically.
@@ -665,7 +663,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 Tips & Tricks
 -------------
 
-0. Avoid bare naked base types, such as `String`, `Int`, or `Date`. Those unwrapped "primitive" types have no semantic meaning and provide little type safety (e.g., mixing `firstName` and `lastName`). Instead, make plentiful use of value classes to enforce stronger typing:
+0. Avoid naked base types, such as `String`, `Int`, or `Date`. Those unwrapped "primitive" types have no semantic meaning and provide little type safety (e.g., mixing `firstName` and `lastName`). Instead, make plentiful use of value classes to enforce stronger typing:
 
     ```scala
     case class Email(email: String) extends AnyVal // No extra object allocation at runtime
@@ -683,7 +681,7 @@ Tips & Tricks
     5.stars // Equivalent to a static method call, no implicit conversion actually takes place
     ```
 
-0. Whenever possible, use `private[this]` instead of `private` and `final val` instead of `val` as they enable the Scala compiler and the JVM to perform additional optimizations: direct field access vs. accessor method, or inlined constant vs. field access, respectively. (If `final val` surprised you, remember that it is not redundant, as in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
+0. Whenever possible, use `private[this]` instead of `private` and `final val` instead of `val` as they enable the Scala compiler and the JVM to perform additional optimizations: direct field access vs. accessor method, or inlined constant vs. field access, respectively. (If `final val` surprised you, remember that it is not redundant, because in Scala `final` means "cannot be overridden", while in Java it may mean both that as well as "cannot be reassigned").
 
 0. Leverage parallel collections, use `.par` judiciously.
 
@@ -692,16 +690,6 @@ Tips & Tricks
 0. Use the `@tailrec` annotation to ensure the compiler can recognize a recursive method is tail-recursive.
 
 0. You can use the `@scala.beans.BeanProperty` and `@BooleanBeanProperty` annotations to automatically generate JavaBeans style getter and setter methods.
-
-0. If a method takes a parameter of type `Seq[T]`, consider putting that parameter last and making it a variable-length argument (_vararg_):
-
-    ```scala
-    def before(prefix: String, seq: Seq[Int]): Seq[String] = seq map (prefix + _)
-    before("a", Seq(1, 2, 3))
-
-    def after(prefix: String, seq: Int*): Seq[String] = seq map (prefix + _)
-    after("a", 1, 2, 3)
-    ```
 
 0. You can use the following syntax to pass a sequence as a parameter to a variable length argument list method:
 
@@ -741,6 +729,8 @@ Tips & Tricks
     val vector = Vector(1, 2, 3, 4, 5, 6)
     val Vector(_, a, b, _, ws@_*) = vector
     assert((a, b, ws) == ((2, 3, Vector(5, 6))))
+
+    val Array(key, value) = "key:value" split ':'
 
     // Regular expressions
     val regex = """(.)(.)(.)""".r
