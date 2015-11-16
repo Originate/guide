@@ -730,7 +730,7 @@ Tips & Tricks
     val Vector(_, a, b, _, ws@_*) = vector
     assert((a, b, ws) == ((2, 3, Vector(5, 6))))
 
-    val Array(key, value) = "key:value" split ':'
+    val Array(key, value) = "key:value".split(':')
 
     // Regular expressions
     val regex = """(.)(.)(.)""".r
