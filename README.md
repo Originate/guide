@@ -9,6 +9,7 @@ A starting point for Originate engineers. This guide includes best practices and
 ### Stack Guides
 
 * [Android](android/README.md)
+* [iOS](/ios/README.md)
 * [Node](https://github.com/Originate/guide/blob/master/node-practices.md)
 * [Rails](https://github.com/Originate/guide/blob/master/rails.md)
 * [Scala](https://github.com/Originate/guide/blob/master/scala/README.md)
