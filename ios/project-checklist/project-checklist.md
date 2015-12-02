@@ -31,14 +31,10 @@ All iOS projects should strive to follow these guidelines.
 Releasing an app to the App Store should not be taken lightly. Steps must be taken to ensure what you submit is correct and will work once published to the store. Allocate at least 4 hours to make sure everything is working properly before submitting.
 
 1. Scan and understand [Apple's App Distribution Guide](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AppDistributionGuide.pdf)
-2. Ensure final code commits pass all tests and are pushed out
-3. Update the app's public version number in the Info.plist file (`CFBundleShortVersionString`)
+2. Understand the app's responsibility for securing data. ([Software Security](https://developer.apple.com/library/ios/documentation/Security/Conceptual/Security_Overview/Introduction/Introduction.html#//apple_ref/doc/uid/TP30000976-CH1-SW1)).
+3. Ensure final code commits pass all tests and are pushed out
+4. Update the app's public version number in the Info.plist file (`CFBundleShortVersionString`)
     * For every new public version number, reset the private version back to 1.0 (`CFBundleVersion`). This number is only incremented in rare cases, such as when iTunes Connect requires a new build. This isn't user-facing, so the exact values are not too important.
-4. If using Core Data, ensure that a database migration is handled appropriately by the app
-5. Ensure debugging statements and development-only code are not built when making a release build
-6. Ensure the app uses the correct production server endpoints for release builds
-
-
-### Extra credit
-
-1. Understand the app's responsibility for securing data. ([Software Security](https://developer.apple.com/library/ios/documentation/Security/Conceptual/Security_Overview/Introduction/Introduction.html#//apple_ref/doc/uid/TP30000976-CH1-SW1)).
+5. If using Core Data, ensure that a database migration is handled appropriately by the app
+6. Ensure debugging statements and development-only code are not built when making a release build
+7. Ensure the app uses the correct production server endpoints for release builds
