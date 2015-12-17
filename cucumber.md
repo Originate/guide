@@ -1,21 +1,25 @@
 # Cucumber
 
-Cucumber offers the capability to create feature specs
-with the same high level end-user perspective
-with which we think about products and their features
-in real life.
-This gives everybody working on a product
-a chance to look at what they build
-with common sense, intuition, and structure.
+Cucumber fulfills many roles in modern agile development teams:
 
-Cucumber's primary ability is to communicate
-all necessary details
-about how a product is supposed to work
-through source code
-that is understood by the product, development, and testing teams
-as well as the CI server.
-This allows efficient collaboration of the whole team,
-with a minimal requirement for meetings.
+* It is _living documentation_ of the application
+  that never becomes outdated because is updated together with code changes.
+  This documentation gives an overview of an application's behavior
+  on the same high-level end-user perspective
+  with which we think about products and their features in real life,
+  thereby allowing to use common sense in addition to technical thinking.
+  Gherkin lists the value propesition of a feature as a user story,
+  the cornerstones and rules of it,
+  as well as concrete examples how these rules are implemented in the product.
+* Cucumber is also a _communication vehicle_ between the product, development, and testing teams
+  that helps remove process and replaces boring meetings with online collaboration.
+* Finally, it is a form of automated testing that makes TDD
+  easy, intuitive, and efficient.
+
+All of these things together make Cucumber a tool that supports the collaborative agile
+development process on many levels,
+from defining over building to testing the product.
+
 
 Please check out:
 
@@ -46,52 +50,47 @@ should understand how a particular feature works
 after reading a Cucumber spec for it.
 
 
-### Features
+### Folder hierarchy
 
-Each feature should be in its own file or folder.
-Each epic should have its own folder,
-which contains the features for that epic.
-Features should optimally contain the user story 
-as a comment on top of it either 
-using [persona user story](http://www.boost.co.nz/blog/2010/09/acceptance-criteria/)
-or [feature injection syntax](http://lizkeogh.com/2008/09/10/feature-injection-and-handling-technical-stories/).
+* each feature is in its own file or folder
+* each epic has its own folder
+* features contain the user story, rules, and scenarios that demonstrate how the
+  rules apply within the product.
 
 ```cucumber
-Feature: logging in
+Feature: Updating user details
 
-  As a user of Acme
-  I want to be able to sign into my account
-  So that I can enjoy the application personalized to my interests.
+  As a user of FooBar
+  I want to be able to update my account's details
+  So that I can correct typing mistakes and keep my account details accurate.
 
-  Scenario: ...
-```
+  Rules:
+  - user accounts can update the first and last name of their own account
+  - user accounts cannot update other accounts
+  - admins can update any account
+  - when an account is updated,
+    an email is sent to the account's primary email to confirm the changes
+
+
+  Scenario: a user updates their last name
+    Given my name is "John Doe"
+    When I update my last name to "Connor"
+    Then I am "John Connor"
+
+
+  Scenario: a user tries to update another account's details
+
+
+  Scenario: an admin updates another account
+  ```
 
 
 ## Scenarios
 
-Each Scenario describes a particular way of using the respective feature,
+Each Scenario describes a particular way of using the respective feature
 in a particular situation.
-A good structure is to have one scenario describe the happy path of the feature,
-and then a number of scenarios to cover optional edge cases.
-
-The scenario title should describe the situation that is tested
-and should be easily understood.
-
-__example__
-
-```cucumber
-Feature: Sign-In
-
-  Scenario: with correct credentials
-
-  Scenario: with wrong password
-
-  Scenario: with non-existing username
-
-  Scenario: with missing password
-
-  Scenario: with missing username
-```
+If you write down the rules of the feature first,
+the scenarios fall out naturally.
 
 If a feature has more than 10 scenarios,
 its probably too big and should be broken up
@@ -101,6 +100,50 @@ Common `Given` steps
 at the beginning of all scenarios
 can (and should) be extracted
 into a `Background` block.
+
+
+## Multi-level Cucumber
+
+Cucumber enforce consistent behavior of an application on several levels,
+implementing several levels of the _testing pyramid_:
+* __model layer:__ against the domain models or service layer.
+  This allows to create the core of the application and its business logic first,
+  without having to worry how it is exposed to the outside world
+* __controller layer:__ against the APIs that expose the business logic.
+  This allows amongst other things to verify access controls.
+* __view layer:__ against the UI. This allows to verify that the app works as a whole.
+
+To make this possible,
+scenarios must be free from implementation details of one particular layer.
+As an example, here is the scenario from above loaded with implementation details
+about the API. Don't do this.
+
+```cucumber
+When I send a PATCH request to "/users/1" with the payload:
+  """
+  { "last_name": "Connor" }
+  """
+Then a GET request to "/users/1" returns:
+  """
+  {
+    "first_name": "John",
+    "last_name": "Connor"
+  }
+  """
+```
+
+As another example, here is the same scenario loaded with implementation details
+of the web UI. Don't do this either.
+
+```cucumber
+When I go to "/users/1"
+And I enter "Connor" into the "Last name" text field
+And I click the button "SUBMIT"
+And I wait until I see "User updated"
+Then the page contains "John Connor"
+```
+
+Don't mix different levels in your specs.
 
 
 ## Step definitions
@@ -132,30 +175,3 @@ Given a user account with name "foo" and password "bar"
 When I log in as "foo" with password "bar"
 Then the application greets me with "welcome foo!"
 ```
-
-* don't use helper libraries like
-  [websteps](https://github.com/kucaahbe/cucumber-websteps).
-* you Cucumber
-  [shouldn't](http://aslakhellesoy.com/post/11055981222/the-training-wheels-came-off)
-  be based on generic low-level steps.
-  That's what Selenium is for.
-* Use appropriately high-level steps.
-
-__bad example__
-
-```cucumber
-Background:
-  Given a user account with name "foo" and password "bar"
-  And I go to page "login"
-  And I enter "foo" into the "username" field
-  And I enter "bar" into the "password" field
-  And I click the button "Login"
-```
-
-__good example__
-
-```cucumber
-Background:
-  Given I am logged in as user "foo"
-```
-
