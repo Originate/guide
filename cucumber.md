@@ -68,8 +68,8 @@ Feature: Updating user details
   - normal users can update the first and last name of their own account
   - normal users cannot update other accounts
   - admins can update any account
-  - when an account is updated,
-    an email is sent to the account's primary email to confirm the changes
+  - when an account is updated, an email is sent to the account's primary email 
+    to confirm the changes
 
 
   Scenario: a user updates their last name
