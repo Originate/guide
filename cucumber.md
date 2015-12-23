@@ -65,8 +65,8 @@ Feature: Updating user details
   So that I can correct typing mistakes and keep my account details accurate.
 
   Rules:
-  - user accounts can update the first and last name of their own account
-  - user accounts cannot update other accounts
+  - normal users can update the first and last name of their own account
+  - normal users cannot update other accounts
   - admins can update any account
   - when an account is updated,
     an email is sent to the account's primary email to confirm the changes
