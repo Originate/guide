@@ -73,9 +73,9 @@ Feature: Updating user details
 
 
   Scenario: a user updates their last name
-    Given my name is "John Doe"
+    Given am logged in as "John Doe"
     When I update my last name to "Connor"
-    Then I am "John Connor"
+    Then my name is "John Connor"
 
 
   Scenario: a user tries to update another account's details
