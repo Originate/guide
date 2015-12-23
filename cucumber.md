@@ -79,9 +79,11 @@ Feature: Updating user details
 
 
   Scenario: a user tries to update another account's details
+    ...
 
 
   Scenario: an admin updates another account
+    ...
   ```
 
 
