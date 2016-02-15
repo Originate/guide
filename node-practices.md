@@ -106,4 +106,4 @@ deployment:
       - npm set //registry.npmjs.org/:_authToken $AUTH_TOKEN
       - npm publish
 ```
-Then set the AUTH_TOKEN environment variable in the project settings in CircleCI.
+Then set the `AUTH_TOKEN` environment variable in the project settings in CircleCI. Ping Alex David, or Kevin Goslar for Originate's `AUTH_TOKEN`.
