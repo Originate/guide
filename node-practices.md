@@ -95,3 +95,15 @@ Continuous integration
 -----
 
 Mycha can be used for CI as well through [Travis-CI](http://docs.travis-ci.com/user/languages/javascript-with-nodejs/) or [Circle CI](https://circleci.com/docs/language-nodejs)
+
+Set up CI to `npm publish` your package when pushing to the `release` branch.
+This can be accomplished on CircleCI by adding the following to your `circle.yml`:
+```yaml
+deployment:
+  publish:
+    branch: release
+    commands:
+      - npm set //registry.npmjs.org/:_authToken $AUTH_TOKEN
+      - npm publish
+```
+Then set the AUTH_TOKEN environment variable in the project settings in CircleCI.
