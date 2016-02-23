@@ -134,8 +134,8 @@ like [LiveScript](http://livescript.net).
 
 ## Versioning
 
-The Node.JS ecosystem follows [semantic versioning](http://semver.org/),
-so your NPM module must follow it as well
+Follow [semantic versioning](http://semver.org/)
+like the rest of the Node ecosystem.
 
 
 ## Testing
