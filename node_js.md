@@ -25,7 +25,7 @@ $ brew install node
 ```
 
 Use [n](https://github.com/tj/n)
-if you have to deal with different Node.JS versions.
+if you want to run different Node.JS versions on your machine.
 
 
 ## Languages
@@ -40,7 +40,7 @@ For partner-facing projects, pick a widely known language with broad and long-te
 (including linters, source maps, code coverage measurements, published books, and an active developer community)
 like [CoffeeScript](http://coffeescript.org) or [ES6](https://babeljs.io).
 
-For internal projects you can use more experimental languages
+For internal projects you can use more experimental languages,
 like [LiveScript](http://livescript.net).
 
 
@@ -94,7 +94,7 @@ like [LiveScript](http://livescript.net).
   </table>
 
 * Make copious use of badges to indicate build status, dependency currentness,
-  code coverage, code quality, and other metrics in your documentation.
+  code coverage, code quality, and other metrics in your readme.
 
 * Don't commit the compiled JavaScript and the `node_modules` directory into Git
   by adding these directories to your `.gitignore` file
