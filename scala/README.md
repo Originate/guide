@@ -740,61 +740,6 @@ Tips & Tricks
 
     Please note that the extra parentheses are needed due to the `-Yno-adapted-args` compiler option.
 
-0. Instead of running sbt tasks directly from the command line (`$ sbt compile`, for instance), it is better to open an sbt prompt (just type `$ sbt`) and never leave it. Running all your sbt tasks (`clean`, `update`, `compile`, `test`, etc.) inside the sbt prompt is a lot faster since you only have to start sbt, load the JVM, and wait for it to warm up (if ever) once. If your `build.sbt` file changes, just run the `reload` task and you are good to go again.
-
-    Having an sbt instance running `~test` in the background is one of the best ways to develop in Scala. You can run some sbt tasks and be left inside the prompt by using the `shell` task: `$ sbt clean update compile test:compile shell`.
-
-0. The following shorthand trick works in the Scala REPL:
-
-    ```scala
-    scala> "The quick brown fox jumps over the lazy dog!"
-    res0: String = The quick brown fox jumps over the lazy dog!
-
-    scala> .toLowerCase
-    res1: String = the quick brown fox jumps over the lazy dog!
-
-    scala> .distinct
-    res2: String = the quickbrownfxjmpsvlazydg!
-
-    scala> .filter(_.isLetter)
-    res3: String = thequickbrownfxjmpsvlazydg
-
-    scala> .sorted
-    res4: String = abcdefghijklmnopqrstuvwxyz
-
-    scala> .size
-    res5: Int = 26
-    ```
-
-0. Learn you a few Scala tricks for great good: https://github.com/marconilanna/ScalaUpNorth2015
-
-Additional Remarks
-------------------
-
-0. Program in Scala. You are not writing Java, Haskell, or Python.
-
-0. Leverage type safety. Let the compiler and the type system do the grunt work for you. Type early, type often. "When in doubt, create a type" - Martin Fowler
-
-0. Favor immutability, avoid mutability whenever possible. Mutability encapsulated in small scopes internal to functions is acceptable.
-
-0. Obey the principle of least astonishment.
-
-0. Always favor readability. Be clear.
-
-0. Brevity enhances clarity.
-
-0. Favor generic code but not at the expensive of clarity.
-
-0. Be always aware of the trade offs you make.
-
-0. "Premature optimization is the root of all evil" is not an excuse to do stupid things on purpose!
-
-0. Do not leave unreachable ("dead") code behind.
-
-0. Do not comment out code, that is what version control is for.
-
-0. Take advantage of simple language features that afford great power but avoid the esoteric ones, especially in the type system.
-
 0. Java `enum`s are very powerful and flexible. Enumeration types in Java can include methods and fields, and enum constants are able to specialize their behavior. For more information, refer to the awesome "Effective Java, 2nd Edition" by Joshua Bloch, in particular Chapter 6, "Enums and Annotations", Item 30: "Use enums instead of int constants".
 
     Unfortunately, Scala enums are not at feature parity with their Java counterparts. They do not, by default, offer the same flexibility and power. They do not interoperate with Java. They have the same type after erasure (see below). Pattern matching is not exhaustively checked. Play JSON and Scala Pickling do not support enumerations. [Do not expect](https://groups.google.com/forum/#!msg/scala-internals/8RWkccSRBxQ/U4y0XpRJfdQJ) the [situation to change](https://www.reddit.com/r/scala/comments/3aqlhu/is_there_a_voting_mechanism_for_new_scala_features/csgy8i0).
@@ -849,6 +794,61 @@ Additional Remarks
       }
     }
     ```
+
+0. Instead of running sbt tasks directly from the command line (`$ sbt compile`, for instance), it is better to open an sbt prompt (just type `$ sbt`) and never leave it. Running all your sbt tasks (`clean`, `update`, `compile`, `test`, etc.) inside the sbt prompt is a lot faster since you only have to start sbt, load the JVM, and wait for it to warm up (if ever) once. If your `build.sbt` file changes, just run the `reload` task and you are good to go again.
+
+    Having an sbt instance running `~test` in the background is one of the best ways to develop in Scala. You can run some sbt tasks and be left inside the prompt by using the `shell` task: `$ sbt clean update compile test:compile shell`.
+
+0. The following shorthand trick works in the Scala REPL:
+
+    ```scala
+    scala> "The quick brown fox jumps over the lazy dog!"
+    res0: String = The quick brown fox jumps over the lazy dog!
+
+    scala> .toLowerCase
+    res1: String = the quick brown fox jumps over the lazy dog!
+
+    scala> .distinct
+    res2: String = the quickbrownfxjmpsvlazydg!
+
+    scala> .filter(_.isLetter)
+    res3: String = thequickbrownfxjmpsvlazydg
+
+    scala> .sorted
+    res4: String = abcdefghijklmnopqrstuvwxyz
+
+    scala> .size
+    res5: Int = 26
+    ```
+
+0. Learn you a few Scala tricks for great good: https://github.com/marconilanna/ScalaUpNorth2015
+
+Additional Remarks
+------------------
+
+0. Program in Scala. You are not writing Java, Haskell, or Python.
+
+0. Leverage type safety. Let the compiler and the type system do the grunt work for you. Type early, type often. "When in doubt, create a type" - Martin Fowler
+
+0. Favor immutability, avoid mutability whenever possible. Mutability encapsulated in small scopes internal to functions is acceptable.
+
+0. Obey the principle of least astonishment.
+
+0. Always favor readability. Be clear.
+
+0. Brevity enhances clarity.
+
+0. Favor generic code but not at the expensive of clarity.
+
+0. Be always aware of the trade offs you make.
+
+0. "Premature optimization is the root of all evil" is not an excuse to do stupid things on purpose!
+
+0. Do not leave unreachable ("dead") code behind.
+
+0. Do not comment out code, that is what version control is for.
+
+0. Take advantage of simple language features that afford great power but avoid the esoteric ones, especially in the type system.
 
 0. Learn and use the most advanced features of your favorite text editor. Make sure to configure it to perform as many formatting functions for you as possible, so that you do not have to think about it: remove whitespace at end of lines, add a newline at end of file, etc. If your editor does not support even those "basic" advanced features, find yourself a better one. :-)
 
