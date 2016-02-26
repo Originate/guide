@@ -302,6 +302,18 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
 0. Use `Seq[T]`, not `List[T]` (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another. The most common exception is that Play form mappers require `List[T]`, so you have to use it there. `Seq` is the interface, `List` the implementation, analogous to `Map` and `HashMap` in Java.
 
+0. When possible, use `scala.collection.breakOut` to avoid producing and converting intermediate collections with `.toMap`, `.toSeq`, `.toSet`, etc.
+
+    ```scala
+    // Produces an intermediate Seq[(String, Int)] and converts it to Map[String, Int]
+    val bad = Seq("Toronto", "New York", "San Francisco").map(s => (s, s.length)).toMap
+
+    // No intermediate values or conversions involved
+    val good: Map[String, Int] = Seq("Toronto", "New York", "San Francisco").map(s => (s, s.length))(breakOut)
+    ```
+
+    Please notice that the type annotation is required or `breakOut` will not be able to infer and use the proper builder. To know when `breakOut` can be used, check in the Scaladoc if the higher-order function (`map` in the example above) takes an implicit `CanBuildFrom` parameter.
+
 0. Do not overuse tuples, decompose them or better, use case classes:
 
     ```scala
