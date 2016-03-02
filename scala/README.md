@@ -312,7 +312,7 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     val good: Map[String, Int] = Seq("Toronto", "New York", "San Francisco").map(s => (s, s.length))(breakOut)
     ```
 
-    Please notice that the type annotation is required or `breakOut` will not be able to infer and use the proper builder. To know when `breakOut` can be used, check in the Scaladoc if the higher-order function (`map` in the example above) takes an implicit `CanBuildFrom` parameter.
+    Please note that the type annotation is required or `breakOut` will not be able to infer and use the proper builder. To know when `breakOut` can be used, check in the Scaladoc if the higher-order function (`map` in the example above) takes an implicit `CanBuildFrom` parameter. The attentive reader may notice that `breakOut` is in fact being passed in lieu of the implicit `CanBuildFrom` parameter.
 
 0. Do not overuse tuples, decompose them or better, use case classes:
 
@@ -882,7 +882,7 @@ Additional Remarks
 
 0. Always remember Tip 4: "[Do not Live with Broken Windows](http://www.artima.com/intv/fixit.html): Fix each as soon as it is discovered." - The Pragmatic Programmer, Andrew Hunt and David Thomas.
 
-Part II, [Orthogonality and the DRY Principle](http://www.artima.com/intv/dry.html), is also an interesting reading. [Full interview](http://www.artima.com/intv/plain.html).
+Part II, [Orthogonality and the DRY Principle](http://www.artima.com/intv/dry.html), is also an interesting read. [Full interview](http://www.artima.com/intv/plain.html).
 
 Static Analysis Tools & Configuration
 -------------------------------------
