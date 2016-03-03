@@ -155,17 +155,19 @@ use cases, so let's discuss the various options in more detail to give you some 
       Every bug fix per definition changes existing behavior,
       and even just adding functionality often changes existing behavior in subtle ways.
       Therefore, each version change must be treated as potentially breaking,
-      and be tested thoroughly before being released.
+      and be tested thoroughly before being used in production.
       The version number change merely provides a hint about
-      how substantial the expected change is,
+      how impactful the expected change should be,
       which allows you to defer more substantial version upgrades to an appropriate time.
     - Each deploy can use a slightly different set of direct and indirect dependency versions.
-      This problem gets worse the older the version of your library becomes.
-    - You don't know which exact API versions you actually code against.
+      This problem gets worse the more outdated your `package.json` file becomes.
+    - You don't know which exact API versions you actually run against.
       If your package.json specifies version `^1.2.3` of a dependency,
       your could actually be using `1.7.9` and wouldn't know it.
       The problem here is that such vast version changes are very likely to
       introduce subtle changes in APIs and functionality that you are not aware of.
+      And the only time you will notice this is when a new production deploy suddenly
+      stops working.
     - Currently there are no tools that can automatically update
       your `package.json` file with this setup.
   * _conclusion:_
@@ -188,9 +190,10 @@ use cases, so let's discuss the various options in more detail to give you some 
     but leave management of your dependencies' stability and updates up to them.
   * _advantages:_
     - Can make guarantees that _your code_ interacts with the external world correctly.
-    - Your dependencies can manage themselves
     - The exact APIs that your code talks to are clearly documented in package.json
+    - Your dependencies can still use newer versions of their dependencies
   * _disadvantages:_
+    - Your dependencies can still use newer versions of their dependencies
     - Cannot make guarantees that _your overall application_ works correctly,
       because dependencies of dependencies can still update at any time.
   * _tips:_
@@ -243,6 +246,9 @@ use cases, so let's discuss the various options in more detail to give you some 
     - you have to customize the deployment process to run `npm rebuild`
       on the target machine
   * _more info:_ [here](http://www.letscodejavascript.com/v3/blog/2014/03/the_npm_debacle)
+  * tips: To avoid cluttering PRs with dependency source code,
+    submit them on your own before the PR.
+    The code review can assume the correct dependencies are in place.
   * _conclusion:_ This approach should be used for applications in maintenance mode.
     Ideally it is combined with a virtual machine image that prevents bit rot by
     providing a stable run-time environment (same OS, Node, and NPM version etc)
@@ -250,13 +256,13 @@ use cases, so let's discuss the various options in more detail to give you some 
 
 __Guidelines:__
 
-* _actively developed projects_ should do (3) and (4) together:
+* _actively developed projects_ should do __(3)__ and __(4)__ together:
   use exact versioning in package.json
   to document what exact API versions your code is designed against,
   plus a shrinkwrap to lock down all versions of all dependencies
   for stability.
 
-* _projects in maintenance mode_ should do (3), (4), and (5) together
+* _projects in maintenance mode_ should do __(3)__, __(4)__, and __(5)__ together
 
 * this applies equally to _libraries_ (code that is used by other Node.JS code)
   as well as _servers_ (code that runs by itself).
@@ -266,15 +272,15 @@ __Guidelines:__
   Examples: NPM itelf, Mocha, Cucumber-JS, etc.
 
 * dependencies of all NPM modules should be updated at least once a month,
-  ideally using [O-Update-NPM](https://github.com/Originate/o-update-npm).
+  ideally using [o-tools](https://github.com/Originate/o-tools-node).
 
 
 ## Testing
 
 * Try to use [Cucumber-JS](https://github.com/cucumber/cucumber-js) for end-to-end testing,
-  otherwise [Mocha](https://mochajs.org) or [Mycha](https://github.com/Originate/mycha)
+  otherwise [Mycha](https://github.com/Originate/mycha) or [Mocha](https://mochajs.org)
   are good choices as well.
-* Use [Mocha](https://mochajs.org) or [Mycha](https://github.com/Originate/mycha)
+* Use [Mycha](https://github.com/Originate/mycha) or [Mocha](https://mochajs.org)
   for unit testing.
 
 
