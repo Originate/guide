@@ -108,15 +108,6 @@ like [LiveScript](http://livescript.net).
 
 ## Dependencies
 
-* If you create a library that is used by other code bases,
-  use semantic versioning for your dependencies
-  to maintain a certain amount of flexibility for your users
-  to use more recent bug fixed versions of dependencies.
-
-* If you create a final product that is to be run somewhere,
-  lock down the exact versions of all dependencies using `npm shrinkwrap`
-  to be safe from any surprises in production.
-
 * Separate development and production dependencies from each other
   by putting them into the `dependencies` vs `devDependencies` section
   in `package.json`.
@@ -132,10 +123,150 @@ like [LiveScript](http://livescript.net).
   tool to prune out unused dependencies.
 
 
-## Versioning
+### Versioning
 
-Follow [semantic versioning](http://semver.org/)
+For your own code, try to follow [semantic versioning](http://semver.org/),
 like the rest of the Node ecosystem.
+
+NPM provides a wide range of ways
+to specify the versions of your dependencies
+in more or less flexible ways.
+Unfortunately,
+there is no easy to use single best solution for more serious (enterprise-grade)
+use cases, so let's discuss the various options in more detail to give you some guidance:
+
+1. __specify no version for your direct dependencies__
+  * _example:_ `"fsextra": "*"` or `"fsextra": "latest"`
+  * _motivation:_ automatically use the latest state of the art on each deploy
+  * _conclusion:_ this is highly unsafe, and should never be used.
+    Any breaking change in any of your dependencies will be picked up automatically
+    and affect your application.
+
+2. __specify semantically safe versions for your direct dependencies__
+  * _example:_ `"fsextra": "^1.2.3"`
+  * _motivation:_ your dependencies get automatically updated to the latest semantically "safe" versions
+    on each deploy
+  * _advantages:_
+    - You don't have to constantly update the version of the dependencies your code talks to,
+      and your users can take advantages of the latest bug fixes.
+  * _disadvantages:_
+    - True semantic versioning is an abstract, un-attainable ideal.
+      In real life it is an illusion.
+      Every bug fix per definition changes existing behavior,
+      and even just adding functionality often changes existing behavior in subtle ways.
+      Therefore, each version change must be treated as potentially breaking,
+      and be tested thoroughly before being released.
+      The version number change merely provides a hint about
+      how substantial the expected change is,
+      which allows you to defer more substantial version upgrades to an appropriate time.
+    - Each deploy can use a slightly different set of direct and indirect dependency versions.
+      This problem gets worse the older the version of your library becomes.
+    - You don't know which exact API versions you actually code against.
+      If your package.json specifies version `^1.2.3` of a dependency,
+      your could actually be using `1.7.9` and wouldn't know it.
+      The problem here is that such vast version changes are very likely to
+      introduce subtle changes in APIs and functionality that you are not aware of.
+    - Currently there are no tools that can automatically update
+      your `package.json` file with this setup.
+  * _conclusion:_
+    If you want to make any sort of guarantee that your code uses
+    its direct APIs correctly (this applies to almost all of Originate's projects)
+    this option isn't reliable enough.
+    The only advantage of this approach is
+    better availability of certain dependency updates.
+    Manual updating of dependencies can (and should) be made efficient
+    by dependency tracking services
+    ([david-dm.org](https://david-dm.org)),
+    tools to automatically bump dependency versions ([david](https://github.com/alanshaw/david)),
+    automated releases via CI systems,
+    and possibly [tooling](https://github.com/Originate/extra-miles/issues/8)
+    that runs all this automatically at regular intervals.
+
+3. __specify the exact versions of your direct dependencies__
+  * _example:_ `"fsextra": "1.2.3"`
+  * _motivation:_ lock down the APIs that _your_ code talks to,
+    but leave management of your dependencies' stability and updates up to them.
+  * _advantages:_
+    - Can make guarantees that _your code_ interacts with the external world correctly.
+    - Your dependencies can manage themselves
+    - The exact APIs that your code talks to are clearly documented in package.json
+  * _disadvantages:_
+    - Cannot make guarantees that _your overall application_ works correctly,
+      because dependencies of dependencies can still update at any time.
+  * _tips:_
+    - Run `npm config set save-exact true` to configure your NPM client
+      to always store exact version numbers from now on.
+  * _conclusion:_ This can make better guarantees than (2),
+    but still includes the possibility of sudden and unpredictable breakages.
+    It could be okay for prototyping and early-stage development,
+    but cannot provide the level of reliabilty required for
+    production-quality projects.
+
+4. __specify the exact version of all your dependencies__
+  * _example:_ by using a [shrinkwrap](https://docs.npmjs.com/cli/shrinkwrap)
+  * _motivation:_ lock down the exact versions of all external APIs
+  * _advantages:_
+    - Together with NPM's policy that existing versions can never be changed,
+      this can make guarantees that your code will always work exactly the same.
+  * _disadvantages:_
+    - you have to maintain the `npm-shrinkwrap.json` file now
+  * _conclusion:_ given that correct semantic versioning is impossible,
+    this is the recommended approach for all
+    actively developed production-grade projects at Originate.
+
+5. __store the source code of your dependencies together with your code__
+  * _example:_
+
+    ```
+    # remove `node_modules` from `.gitignore`
+    rm -rf node_modules
+    npm install --ignore-scripts
+    git add . && git commit -a
+    npm rebuild
+    git status
+    # add all new files to .gitignore
+    # when deploying on production, you just have to run "npm rebuild"
+    ```
+
+  * _motivation:_ store all of the source code that your application needs to run
+    in one place, so that it is deployable as-is.
+  * _advantages:_
+    - You can deploy even when NPM is currently unavailable
+    - Your application remains deployable and works exactly the same,
+      for years to come,
+      even if particular NPM package versions get modified,
+      sources of NPM packages go away (GitHub or NPM repos), or
+      npmjs.org as a whole gets discontinued.
+  * _disadvantages:_
+    - a lot of extra code in your repo
+    - a lot of noise in PRs when changing dependencies
+    - you have to customize the deployment process to run `npm rebuild`
+      on the target machine
+  * _more info:_ [here](http://www.letscodejavascript.com/v3/blog/2014/03/the_npm_debacle)
+  * _conclusion:_ This approach should be used for applications in maintenance mode.
+    Ideally it is combined with a virtual machine image that prevents bit rot by
+    providing a stable run-time environment (same OS, Node, and NPM version etc)
+
+
+__Guidelines:__
+
+* _actively developed projects_ should do (3) and (4) together:
+  use exact versioning in package.json
+  to document what exact API versions your code is designed against,
+  plus a shrinkwrap to lock down all versions of all dependencies
+  for stability.
+
+* _projects in maintenance mode_ should do (3), (4), and (5) together
+
+* this applies equally to _libraries_ (code that is used by other Node.JS code)
+  as well as _servers_ (code that runs by itself).
+  This distinction is artificial and doesn't hold up in real life.
+  Almost all "servers" should (and do) provide JS APIs to call them from other code Node code
+  in addition to running them by themselves from the command line.
+  Examples: NPM itelf, Mocha, Cucumber-JS, etc.
+
+* dependencies of all NPM modules should be updated at least once a month,
+  ideally using [O-Update-NPM](https://github.com/Originate/o-update-npm).
 
 
 ## Testing
