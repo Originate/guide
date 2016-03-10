@@ -266,7 +266,7 @@ Here are some tips and best practices in securing the project you're working on 
 - Use strong passwords
   - Preferably randomly generated with letters, numbers, and other characters
 - Try not to use public personal information to secure anything (i.e. using your dog's name as the answer to a secret question and your dog's name is on Facebook)
-  - Don't assume information about your personal life or relationships is private enough to only be known by you. It's 2014.
+  - Don't assume information about your personal life or relationships is private enough to only be known by you. It's 2016.
   - Do not talk about the specifics of a project on social media. Improper disclosure of technologies used may give an attacker enough information to exploit it.
   - If you own a domain name, purchase [whois protection](https://en.wikipedia.org/wiki/Domain_privacy). Whois records are a publically accessible treasure trove of personal information that includes your name, address, and phone number.
   - See the “Recon Tools” section below and see how much personal information you can dig up about yourself.
