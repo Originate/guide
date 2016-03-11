@@ -450,6 +450,8 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     }
     ```
 
+    Please note that `NonFatal` is not needed when pattern matching `Future` or `Try` since they already filter for it.
+
 0. Make judicious use of the various assertions (contracts) offered by Scala. See [scala.Predef](http://www.scala-lang.org/api/current/index.html#scala.Predef$) for the complete reference.
 
     1. Assertions (`assert(b != 0)`) are used to document and check design-by-contract invariants in code. They can be disabled at runtime with the `-Xdisable-assertions` command line option.
