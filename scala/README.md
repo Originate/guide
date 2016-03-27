@@ -302,6 +302,18 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
 0. Use `Seq[T]`, not `List[T]` (see: [http://stackoverflow.com/a/10866807/410286](http://stackoverflow.com/a/10866807/410286)) except where you specifically need to force one implementation over another. The most common exception is that Play form mappers require `List[T]`, so you have to use it there. `Seq` is the interface, `List` the implementation, analogous to `Map` and `HashMap` in Java.
 
+0. When possible, use `scala.collection.breakOut` to avoid producing and converting intermediate collections with `.toMap`, `.toSeq`, `.toSet`, etc.
+
+    ```scala
+    // Produces an intermediate Seq[(String, Int)] and converts it to Map[String, Int]
+    val bad = Seq("Toronto", "New York", "San Francisco").map(s => (s, s.length)).toMap
+
+    // No intermediate values or conversions involved
+    val good: Map[String, Int] = Seq("Toronto", "New York", "San Francisco").map(s => (s, s.length))(breakOut)
+    ```
+
+    Please note that the type annotation is required or `breakOut` will not be able to infer and use the proper builder. To know when `breakOut` can be used, check in the Scaladoc if the higher-order function (`map` in the example above) takes an implicit `CanBuildFrom` parameter. The attentive reader may notice that `breakOut` is in fact being passed in lieu of the implicit `CanBuildFrom` parameter.
+
 0. Do not overuse tuples, decompose them or better, use case classes:
 
     ```scala
@@ -437,6 +449,8 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
       case NonFatal(e) =>  // The only acceptable way to catch all exceptions
     }
     ```
+
+    Please note that `NonFatal` is not needed when pattern matching `Future` or `Try` since they already filter for it.
 
 0. Make judicious use of the various assertions (contracts) offered by Scala. See [scala.Predef](http://www.scala-lang.org/api/current/index.html#scala.Predef$) for the complete reference.
 
@@ -740,61 +754,6 @@ Tips & Tricks
 
     Please note that the extra parentheses are needed due to the `-Yno-adapted-args` compiler option.
 
-0. Instead of running sbt tasks directly from the command line (`$ sbt compile`, for instance), it is better to open an sbt prompt (just type `$ sbt`) and never leave it. Running all your sbt tasks (`clean`, `update`, `compile`, `test`, etc.) inside the sbt prompt is a lot faster since you only have to start sbt, load the JVM, and wait for it to warm up (if ever) once. If your `build.sbt` file changes, just run the `reload` task and you are good to go again.
-
-    Having an sbt instance running `~test` in the background is one of the best ways to develop in Scala. You can run some sbt tasks and be left inside the prompt by using the `shell` task: `$ sbt clean update compile test:compile shell`.
-
-0. The following shorthand trick works in the Scala REPL:
-
-    ```scala
-    scala> "The quick brown fox jumps over the lazy dog!"
-    res0: String = The quick brown fox jumps over the lazy dog!
-
-    scala> .toLowerCase
-    res1: String = the quick brown fox jumps over the lazy dog!
-
-    scala> .distinct
-    res2: String = the quickbrownfxjmpsvlazydg!
-
-    scala> .filter(_.isLetter)
-    res3: String = thequickbrownfxjmpsvlazydg
-
-    scala> .sorted
-    res4: String = abcdefghijklmnopqrstuvwxyz
-
-    scala> .size
-    res5: Int = 26
-    ```
-
-0. Learn you a few Scala tricks for great good: https://github.com/marconilanna/ScalaUpNorth2015
-
-Additional Remarks
-------------------
-
-0. Program in Scala. You are not writing Java, Haskell, or Python.
-
-0. Leverage type safety. Let the compiler and the type system do the grunt work for you. Type early, type often. "When in doubt, create a type" - Martin Fowler
-
-0. Favor immutability, avoid mutability whenever possible. Mutability encapsulated in small scopes internal to functions is acceptable.
-
-0. Obey the principle of least astonishment.
-
-0. Always favor readability. Be clear.
-
-0. Brevity enhances clarity.
-
-0. Favor generic code but not at the expensive of clarity.
-
-0. Be always aware of the trade offs you make.
-
-0. "Premature optimization is the root of all evil" is not an excuse to do stupid things on purpose!
-
-0. Do not leave unreachable ("dead") code behind.
-
-0. Do not comment out code, that is what version control is for.
-
-0. Take advantage of simple language features that afford great power but avoid the esoteric ones, especially in the type system.
-
 0. Java `enum`s are very powerful and flexible. Enumeration types in Java can include methods and fields, and enum constants are able to specialize their behavior. For more information, refer to the awesome "Effective Java, 2nd Edition" by Joshua Bloch, in particular Chapter 6, "Enums and Annotations", Item 30: "Use enums instead of int constants".
 
     Unfortunately, Scala enums are not at feature parity with their Java counterparts. They do not, by default, offer the same flexibility and power. They do not interoperate with Java. They have the same type after erasure (see below). Pattern matching is not exhaustively checked. Play JSON and Scala Pickling do not support enumerations. [Do not expect](https://groups.google.com/forum/#!msg/scala-internals/8RWkccSRBxQ/U4y0XpRJfdQJ) the [situation to change](https://www.reddit.com/r/scala/comments/3aqlhu/is_there_a_voting_mechanism_for_new_scala_features/csgy8i0).
@@ -850,6 +809,61 @@ Additional Remarks
     }
     ```
 
+0. Instead of running sbt tasks directly from the command line (`$ sbt compile`, for instance), it is better to open an sbt prompt (just type `$ sbt`) and never leave it. Running all your sbt tasks (`clean`, `update`, `compile`, `test`, etc.) inside the sbt prompt is a lot faster since you only have to start sbt, load the JVM, and wait for it to warm up (if ever) once. If your `build.sbt` file changes, just run the `reload` task and you are good to go again.
+
+    Having an sbt instance running `~test` in the background is one of the best ways to develop in Scala. You can run some sbt tasks and be left inside the prompt by using the `shell` task: `$ sbt clean update compile test:compile shell`.
+
+0. The following shorthand trick works in the Scala REPL:
+
+    ```scala
+    scala> "The quick brown fox jumps over the lazy dog!"
+    res0: String = The quick brown fox jumps over the lazy dog!
+
+    scala> .toLowerCase
+    res1: String = the quick brown fox jumps over the lazy dog!
+
+    scala> .distinct
+    res2: String = the quickbrownfxjmpsvlazydg!
+
+    scala> .filter(_.isLetter)
+    res3: String = thequickbrownfxjmpsvlazydg
+
+    scala> .sorted
+    res4: String = abcdefghijklmnopqrstuvwxyz
+
+    scala> .size
+    res5: Int = 26
+    ```
+
+0. Learn you a few Scala tricks for great good: https://github.com/marconilanna/ScalaUpNorth2015
+
+Additional Remarks
+------------------
+
+0. Program in Scala. You are not writing Java, Haskell, or Python.
+
+0. Leverage type safety. Let the compiler and the type system do the grunt work for you. Type early, type often. "When in doubt, create a type" - Martin Fowler
+
+0. Favor immutability, avoid mutability whenever possible. Mutability encapsulated in small scopes internal to functions is acceptable.
+
+0. Obey the principle of least astonishment.
+
+0. Always favor readability. Be clear.
+
+0. Brevity enhances clarity.
+
+0. Favor generic code but not at the expensive of clarity.
+
+0. Be always aware of the trade offs you make.
+
+0. "Premature optimization is the root of all evil" is not an excuse to do stupid things on purpose!
+
+0. Do not leave unreachable ("dead") code behind.
+
+0. Do not comment out code, that is what version control is for.
+
+0. Take advantage of simple language features that afford great power but avoid the esoteric ones, especially in the type system.
+
 0. Learn and use the most advanced features of your favorite text editor. Make sure to configure it to perform as many formatting functions for you as possible, so that you do not have to think about it: remove whitespace at end of lines, add a newline at end of file, etc. If your editor does not support even those "basic" advanced features, find yourself a better one. :-)
 
 0. Functions should communicate purpose and intent.
@@ -868,7 +882,9 @@ Additional Remarks
 
     [Martin Fowler](http://www.martinfowler.com/bliki/AnemicDomainModel.html)
 
-0. Always remember Tip 4: "Do not Live with Broken Windows: Fix each as soon as it is discovered." - The Pragmatic Programmer, Andrew Hunt and David Thomas.
+0. Always remember Tip 4: "[Do not Live with Broken Windows](http://www.artima.com/intv/fixit.html): Fix each as soon as it is discovered." - The Pragmatic Programmer, Andrew Hunt and David Thomas.
+
+Part II, [Orthogonality and the DRY Principle](http://www.artima.com/intv/dry.html), is also an interesting read. [Full interview](http://www.artima.com/intv/plain.html).
 
 Static Analysis Tools & Configuration
 -------------------------------------
