@@ -305,3 +305,15 @@ Then, to release a new version of your NPM module, call:
 $ npm version <patch|minor|major>
 $ npm publish
 ```
+
+Set up CI to `npm publish` your package when pushing to the `release` branch.
+This can be accomplished on CircleCI by adding the following to your `circle.yml`:
+```yaml
+deployment:
+  publish:
+    branch: release
+    commands:
+      - npm set //registry.npmjs.org/:_authToken $AUTH_TOKEN
+      - npm publish
+```
+Then set the `AUTH_TOKEN` environment variable in the project settings in CircleCI. Ping Alex David, or Kevin Goslar for Originate's `AUTH_TOKEN`.
