@@ -2,15 +2,15 @@ A starting point for Originate engineers. This guide includes best practices and
 
 ### Engineering Process
 
-* [Git](https://github.com/Originate/guide/blob/master/git.md)
-* [Code Reviews](https://github.com/Originate/guide/blob/master/pull_requests.md)
-* [Security](https://github.com/Originate/guide/blob/master/security)
+* [Git](git.md)
+* [Code Reviews](pull_requests.md)
+* [Security](security)
 * [Open Sourcing](open_sourcing.md)
 
 ### Stack Guides
 
 * [Android](android/README.md)
-* [iOS](/ios/README.md)
-* [Node](https://github.com/Originate/guide/blob/master/node-practices.md)
-* [Rails](https://github.com/Originate/guide/blob/master/rails.md)
-* [Scala](https://github.com/Originate/guide/blob/master/scala/README.md)
+* [iOS](ios/README.md)
+* [Node](node_js.md)
+* [Rails](rails.md)
+* [Scala](scala/README.md)
