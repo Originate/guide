@@ -48,4 +48,4 @@ Additional Remarks
 
 0. Always remember Tip 4: "[Do not Live with Broken Windows](http://www.artima.com/intv/fixit.html): Fix each as soon as it is discovered." - The Pragmatic Programmer, Andrew Hunt and David Thomas.
 
-Part II, [Orthogonality and the DRY Principle](http://www.artima.com/intv/dry.html), is also an interesting read. [Full interview](http://www.artima.com/intv/plain.html).
+    Part II, [Orthogonality and the DRY Principle](http://www.artima.com/intv/dry.html), is also an interesting read. [Full interview](http://www.artima.com/intv/plain.html).
