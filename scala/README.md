@@ -1,10 +1,10 @@
-Originate's Scala Style Guide
-=============================
+Originate's Scala Guide
+=======================
 
 Introduction
 ------------
 
-Welcome to Originate's Scala Style Guide.
+Welcome to Originate's Scala Guide.
 This guide contains recommendations for formatting conventions, coding style,
 and best practices based on person-decades of experience gathered across
 innumerous Scala projects.

@@ -1,5 +1,5 @@
-Originate's Scala Style Guide
-=============================
+Originate's Scala Guide
+=======================
 
 Additional Remarks
 ------------------
