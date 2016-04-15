@@ -14,3 +14,4 @@ A starting point for Originate engineers. This guide includes best practices and
 * [Node](node_js.md)
 * [Rails](rails.md)
 * [Scala](scala/README.md)
+* [Haskell](haskell/README.md)
