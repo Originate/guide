@@ -1,4 +1,4 @@
-# Originate Android Stack Guidelines
+# Originate Guides - Android Stack
 
 Welcome to Originate's Android stack guidelines. This is intended to be a living document that captures our collective Android knowledge here at Originate.
 

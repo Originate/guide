@@ -1,4 +1,4 @@
-# CoffeeScript Style Guide
+# Originate Guides - CoffeeScript Style Guide
 * follow the official CoffeeScript syntax on [coffeescript.org](http://coffeescript.org)
 * also these more detailed guidelines: [github.com/polarmobile/coffeescript-style-guide](https://github.com/polarmobile/coffeescript-style-guide)
 * consider setting up coffeelint
