@@ -1,4 +1,4 @@
-Originate's Scala Guide
+Originate Guides - Scala
 =======================
 
 Introduction

@@ -1,4 +1,4 @@
-# The Originate Guide to Git
+# Originate Guides - Git
 
 These are recommendations. They should be followed in the absence of good, justifiable reasons to do things differently.
 

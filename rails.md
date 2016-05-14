@@ -1,4 +1,4 @@
-# Ruby on Rails
+# Originate Guides - Ruby on Rails
 
 Rails is best for
 * quick prototypes

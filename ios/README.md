@@ -1,4 +1,4 @@
-# Originate iOS stack guidelines
+# Originate Guides - iOS Stack
 
 Welcome to Originate's iOS stack guidelines. This repository is intended to be a living document that captures our collective iOS knowledge here at Originate.
 

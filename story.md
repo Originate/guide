@@ -1,4 +1,4 @@
-# Storywriting Best Practices
+# Originate Guides - Storywriting Best Practices
 
 Good user stories create efficient development processes.
 

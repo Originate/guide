@@ -1,4 +1,4 @@
-Best Practices for App Security
+Originate Guides - Best Practices for App Security
 ========================
 
 Hello! This document will give a general guideline on best practices in building a secure application as well as list and describe commonly used application exploits and how to defend against them.

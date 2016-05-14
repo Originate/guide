@@ -1,4 +1,4 @@
-# The Originate Field Guide to Haskell Development
+# Originate Guides - Field Guide to Haskell Development
 
 Don't panic.
 

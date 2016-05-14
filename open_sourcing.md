@@ -1,4 +1,4 @@
-# Open-sourcing code from projects
+# Originate Guides - Open-sourcing Code from Projects
 
 While Originate excels at building high-quality intellectual property for our partners,
 we also have very generous policies that allow and encourage open-sourcing code,
