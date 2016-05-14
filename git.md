@@ -2,6 +2,13 @@
 
 These are recommendations. They should be followed in the absence of good, justifiable reasons to do things differently.
 
+## GitHub user account
+
+Please make sure you have [2 factor authentication](https://github.com/settings/security) enabled. 
+Your GitHub account is used to access a lot of things, 
+and it is important to know that changes really come from you,
+even if you work on open-source code.
+
 
 ## Branches
 
