@@ -239,4 +239,6 @@ Then the application greets me with "welcome foo!"
   over source code
   when it comes to describing application features
   on a high level.
+* [the world's most misunderstood collaboration tool](https://cucumber.io/blog/2014/03/03/the-worlds-most-misunderstood-collaboration-tool)
+* [three amigos meeting - agree on the tests before development starts](http://itsadeliverything.com/three-amigos-meeting-agree-the-tests-before-development-starts)
 
