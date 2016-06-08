@@ -144,9 +144,9 @@ The best Git tool is the command line. It is easy to learn and use, and makes th
 
 ### OS X
 * __[GitX](http://gitx.frim.nl):__ free, very lean, provides the things that are better done in a visual tool than on the command line: staging, committing, looking at history.
-* __[Github for Mac]__
-* __[Tower]()__
-* __[SourceTree]()__
+* __[Github Desktop for Mac](https://desktop.github.com/)__
+* __[Tower](https://www.git-tower.com/)__
+* __[SourceTree](https://www.atlassian.com/software/sourcetree)__
 
 ### Conflict Resolution
 - Araxis Merge
