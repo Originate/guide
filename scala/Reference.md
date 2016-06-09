@@ -1,20 +1,20 @@
 Originate's Scala Guide
 =======================
 
-Reference
+Reference - Recommended further reading
 ---------
 
-0. [Scala Style Guide]
-0. [Effective Scala]
-0. [Scala School]
-0. [Scalariform]
-0. [Scalastyle]
-0. [WartRemover]
-0. [Linter]
-0. [Scapegoat]
-0. [abide]
-0. [obey]
-0. [cpd4sbt]
+0. [Scala Style Guide] - Intended to outline some basic Scala stylistic guidelines
+0. [Effective Scala] - Living document that will change to reflect current “best practices”
+0. [Scala School] - A series of lectures to prepare experienced engineers to be productive Scala programmers
+0. [Scalariform] - Scalariform is a code formatter for Scala
+0. [Scalastyle] - Scala style checker
+0. [WartRemover] - Flexible Scala code linting tool
+0. [Linter] - Linter is a Scala static analysis compiler plugin
+0. [Scapegoat] - Scala static code analyzer
+0. [abide] - A simple framework for lint-like rule creation and verification
+0. [obey] - Linter tool for Scala
+0. [cpd4sbt] - Static code analysis via PMD/CPD from within SBT
 
 [Scala Style Guide]: http://docs.scala-lang.org/style/
 [Effective Scala]: http://twitter.github.io/effectivescala/
