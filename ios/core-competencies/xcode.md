@@ -61,4 +61,4 @@ Xcode has an often overlooked snippet manager. Snippets can be mapped to a compl
 
 
 ---
-<sup>†</sup> [Allen](allen.wu@originate.com)
+<sup>†</sup> [Allen](mailto:allen.wu@originate.com)
