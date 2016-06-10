@@ -33,7 +33,7 @@ There are third-party tools that can automatically format Objective-C code to ad
 > * Code smells - long method and long parameter list
 > * Bad practices - inverted logic and parameter reassignment
 
-There are [50+ rules](http://docs.oclint.org/en/dev/rules/index.html) that it can check your code with, and you can even write [custom rules](http://docs.oclint.org/en/dev/devel/rules.html) for it to use.
+There are [60+ rules](http://docs.oclint.org/en/stable/rules/index.html) that it can check your code with, and you can even write [custom rules](http://docs.oclint.org/en/stable/devel/rules.html) for it to use.
 
 ### [clang-format](http://clang.llvm.org/docs/ClangFormat.html)
 
@@ -84,7 +84,7 @@ $ brew install clang-format
             * [x] Treat Warnings as Errors (**Yes**)
     * Further analysis with OCLint
         * Add [`oclint.sh`](../files/oclint.sh) to `scripts/`
-        * Create an OCLint target ([detailed instructions](http://docs.oclint.org/en/dev/guide/xcode.html))
+        * Create an OCLint target ([detailed instructions](http://docs.oclint.org/en/stable/guide/xcode.html))
         * Add new target (Aggregate type), named **OCLint**
             * Add a Run Script to the Build Phases:
             ```bash
