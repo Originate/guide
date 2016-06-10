@@ -4,8 +4,8 @@ Originate's Scala Guide
 Reference - Recommended further reading
 ---------
 
-0. [Scala Style Guide] - Intended to outline some basic Scala stylistic guidelines
-0. [Effective Scala] - Living document that will change to reflect current “best practices”
+0. [Scala Style Guide] - The official Scala community style guide
+0. [Effective Scala] - Scala style guide and best practices from Twitter
 0. [Scala School] - A series of lectures to prepare experienced engineers to be productive Scala programmers
 0. [Scalariform] - Scalariform is a code formatter for Scala
 0. [Scalastyle] - Scala style checker
