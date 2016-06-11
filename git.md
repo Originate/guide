@@ -149,6 +149,6 @@ The best Git tool is the command line. It is easy to learn and use, and makes th
 * __[SourceTree](https://www.atlassian.com/software/sourcetree)__
 
 ### Conflict Resolution
-- Araxis Merge
-- vimdiff
-- FileMerge
+- [Araxis Merge](http://www.araxis.com/merge/)
+- [vimdiff](http://vimdoc.sourceforge.net/htmldoc/diff.html)
+- [FileMerge](https://developer.apple.com/xcode/features/) (part of Xcode by Apple)
