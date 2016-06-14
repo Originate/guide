@@ -31,6 +31,7 @@ These specific economics of software favor open-sourcing code
 over keeping it proprietary in many situations.
 Depending on the particular situation,
 an open-source release can achieve the following business benefits for our partners:
+
 * __cost savings__: All work that is open-sourced under
   the Originate brand is not billed by Originate, but still available to partners.
   It is also maintained by Originate for free well beyond the typical engagement
