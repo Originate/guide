@@ -28,17 +28,50 @@ its own reward. It will make you faster at solving your own problems, and if you
 you’ll find that bad documentation will never stand in your way again (ironically, stackoverflow will become less useful for languages where you have access to
 all of the source).
 
-## Readability and Maintainability
+In summary, the code review process serves the following purposes:
+* __knowledge transfer__
+  * team members learn tricks and best practices from each other
+  * better use of experts: 5-10% of their time spent reviewing code can make a meaningful contribution to a team
+  * within a few months of serious code reviews, every team member writes code on the level of the best developer
+* __better team work__
+  * ensuring agreed upon coding practices are followed
+  * team develops common code style while reviewing each others code
+  * better collaboration of remote teams
+  * more people stay up to date with whats going on in other parts of the code base → they can fix bugs there
+* __better code quality__
+  * team develops culture of high code quality (people are less sloppy if somebody else is looking)
+  * Identify issues in code that are not found through automated testing: poor code structure/architecture, performance bottlenecks, bad variable naming, etc
+  * Find and eliminate defects in the code early (when they are cheap to fix)
+* __feedback for developers__
+  * how good good/bad/average is my code?
+  * where am I in comparison to my peers?
+  * what is possible?
+  * how do others solve interesting problems?
 
-Originate is successful when we build projects that are readable and maintainable. Our partners eventually take over the codebases that we work on, and we
-strive to show them a clean and efficient development process and leave them with a codebase they are proud of and happy to work on.
 
-One of the fastest ways to create convoluted and unreadable code is to let someone code alone. Having your team read your code will allow them to point out
-things that are hard to understand, with the ultimate goal of striving towards a codebase that is a pleasure to read through. The knowledge
-that someone will be reading your code forces you to not be lazy, to think about proper naming of variables, and to consider that style consistency is important.
-This should result in less comments in the code that look like: `//TODO: make this work`.
+## Guidelines submitting a code review
 
-## Giving Effective Feedback
+* Limit the total amount of code for a review to a single logical change.
+  Submit several pull requests for independent changes.
+  [Split up your feature branch](http://blog.originate.com/blog/2015/02/13/refactoring-git-branches-part-ii/) if necessary.
+* No more than 200–400 lines of code per PR
+* Review your code yourself before sending off the pull request, and clean it up as much as possible.
+* Add missing documentation/tests
+* Tag at least one person to do the review. Significant changes need approval from at least two reviewers before they can get merged.
+  You can tag more people, but be mindful of people's time and productivity.
+  If you tag them, they will have to spend time looking at your PR.
+* You must address all comments, by either
+  * implementing them (and acknowledge that through a comment)
+  * complex changes coming out of a comment can be implemented separately, but that must be tracked through a separate JIRA ticket (and you gave your word to do it)
+  * convincing the reviewer why your version is better
+  * deferring to a face-to-face conversation in case there is a lot of back and forth
+  * if you and your reviewer both have valid opinions and can't agree which one to choose here,
+    even after musing about it over lunch or a beer, seek a third party to resolve this and avoid lengthy debates.
+    The tech lead is a good default person for this, and has the last word in code reviews anyways.
+* when you get the LGTM ("looks good to me"), merge your branch and delete it from both your local machine and from Github
+
+
+## Guidelines for reviewing a code review
 
 Since the goal of pull requests is to help people improve and learn from each other, there are some simple rules we can follow to make this more efficient.
 The most important thing is that you have to realize that nobody is perfect, neither reviewer nor reviewee. When a reviewer sees something that is questionable,
@@ -50,6 +83,32 @@ One thing to keep in mind is that it’s extremely easy to write code that a com
 best in __Refactoring: Improving the Design of Existing Code__:
 
 > “Any fool can write code that a computer can understand. Good programmers write code that humans can understand.“
+
+* be polite and constructive, make concrete suggestions.
+  Remember that written language lacks emotional context and body language, and is easily misunderstood.
+* If you are tagged, you have to look at the code. You can still look at other pull requests if you want to
+* Do the code review within half a day of when you are tagged. The other person cannot ship their feature without your feedback!
+* Keep discussions short, if the conversation goes back and forth more than 2 times, its probably better to talk in person
+* the tech lead has the last word in disagreements
+* things to look out for in a code review
+  * Is every piece of code in the right place, i.e. model code in a model, controller logic in a controller, app-specific helper code in a helper, generic helper code in a library?
+  * Do all classes have only one responsibility?
+  * Do all methods do only one thing?
+  * If a method has a side-effect, is that clear from the name, and otherwise documented?
+  * Are all classes/methods/variables named properly so that the code is self-describing?
+  * Is everything as private as possible, i.e. only the intended public interface is public?
+  * Are too many things private? This could be an indication that you should extract a class.
+  * Are all files within a reasonable size (e.g., less than 100 lines of code)?
+  * Are all methods less than 10 lines of code?
+  * No law of demeter violations (providing whole objects to methods when all that’s needed is the value of one attribute of them)?
+  * Is everything tested? Is each thing tested enough? Is it not over-tested?
+  * Are there tests for private methods? This shouldn't happen, it is a code smell.
+  * Every class should have a small comment describing what it represents/does. Public methods should have comments describing what they are for, or when to call them, if this isn’t obvious from the code. Comments shouldn’t describe what the method does (this is visible from looking at the code).
+  * Are there any obvious performance-problems, like making a database query for each loop iteration, rather than using a more optimized query that loads all data at once?
+  * Spacing errors like no empty line between methods, or too many empty lines
+  * There shouldn’t be any commented-out code.
+  * There should be no debug statements like `console.log` or the likes.
+  * There should be no TODO's, as this is often a crutch for being lazy.
 
 
 ## Who Does Code Reviews
@@ -73,45 +132,15 @@ miscommunication. These things happen.
 
 In order to avoid situations like this, always remember that we review the code, not the other person. Criticism should be taken professionally and not personally.
 
+
 ## Workflow
 
 * Submit PR
 * Tag relevant parties (using GitHub’s `@username`)
+  * If your pull request contains changes to both frontend and backend code, tag someone from each team and tell them what to review.
 * Describe changes
 * Add comments about parts you need help with/are unsure about/etc.
+* Its your responsibility to get your code reviewed and submitted. If reviewers neglect you, bump the PR or send them a (friendly) reminder.
 * People review
 * Discuss/make changes per review
 * If people sign off/you get LGTM, then you can merge and delete the branch
-
-## Code Review Cheat Sheet
-
-If you are new to code reviews, you can use this cheat sheet to help give you a list of things to look for when reviewing someone's code.
-
-* Is every piece of code in the right place, i.e. model code in a model, controller logic in a controller, app-specific helper code in a helper,
-generic helper code in a library?
-* Do all classes have only one responsibility?
-* Do all methods do only one thing?
-* Are all classes/methods/variables named properly so that the code is self-describing?
-* Is everything as private as possible, i.e. no things public that don't need to be public?
-* Are too many things private?
-* There should be no law of demeter violations (providing whole objects to methods when all that's needed is the value of one attribute of them).
-* Is everything tested? Is each thing tested enough? Is it not over-tested?
-* Comments shouldn't describe what the method does (this is visible from looking at the code).
-* Are there any obvious performance-stupidities, like making a database query for each loop iteration, rather than using a more optimized query
-that loads all data at once?
-* Are there spacing/style issues like no empty line between methods, or too many empty lines?
-* There shouldn't be any commented-out code.
-* There should be no debug statements like `console.log("here")` etc.
-* There should be no TODO's, as this is often a crutch for being lazy.
-
-## Tips
-
-* Try to avoid tagging too many people in pull requests (in most cases 2 is the max).
-* If your pull request contains changes to both frontend and backend code, tag someone from each team and tell them what to review.
-* Try to keep pull requests small. Bigger pull requests are harder to review effectively, and often sit for longer. If you need help figuring out how to
-break up a pull request that became massive, see: [Refactoring Git Branches](http://blog.originate.com/blog/2014/04/19/refactoring_git_branches/).
-* Expect to get affirmations that the PR is ready to merge by your reviewers. Something like “LGTM” (looks good to me), “ship it”, a thumbsup GIF, or sheep
-icon (or any permutation of these).
-* The creator of the pull request merges! This is to maintain accountability. If reviewers are neglecting you, you can bump the PR or send them a message.
-* A good trick for making sure you’ve addressed most of the comments is to look at the pull request for a bunch of “username commented on an outdated diff”
-messages. These appear when changes are made to lines that a reviewer commented on.
