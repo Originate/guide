@@ -1,6 +1,13 @@
-# The Originate Guide to Git
+# Originate Guides - Git
 
 These are recommendations. They should be followed in the absence of good, justifiable reasons to do things differently.
+
+## GitHub user account
+
+Please make sure you have [2 factor authentication](https://github.com/settings/security) enabled.
+Your GitHub account is used to access a lot of things,
+and it is important to know that changes really come from you,
+even if you work on open-source code.
 
 
 ## Branches
@@ -24,10 +31,22 @@ $ git push -u origin [new feature branch name]
 
 ## Commits
 
-* Each commit should contain only one particular change. Its okay (and encouraged) to have many small commits during development.
-* Commit frequently during your work, each time a dedicated change is done and the tests pass. Don't accumulate dozens of changes before committing. Rather, get into the habit of doing one thing at a time, committing it, then do the next.
-* **Always** review your work before committing it. 
-* Commit messages should have a 50 character summary written in imperative ("fix signup") if possible, or as a short summary for features ("logout button"), followed by an empty line, followed by an optional longer description.
+* Each commit into the main branch should contain only one particular change.
+* Commit frequently during your work,
+  each time a dedicated change is done and the tests pass.
+  Don't accumulate dozens of changes before committing.
+  Rather, get into the habit of doing one thing at a time,
+  reviewing and committing it when done,
+  then doing the next.
+* Always review your work before committing it.
+* Squash the commits on your feature branch,
+  or do a squash commit when merging into the main branch,
+  so that it appears there as a single atomic commit.
+* Write [good commit messages](http://chris.beams.io/posts/git-commit):
+  A 50 character summary written in imperative ("fix signup")
+  or as a short summary for features ("logout button"),
+  followed by an empty line,
+  followed by an optional longer description.
 
 
 ## Staying in sync
@@ -88,7 +107,7 @@ Here is a check list for reviewers:
 * Are all methods less than 10 loc?
 * No law of demeter violations (providing whole objects to methods when all that's needed is the value of one attribute of them)?
 * Is everything tested? Is each thing tested enough? Are things over-tested?
-* Are there any obvious inefficiencies, like making a database query for each loop iteration, rather than using a more optimized query that loads all data at once? 
+* Are there any obvious inefficiencies, like making a database query for each loop iteration, rather than using a more optimized query that loads all data at once?
 * Spacing errors like no empty line between methods, or too many empty lines.
 * There should not be any commented-out code. Commented code should be removed.
 * There should not be any debug statements like "console.log" or the like.
@@ -133,15 +152,27 @@ Advantages of squash merges:
 
 ## Tools
 
-The best Git tool is the command line. It is easy to learn and use, and makes the full power of Git available. In addition to the command line, it is often helpful to have a visual representation of your Git tree and an interactive tool for staging changes/making commits. Here are some tools used by Originate developers: 
+The best Git tool is the command line.
+It is easy to learn and use,
+and makes the full power of Git available.
+In addition to the command line,
+it is often helpful to have a visual representation of your Git tree
+and an interactive tool for staging changes/making commits.
+Here are some tools used by Originate developers:
+
+### Command Line
+
+* __[Git Town](http://www.git-town.com):__ high-level command-line interface for Git
+
 
 ### OS X
 * __[GitX](http://gitx.frim.nl):__ free, very lean, provides the things that are better done in a visual tool than on the command line: staging, committing, looking at history.
-* __[Github for Mac]__
-* __[Tower]()__
-* __[SourceTree]()__
+* __[Github Desktop for Mac](https://desktop.github.com/)__
+* __[Tower](https://www.git-tower.com/)__
+* __[SourceTree](https://www.atlassian.com/software/sourcetree)__
+
 
 ### Conflict Resolution
-- Araxis Merge
-- vimdiff
-- FileMerge
+- [Araxis Merge](http://www.araxis.com/merge/)
+- [vimdiff](http://vimdoc.sourceforge.net/htmldoc/diff.html)
+- [FileMerge](https://developer.apple.com/xcode/features/) (part of Xcode by Apple)

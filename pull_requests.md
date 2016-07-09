@@ -1,4 +1,4 @@
-# Code Reviews
+# Originate Guides - Code Reviews and Pull Requests
 
 At Originate, we strive to be humble engineers that are always ready to learn from each other and improve our skills. Code reviews are one of the best
 tools we have to ensure this. Since we use GitHub to host all of our projects, code reviews come in the form of pull requests.

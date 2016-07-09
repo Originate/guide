@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>About</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Version</string>
+			<key>Key</key>
+			<string>settings_app_version</string>
+			<key>DefaultValue</key>
+			<string>Unknown</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Build</string>
+			<key>Key</key>
+			<string>settings_git_hash</string>
+			<key>DefaultValue</key>
+			<string>-</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Development Settings (requires app restart)</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Key</key>
+			<string>settings_server_environment</string>
+			<key>Title</key>
+			<string>API environment</string>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>DefaultValue</key>
+			<string>settings_server_beta</string>
+			<key>Titles</key>
+			<array>
+				<string>Production</string>
+				<string>Beta</string>
+				<string>Staging</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>settings_server_production</string>
+				<string>settings_server_beta</string>
+				<string>settings_server_staging</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Use local server?</string>
+			<key>Key</key>
+			<string>settings_local_server</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>

