@@ -1,19 +1,28 @@
 # Originate Guides
 
-A starting point for Originate engineers. This guide includes best practices and information for engineering related topics at Originate.
+A starting point for Originate engineers, product managers, and testers.
 
-### Engineering Process
+This guide includes best practices and information for engineering related topics at Originate.
 
-* [Git](git.md)
-* [Code Reviews](pull_requests.md)
+### Engineering Process Practices
+
+* [Git](practices/git.md)
+* [Code Reviews and Pull Requests](practices/pull_requests.md)
 * [Security](security)
-* [Open Sourcing](open_sourcing.md)
+* [Open Sourcing](practices/open_sourcing.md)
 
-### Stack Guides
+### Technology Stack Guides
 
 * [Android](android/README.md)
+* [CoffeeScript](coffeescript.md)
+* [Haskell](haskell/README.md)
 * [iOS](ios/README.md)
 * [Node](javascript/node_js.md)
-* [Rails](rails.md)
+* [Rails](ruby/rails.md)
 * [Scala](scala/README.md)
-* [Haskell](haskell/README.md)
+
+### Software Practices
+
+* [Story Writing](product/story.md)
+* [Product Management Toolkit](product_toolkit.md)
+* [Feature Specs with Cucumber](cucumber.md)
