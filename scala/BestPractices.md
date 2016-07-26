@@ -345,6 +345,30 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
 
     ![You keep using that word, I do not think it means what you think it means](lazyval.jpg "You keep using that word, I do not think it means what you think it means")
 
+0. `object`s are lazily initialized. If an object is defined at the top level or inside another `object`, then that initialization is relatively cheap, done via Java's static initializer blocks. **However** if an `object` is defined inside a `class` or `trait` then it compiles the same as a `lazy val`! That means it suffers all the same problems described in the above section. There are probably no cases where an `object` inside a `class` definition is necessary anyway, so just avoid it. But feel free to define them inside other `object`s!
+
+    ```scala
+    trait T { def x: Int }
+
+    class Bad {
+      object Inner extends T {
+        val x = 10
+      }
+    }
+
+    class Good {
+      val inner: T = new T {
+        val x = 10
+      }
+    }
+
+    object ThisIsFine {
+      object Inner extends T {
+        val x = 10
+      }
+    }
+    ```
+
 0. Secondary constructors: with default parameters, secondary constructors are a lot less frequently needed in Scala than in Java. But they can still be quite useful, use them when needed. Just avoid pathological cases:
 
     ```scala
