@@ -1,8 +1,8 @@
 # Originate Guides - Cucumber
 
-Cucumber in feature specifications fulfills many roles in modern agile development teams:
+Feature specifications written using Cucumber fulfills many roles in modern agile development teams:
 
-* It is _living documentation_ of the software product
+* It is _living documentation_ of the product
   that never becomes outdated because it is updated together with code changes.
   This documentation gives an overview of an application's behavior
   at the same high-level end-user perspective
@@ -42,7 +42,7 @@ This guide provides a number of tips and best practices for writing Cucumber spe
 
 ## Gherkin
 
-[Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) is the language in which Cucumber specs are written in.
+[Gherkin](https://cucumber.io/docs/reference) is the language in which Cucumber specs are written in.
 It should end up sounding close to real English,
 similar to how you would describe the product
 to a normal person in a casual and focussed conversation.
