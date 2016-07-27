@@ -1,21 +1,21 @@
 # Originate Guides - Cucumber
 
-Cucumber fulfills many roles in modern agile development teams:
+Feature specifications written using Cucumber fulfill many roles in modern agile development teams:
 
-* It is _living documentation_ of the application
-  that never becomes outdated because is updated together with code changes.
+* It is _living documentation_ of the product
+  that never becomes outdated because it is updated together with code changes.
   This documentation gives an overview of an application's behavior
-  on the same high-level end-user perspective
+  at the same high-level end-user perspective
   with which we think about products and their features in real life,
-  thereby allowing to use common sense in addition to technical thinking.
-  Gherkin lists the value propesition of a feature as a user story,
+  thereby allowing teams to use common sense in addition to technical thinking.
+  [Gherkin](https://cucumber.io/docs/reference) lists the value proposition of a feature as a user story,
   the cornerstones and rules of it,
-  as well as concrete examples how these rules are implemented in the product.
+  as well as concrete examples ([specification by example](https://en.wikipedia.org/wiki/Specification_by_example)) how these rules are implemented in the product.
 * Cucumber is a _communication vehicle_
   between the product, development, and testing teams.
-  It reflects the team's understanding of the product,
-  and helps remove process and replaces boring meetings with online collaboration.
-* It is a form of automated testing that makes TDD
+  It reflects the team's understanding and expectations of the product,
+  and helps remove process, for example, to replace boring meetings with online collaboration.
+* It is a form of _automated executable testing_ that makes collaborative TDD
   easy, intuitive, and efficient.
 
 All of these things together make Cucumber a tool that supports the collaborative agile
@@ -27,6 +27,9 @@ Cucumber is available in all stacks used at Originate:
 * [Cucumber-Ruby](https://github.com/cucumber/cucumber-ruby) as well as [Cucumber-Rails](https://github.com/cucumber/cucumber-rails)
 * [Cucumber-JS](https://github.com/cucumber/cucumber-js)
 * [Cucumber-JVM](https://github.com/cucumber/cucumber-jvm)
+* [and more...](https://cucumber.io/docs)
+
+----
 
 This guide provides a number of tips and best practices for writing Cucumber specs.
 
@@ -39,13 +42,13 @@ This guide provides a number of tips and best practices for writing Cucumber spe
 
 ## Gherkin
 
-Gherkin is the language in which Cucumber specs are written in.
+[Gherkin](https://cucumber.io/docs/reference) is the language in which Cucumber specs are written in.
 It should end up sounding close to real English,
 similar to how you would describe the product
 to a normal person in a casual and focussed conversation.
 Ideally, somebody with no detailed knowledge about the product
 should understand how a particular feature works
-after reading the Cucumber spec for it.
+after reading the Gherkin in the Cucumber spec for it.
 
 Gherkin files contain:
 
@@ -57,16 +60,17 @@ Gherkin files contain:
   important context for the feature:
   * _who_ it is for: if it doesn't benefit an important stakeholder, it shouldn't exist
   * _what_ functionality it provides
-  * _why_: what relevant business metric is improved by this feature
+  * _why_: what relevant benefit / business metric is improved by this feature
            (if nothing gets improved, it shouldn't exist)
 
   These questions are important.
+  
   A good product only contains features that are relevant and provide value.
   Understanding what value we try to provide to whom
   is important for developers and testers
   for building and testing the feature correctly.
   This also helps with re-evaluating features as part of product maintenance later.
-  The user story documents these aspects in a concise format.
+  The user story documents these aspects and provides context in a concise format.
 
 3. __rules:__ key data points and acceptance criteria about this feature,
               as a bullet point list.
@@ -112,7 +116,7 @@ Feature: Updating account information
 
 ### Writing Scenarios
 
-Each Scenario describes a how the respective feature is used
+Each Scenario describes how the respective feature is used
 in a particular situation.
 If you work out the rules for the feature,
 the scenarios fall out naturally:
