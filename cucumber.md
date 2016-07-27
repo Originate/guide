@@ -1,6 +1,6 @@
 # Originate Guides - Cucumber
 
-Feature specifications written using Cucumber fulfills many roles in modern agile development teams:
+Feature specifications written using Cucumber fulfill many roles in modern agile development teams:
 
 * It is _living documentation_ of the product
   that never becomes outdated because it is updated together with code changes.
