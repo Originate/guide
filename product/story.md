@@ -2,7 +2,7 @@
 
 Good user stories create efficient development processes.
 
-At Originate, we strive to be enable engineers and solutions through our product management, especially including our Storywriting practices.
+At Originate, we strive to enable engineers and solutions through our product management, especially including our Storywriting practices.
 
 -----
 
