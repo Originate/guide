@@ -9,7 +9,7 @@ Other popular style guides for reference:
 * [GitHub](https://github.com/github/objective-c-style-guide)
 * [NYTimes](https://github.com/NYTimes/objective-c-style-guide)
 * [raywenderlich](https://github.com/raywenderlich/objective-c-style-guide)
-* [Google](https://google-styleguide.googlecode.com/svn/trunk/objcguide.xml)
+* [Google](https://google.github.io/styleguide/objcguide.xml)
 
 
 ## Historical matters
