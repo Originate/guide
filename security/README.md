@@ -289,7 +289,7 @@ Web Application Penetration Testing Tools
   - Very useful tool to automatically try all form fields in a web app to look for SQL injection vulnerabilities
 
 - Cookies
-  - [Edit This Cookie](https://chrome.google.com/webstore/unsupported/fngmhnnpilhplaeedifhccceomclgfbg?hl=en) (Chrome)
+  - [Edit This Cookie](http://www.editthiscookie.com/) (Chrome)
     - Quick and easy way to edit cookies in Chrome
   - [Tamper Data](https://addons.mozilla.org/en-US/firefox/addon/tamper-data/) (Firefox)
     - Can edit cookies (and more!)
@@ -303,7 +303,7 @@ Directory Bruteforcing Tools
 
 Recon Tools
 
-- [Creepy](https://ilektrojohn.github.io/creepy/) (aka Cree.py)
+- [Creepy](http://www.geocreepy.com/) (aka Cree.py)
   - An open source intelligence gathering tool that tracks a person's geolocation by searching through their social media
 - [Maltego](https://www.paterva.com/web6/)
   - Used for analyzing and visually presenting relationships between people, groups, websites, and other affiliations

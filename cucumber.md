@@ -158,7 +158,7 @@ When Mike purchases 2 cartons of milk
 
 ## Multi-level Cucumber
 
-Cucumber enforce consistent behavior of an application on several levels,
+Cucumber enforces consistent behavior of an application on several levels,
 implementing several levels of the _testing pyramid_:
 * __model layer:__ against the domain models or service layer.
   This allows to create the core of the application and its business logic first,
@@ -211,7 +211,7 @@ i.e. a number.
 
 Avoid "ego-centric" Cucumber where each step starts with "I".
 The subject in your step definition should be
-what is actually doing the described thing
+who is actually doing the described thing
 in real life.
 
 __bad example__

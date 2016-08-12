@@ -5,8 +5,8 @@ Xcode is the primary IDE used for almost all iOS development and understanding h
 
 ## Documentation
 
-* [Xcode Overview](https://developer.apple.com/library/mac/documentation/ToolsLanguages/Conceptual/Xcode_Overview/Xcode_Overview.pdf)
-* [What's New in Xcode](https://developer.apple.com/library/ios/documentation/DeveloperTools/Conceptual/WhatsNewXcode/WhatsNewXcode.pdf) - updated with new Xcode releases
+* [Xcode Overview](https://developer.apple.com/library/prerelease/content/documentation/ToolsLanguages/Conceptual/Xcode_Overview/index.html)
+* [What's New in Xcode](https://developer.apple.com/xcode/) - updated with new Xcode releases
 
 
 ## Tips and tricks
