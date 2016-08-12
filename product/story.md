@@ -24,14 +24,14 @@ The “user” in user story refers specifically to the user or system CONSUMING
 
 Recommended size: *Smallest amount that delivers value*
 
-There should be some room for PMs to "use their judgement" in terms of sizing a story properly. Sometimes its easier for all parties just to lump a couple of really really small things into one story, or break out a big story into two even if each one independently doesn't really deliver value. It should be the exception, not the rule though.
+There should be some room for PMs to "use their judgement" in terms of sizing a story properly. Sometimes it's easier for all parties to lump a couple of small things into one story, or break a a big story into two smaller ones, even if each one independently doesn't really deliver value. It should be the exception, not the rule though.
 
 -----
 
 ### Storywriting Criteria & Best Practices
 
 Stories are made more complete by following these guidelines:
-* Epics are clearly defined and represent a complete problem that need solving
+* Epics are clearly defined and represent a complete problem that needs solving
 * *Twitter example: "Logged Out User Experience" is a better Epic than "Redesign Homepage". The latter might be the solution for the former problem, but keeping it broader/holistic allows the team to come up with different solutions that might not include a redesigned home page.*
 * Stories are written in an appropriate format to convey the desired user behavior
   * A consuming user or system is specified
