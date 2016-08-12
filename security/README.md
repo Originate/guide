@@ -289,7 +289,7 @@ Web Application Penetration Testing Tools
   - Very useful tool to automatically try all form fields in a web app to look for SQL injection vulnerabilities
 
 - Cookies
-  - [Edit This Cookie](https://chrome.google.com/webstore/unsupported/fngmhnnpilhplaeedifhccceomclgfbg?hl=en) (Chrome)
+  - [Edit This Cookie](http://www.editthiscookie.com/) (Chrome)
     - Quick and easy way to edit cookies in Chrome
   - [Tamper Data](https://addons.mozilla.org/en-US/firefox/addon/tamper-data/) (Firefox)
     - Can edit cookies (and more!)
