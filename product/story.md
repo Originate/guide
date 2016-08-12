@@ -24,7 +24,7 @@ The “user” in user story refers specifically to the user or system CONSUMING
 
 Recommended size: *Smallest amount that delivers value*
 
-There should be some room for PMs to "use their judgement" in terms of sizing a story properly. Sometimes it's easier for all parties to lump a couple of small things into one story, or break a a big story into two smaller ones, even if each one independently doesn't really deliver value. It should be the exception, not the rule though.
+There should be some room for PMs to "use their judgement" in terms of sizing a story properly. Sometimes it's easier for all parties to lump a couple of small things into one story, or break a big story into two smaller ones, even if each one independently doesn't really deliver value. It should be the exception, not the rule though.
 
 -----
 
