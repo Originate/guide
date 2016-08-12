@@ -39,7 +39,7 @@
 ## Getting started
 
 * Language
-  * [Apple - Programming with Objective-C](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/ProgrammingWithObjectiveC.pdf)
+  * [Apple - Programming with Objective-C](https://developer.apple.com/library/ios/documentation/General/Conceptual/DevPedia-CocoaCore/ObjectiveC.html)
   * [Ry's Objective-C Tutorial](http://rypress.com/tutorials/objective-c/introduction)
 * iOS
   * [Stanford - CS 193P iPhone Application Development](http://web.stanford.edu/class/cs193p/cgi-bin/drupal/)
