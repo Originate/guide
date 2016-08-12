@@ -5,7 +5,7 @@ By the end of this short guide, CircleCI should be able to test and build your i
 ## CircleCI setup
 
 1. Login to [CircleCI](https://circleci.com/)
-2. [Add a new project](https://circleci.com/add-projects)
+2. [Add a new project](https://circleci.com/add-projects) (Must be logged in to CircleCi)
   * Select GitHub account and find the iOS repo
   * Press **Build project** to get started
 3. As of August 2015, you may see the following warning:
