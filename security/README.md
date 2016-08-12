@@ -303,7 +303,7 @@ Directory Bruteforcing Tools
 
 Recon Tools
 
-- [Creepy](https://ilektrojohn.github.io/creepy/) (aka Cree.py)
+- [Creepy](http://www.geocreepy.com/) (aka Cree.py)
   - An open source intelligence gathering tool that tracks a person's geolocation by searching through their social media
 - [Maltego](https://www.paterva.com/web6/)
   - Used for analyzing and visually presenting relationships between people, groups, websites, and other affiliations
