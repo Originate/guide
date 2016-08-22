@@ -18,7 +18,7 @@ Additional Remarks
 
 0. Favor generic code but not at the expensive of clarity.
 
-0. Be always aware of the trade offs you make.
+0. Always be aware of the trade offs you make.
 
 0. "Premature optimization is the root of all evil" is not an excuse to do stupid things on purpose!
 
@@ -34,9 +34,9 @@ Additional Remarks
 
     Kent Beck tells the history of a piece of code, a single line method in a word processor, that astonished him the first time he saw it, something like `def highlight(x: X) = underline(x)`. Why write a straightforward alias for the `underline` function, he asked himself? Then he realized the power of this simple abstraction.
 
-    It just so happened that highlights, at that particular point in time, were implemented with underlinings, but that does not mean that highlights and underlines are the same thing, serve the same purpose. Highlights are semantic, underlines are presentational.
+    It just so happened that highlights, at that particular point in time, were implemented with underlinings, but that does not mean that highlights and underlines are the same thing or serve the same purpose. Highlights are semantic, underlines are presentational.
 
-    It could be that, in the future, it were decided a highlight should have, say, a yellow background. That would be a trivial change using the method above, taking only but a few seconds. Had they instead used `underline(x)` interchangeably everywhere across the code, one could spend hours looking at each usage site, trying to infer whether the intention of that particular `underline` call was to underline or to highlight.
+    It could be that in the future, it is decided a highlight should have a yellow background. This would be a trivial change using the method above, taking only but a few seconds. Had they instead used `underline(x)` interchangeably everywhere across the code, one could spend hours looking at each usage site, trying to infer whether the intention of that particular `underline` call was to underline or to highlight.
 
     That is one of the reasons why simple methods like `def isEmpty = this.length == 0` are extremely valuable. No matter how short the equivalent code they capture may be, abstractions that better express intent and purpose are invaluable.
 
