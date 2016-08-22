@@ -4,15 +4,15 @@ The following is a guide on how to integrate your Android app with [CircleCI](ht
 
 ## CircleCI Project Setup
 
-1. Login to CircleCI
-2. Click on **Add Projects**
+1. Login to [CircleCI](https://circleci.com/)
+2. [Add a new project](https://circleci.com/add-projects) 
 3. Select Team
 4. Browse to your git repo and select **Build Project**. If the project has already been setup, click **Watch Project** to add in to their CircleCI Dashboard (in place of **Build Project**)
 5. Add a file called `circle.yml` to the root of your project. Below we will configure **CircleCI** by adding necessary elements to this file.
 
 ## CircleCI Configuration
 
-Some initial configuration is required to get CircleCI working with your Android project. The majority of this configuration is handled via the [circle.yml file](/android/files/code/CI/circle.yml), however occasionally [bash scripts](/android/files/code/CI/environmentSetup.sh) are needed to help get the job done. [Here are CircleCI's official Android docs](https://circleci.com/docs/android), but note the guide below is built from Originate's collective experience and better tailored towards our typical needs. 
+Some initial configuration is required to get CircleCI working with your Android project. The majority of this configuration is handled via the [circle.yml file](/android/files/code/CI/circle.yml), however occasionally [bash scripts](/android/files/code/CI/scripts/environmentSetup.sh) are needed to help get the job done. [Here are CircleCI's official Android docs](https://circleci.com/docs/android), but note the guide below is built from Originate's collective experience and better tailored towards our typical needs. 
 
 By the end of this section, you'll be ready run an integration (build your project & run unit tests) on CircleCI.
 

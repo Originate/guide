@@ -11,7 +11,7 @@ In order to create integration tests on Android, we write feature specs with [Cu
 A number of testing options are available for Android applications. Some of the most popular/widely used frameworks are listed below.
 
 * [Mockito](https://code.google.com/p/mockito/) - A java mocking framework that now supports Android! We've used this on the Newaer project with good results.
-* [Espresso](https://code.google.com/p/android-test-kit/wiki/Espresso) - UI/Automation tests. It's [faster than Robotium](http://www.stevenmarkford.com/android-espresso-vs-robotium-benchmarks/) and the API is simpler. 
+* [Espresso](https://google.github.io/android-testing-support-library/docs/espresso/) - UI/Automation tests. It's [faster than Robotium](http://www.stevenmarkford.com/android-espresso-vs-robotium-benchmarks/) and the API is simpler. 
 * [Robolectric](http://robolectric.org) - Android unit test framework that decouples the the android-sdk.jar so you can test within your JVM on your workstation.
 * [Robotium](https://code.google.com/p/robotium/) - Another automation framework that seems to be popular. We haven't used this on any of our projects yet.
 * [UI Automator](http://developer.android.com/training/testing/ui-testing/index.html) - Google's newly released UI functional testing framework. 
