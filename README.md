@@ -14,7 +14,7 @@ This guide includes best practices and information for engineering related topic
 ### Technology Stack Guides
 
 * [Android](android/README.md)
-* [CoffeeScript](coffeescript.md)
+* [CoffeeScript](javascript/coffeescript.md)
 * [Haskell](haskell/README.md)
 * [iOS](ios/README.md)
 * [Node](javascript/node_js.md)
@@ -24,5 +24,5 @@ This guide includes best practices and information for engineering related topic
 ### Software Practices
 
 * [Story Writing](product/story.md)
-* [Product Management Toolkit](product_toolkit.md)
+* [Product Management Toolkit](product/product_toolkit.md)
 * [Feature Specs with Cucumber](cucumber.md)
