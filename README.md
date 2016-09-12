@@ -8,7 +8,7 @@ This guide includes best practices and information for engineering related topic
 
 * [Git](practices/git.md)
 * [Code Reviews and Pull Requests](practices/pull_requests.md)
-* [Security](security)
+* [Security](security/README.md)
 * [Open Sourcing](practices/open_sourcing.md)
 
 ### Technology Stack Guides
