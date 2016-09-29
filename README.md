@@ -15,7 +15,7 @@ This guide includes best practices and information for engineering related topic
 
 * [Android](android/README.md)
 * [CoffeeScript](javascript/coffeescript.md)
-* [Haskell](haskell/README.md)
+* [Haskell](haskell/README.md) and [Tool Stack](haskell/stack-tutorial.md)
 * [iOS](ios/README.md)
 * [Node](javascript/node_js.md)
 * [Rails](ruby/rails.md)
