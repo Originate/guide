@@ -19,6 +19,7 @@ even if you work on open-source code.
 * the __development__ branch matches the _development_ server
 * the __master__ branch matches what is in production
 * other servers have long-lived branches that match them by name: the __staging__ branch matches the _staging_ server etc
+* recommendation: if there is integration with a ticket-tracking system, feature branches *should be named using the following convention:* "[ticket reference]-[developer initials]-[feature-name]", e.g. __OR-16-kg-new-settings-page__
 
 ### Start a new feature branch
 
