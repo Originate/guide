@@ -42,7 +42,7 @@ This guide provides a number of tips and best practices for writing Cucumber spe
 
 ## Gherkin
 
-[Gherkin](https://cucumber.io/docs/reference) is the language in which Cucumber specs are written in.
+[Gherkin](https://cucumber.io/docs/reference) is the language in which Cucumber specs are written.
 It should end up sounding close to real English,
 similar to how you would describe the product
 to a normal person in a casual and focussed conversation.
@@ -100,18 +100,31 @@ Feature: Updating account information
   - if an admin changes an account, should it send a different email?
 
 
+  Background: 
+    Given I am logged in as John Doe
+
+
   Scenario: a user updates their last name
-    Given I am logged in as "John Doe"
     When updating my last name to "Connor"
-    Then my name is "John Connor"
+    Then my name is now John Connor
 
 
   Scenario: a user tries to update another account's details
-    ...
+    When trying to update the account of Dorian Gray
+    Then I get the error "You cannot change this account"
+    And that account is unchanged
 
 
-  Scenario: an admin updates another account
-    ...
+  Scenario: an administrator updates another account
+    Given I am logged in as an admin
+    When updating the last name of John Doe to "Connor"
+    Then that account new has the name John Connor
+    
+    
+  Scenario: providing incomplete account information
+    When trying to update my last name to ""
+    Then I get the error "The last name is required"
+    And my name is still John Connor
   ```
 
 ### Writing Scenarios
