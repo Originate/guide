@@ -12,6 +12,8 @@ Tips & Tricks
     val email = Email("joe@example.com") // Never gets mixed with other strings
     ```
 
+    ![Population 562 Elevation 2150 Established 1951 Total 4663](baretypes.jpg "Population 562 Elevation 2150 Established 1951 Total 4663")
+
 0. Combine value classes with implicit classes to define extension methods:
 
     ```scala
