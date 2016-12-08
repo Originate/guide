@@ -243,6 +243,28 @@ When logging in as "foo" with password "bar"
 Then the application greets me with "welcome foo!"
 ```
 
+## Cucumber Anti-Patterns:
+
+The opposite of an anti-pattern is a design pattern. Both can be deliberate. Anti-patterns are avoided by knowing them and recognizing them which mitigates the risks of an organization not following a design pattern. The company behind Cucumber held a [podcast](https://cucumber.io/blog/2016/05/09/cucumber-antipatterns) with a panel discussion and then documented their Cucumber anti-patterns:
+
+* [Cucumber anti-patterns (part one)](https://cucumber.io/blog/2016/07/01/cucumber-antipatterns-part-one)
+* [Cucumber anti-patterns (part two)](https://cucumber.io/blog/2016/08/31/cucumber-anti-patterns-part-two)
+
+The Cucumber anti-patterns from the company behind Cucumber:
+
+* Writing the scenario after you've written the code
+* BA/Product Owner creating scenarios in isolation
+* Incidental details
+* Testing several rules at the same time
+* Scenario with either a bad name or no name at all
+* Adding pointless scenario descriptions
+* Testing through the UI
+* Scenarios that use “I” as in the personal pronoun
+* Keeping noisy scenarios
+* Overuse of scenario outlines
+* Developers or testers who write their scenarios without talking to business people
+* No clear separation between Given, When, and Then
+* High-level and vague scenarios
 
 ## Further reading:
 
