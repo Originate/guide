@@ -67,6 +67,13 @@ for a variety of use cases.
   and to get work done that is more interesting
   than the programming language used to implement it.
 
+* There is one single way of formatting Go,
+  enforced by the Go toolchain.
+  It is not the prettiest alternative,
+  but the simplest possible one,
+  the one which causes the least amount of bikeshed debates.
+  This is incredibly valuable for code bases that large amounts of developers are working on.
+
 
 ## Learn
 
