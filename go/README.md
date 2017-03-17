@@ -69,10 +69,18 @@ for a variety of use cases.
 
 * There is one single way of formatting Go,
   enforced by the Go toolchain.
-  It is not the prettiest alternative,
+  It is not the prettiest way of formatting,
   but the simplest possible one,
   the one which causes the least amount of bikeshed debates.
-  This is incredibly valuable for code bases that large amounts of developers are working on.
+  This is incredibly valuable for code bases
+  that large amounts of developers are working on.
+  It also allows automated modification of code bases
+  without irrelevant formatting or whitespace changes.
+  For example, tools that parse source code into an AST,
+  change the AST,
+  and serialize the modified AST back into source code.
+  An example is the `go fix` command, which allows to change uses of old deprecated
+  APIs to newer ones automatically.
 
 
 ## Learn
