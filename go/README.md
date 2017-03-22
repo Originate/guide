@@ -1,6 +1,6 @@
 # Originate Guides - Go
 
-Golang is used for Ops, CLI tools, small API servers,
+Golang is used for Ops, CLI tools, API servers,
 code that is getting deployed into external environments (e.g. agents),
 and other network (micro) services at Originate.
 
