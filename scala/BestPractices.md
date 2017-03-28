@@ -87,10 +87,12 @@ We recommended you read Twitter's "[Effective Scala]" guide. The following secti
     }
     implicit def bad(n: Int) = new Bad(n)
 
-    implicit class Good(val n: Int) extends AnyVal {
+    implicit class Good(private val n: Int) extends AnyVal {
       def stars = "*" * n
     }
     ```
+
+Be sure to make the wrapped parameter `private`! Otherwise you end up exposing an additional method that just returns the same object. You do have to state `private val` explicitly, otherwise it defaults to `private[this]` which is too strong for `AnyVal` wrappers.
 
 0. Whenever possible, avoid matching on `case _`. Try to be specific and thorough, favor exhaustive matches. Do not let unforeseen conditions silently fall through.
 

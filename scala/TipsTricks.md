@@ -17,7 +17,7 @@ Tips & Tricks
 0. Combine value classes with implicit classes to define extension methods:
 
     ```scala
-    implicit class IntOps(val n: Int) extends AnyVal {
+    implicit class IntOps(private val n: Int) extends AnyVal {
       def stars = "*" * n
     }
 
