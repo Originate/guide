@@ -7,9 +7,10 @@ and other network (micro) services.
 
 ## Advantages
 
-Bad programmers create complicated solutions for simple problems.
-Good programmers can create complicated solutions for complex problems.
-Geniuses create simple solutions for complex problems.
+_Bad programmers create complicated solutions for simple problems.
+Good programmers create complex solutions for complex problems.
+Geniuses create simple solutions for complex problems._
+
 Go is such an ingeniously simple solution
 for the many complex problems encountered in modern,
 large-scale, high-quality and high-velocity software engineering.
@@ -131,50 +132,53 @@ better than other languages:
   This means it can be deployed much faster and more frequently,
   allowing important updates to reach production faster.
 
-* __Concurrency:__
+* __Built-in concurrency:__
   Modern hardware achieves speed through parallelization.
   Golang has high-level concurrency primitives built right into the language.
   This not only makes sure that Go programs scale well over cores.
-  Unlike approaches that lean on libraries to achieve concurrency,
-  all Go code is based on the same concurrency mechanism
+  Unlike approaches that use libraries to achieve concurrency,
+  all Go code is based on the same concurrency mechanism,
   concurrency is achieved with the least amount of boilerplate and overhead,
   and with tool support built into the languge toolchain.
 
 * __Server-native language primitives:__
   On a fundamental level,
-  network servers receive data, massage it somehow, and then send it out again.
+  cloud systems receive data, massage it (often in serveral steps), and then send it out again.
   Unlike OO or functional languages,
-  Go provides language primitives for that as directly as possible:
-  Functions transform data,
-  channels transmit data between concurrent functions
-  in easy and safe ways.
-  This means it is possible to write powerful servers in Go
-  using built-in primitives of the language,
-  without further abstractions or libraries.
+  which provide generic abstractions
+  out of which one has to build custom systems that implement this workflow,
+  Go provides language primitives
+  that support the input-processing-output paradigm more directly:
+  - readers and writers for streaming IO
+  - functions for processing data
+  - goroutines for concurrency
+  - channels for piping data through a processing pipeline of concurrent goroutines
 
+  Because all necessary primitives are provided by the language,
+  Go programs express what they do very directly,
+  without detours into abstractions that obfuscate the intent and degrade performance.
 
 * __Cross-compilation__ to all major platforms:
   macOS, Linux, Windows, BSD, ARM
 
-* Most Ops toolkits and libraries
+* __Industry-leading in the cloud/devops space:__
+  Most Ops toolkits and libraries
   as well as a lot of the modern network technologies
   like HTTP/2
-  are being developed on and are therefore available in Go first.
+  are supported in Go first.
 
 
 ## Learn
 
-* [A tour of Go](https://tour.golang.org/welcome/1):
-  quick intro for Go beginners, start here
-* [Effective Go](https://golang.org/doc/effective_go.html):
-  read through this to get fully up to speed
-* [The Go Blog](https://blog.golang.org):
-  a lot of the documentation of best practices
-* [Go Playground](https://play.golang.org):
-  to try out Go in the browser
-* [go tooling in action](https://youtu.be/uBjoTxosSys) (video):
-  explains how to compile, test, profile, and optimize Go code using flame graphs
+__Beginners__
+* start with [A tour of Go](https://tour.golang.org/welcome/1)
+* [The Go Blog](https://blog.golang.org) describes lots of best practices
+* in case you need it, [solutions](https://github.com/golang/tour/tree/master/solutions) to the Go tour
+
+__Advanced__
+* use [Effective Go](https://golang.org/doc/effective_go.html) as a reference later
 * [GoDoc](https://godoc.org) for information on Go packages
+* [Security Guidelines](https://www.gitbook.com/book/checkmarx/go-scp/details)
 
 
 ## Guidelines
@@ -195,17 +199,20 @@ and should be used unless there are justifiable reasons to do otherwise.
 Trying a more modern alternative with clear benefits is a good reason here.
 This is a living list, please suggest better ones via a PR.
 
-Larger frameworks:
+__Larger frameworks__
 * build CLI apps: [Cobra](https://github.com/spf13/cobra)
 * simple [Sinatra](http://www.sinatrarb.com) or [Flask](http://flask.pocoo.org) like server:
   github.com/gin-gonic/gin
 
-Testing:
+__Testing__
 * end-to-end testing: [godog](https://github.com/DATA-DOG/godog)
 * unit testing: [Ginkgo](https://github.com/onsi/ginkgo) and [Gomega](https://onsi.github.io/gomega/)
 
+__Debugging__
+* [go tooling in action](https://youtu.be/uBjoTxosSys) (video):
+  explains how to compile, test, profile, and optimize Go code using flame graphs
 
-Smaller libraries:
+__Smaller libraries__
 * Postgres: github.com/lib/pq
 * logging: github.com/Sirupsen/logrus
 * generate UUIDs: github.com/satori/go.uuid
