@@ -11,7 +11,7 @@ _Bad programmers create complicated solutions for simple problems.
 Good programmers create complex solutions for complex problems.
 Geniuses create simple solutions for complex problems._
 
-Go is such an ingeniously simple solution
+Go is an ingeniously simple solution
 for the many complex problems encountered in modern,
 large-scale, high-quality and high-velocity software engineering.
 The genius underlying its simplicity isn't immediately obvious,
