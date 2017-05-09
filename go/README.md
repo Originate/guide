@@ -85,6 +85,8 @@ better than other languages:
   and efficient hardware utilization at scale.
   * no startup time because it ships as precompiled native code
   * sustained C-like speeds with negligible GC pauses that only take microseconds
+  * a programming model close to the metal,
+    meaning close to how CPU's actually work and how they manage memory
   * utilizes all cores on the user's machine via a simple
     [CSP](https://en.wikipedia.org/wiki/Communicating_sequential_processes) mechanism
     similar to the [Actor Model](https://en.wikipedia.org/wiki/Actor_model),
