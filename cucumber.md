@@ -26,6 +26,7 @@ from defining over building to testing the product.
 
 
 Cucumber is available in all stacks used at Originate:
+
 * [Cucumber-Ruby](https://github.com/cucumber/cucumber-ruby) as well as [Cucumber-Rails](https://github.com/cucumber/cucumber-rails)
 * [Cucumber-JS](https://github.com/cucumber/cucumber-js)
 * [Cucumber-JVM](https://github.com/cucumber/cucumber-jvm) with support for [Scala](https://github.com/cucumber/cucumber-jvm/tree/master/examples/scala-calculator)
@@ -57,7 +58,7 @@ in varying levels of aggregration:
 2. __user story:__
   context for the feature:
   * _where_: the use case for which the feature provides value
-  * _what_ functionality provided by the feature
+  * _what_: functionality provided by the feature
   * _why_: what relevant benefit / business metric is improved by this feature
            (if nothing gets improved, it shouldn't exist)
 
@@ -304,6 +305,7 @@ because very often there is a better way of doing things.
   ```
 
 More information:
+
 * [Cucumber anti-patterns (part one)](https://cucumber.io/blog/2016/07/01/cucumber-antipatterns-part-one)
 * [Cucumber anti-patterns (part two)](https://cucumber.io/blog/2016/08/31/cucumber-anti-patterns-part-two)
 
