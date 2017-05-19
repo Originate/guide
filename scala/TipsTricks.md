@@ -164,4 +164,4 @@ Tips & Tricks
     res5: Int = 26
     ```
 
-0. Learn you a few Scala tricks for great good: https://github.com/marconilanna/ScalaUpNorth2015
+0. Learn you a few Scala tricks for great good: [https://github.com/marconilanna/ScalaUpNorth2015](https://github.com/marconilanna/ScalaUpNorth2015)
