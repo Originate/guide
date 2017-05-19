@@ -204,6 +204,76 @@ __Advanced__
   More info [here](https://peter.bourgon.org/go-best-practices-2016/#dependency-management).
 
 
+### Make the zero value useful
+
+Go tries hard to make the zero value of variables useful.
+For example, an empty string is a better zero value for strings than `nil`,
+because you can use empty strings like any other string
+without having litter your code base with nil checks.
+When printed, it simply displays nothing if printed.
+That's all you need in most situations.
+Go cannot do this for your own custom types,
+so it has to use `nil` as their zero value.
+This doesn't mean that `nil` is always the best zero value, though.
+Use the [null object pattern](https://en.wikipedia.org/wiki/Null_Object_pattern)
+to save yourself and your users from having to litter their code with nil checks.
+The Go library provides null implementations for many of it's elements, for example:
+- [ioutil.Discard](https://golang.org/pkg/io/ioutil/#pkg-variables)
+  for streams
+
+__Example:__
+Let's say cars have doors, but some toy cars don't.
+We want to use doors in our code without having to check each time whether a car has doors.
+
+```go
+type Car struct {
+  door Door
+}
+
+type Door interface {
+  open() error
+}
+
+// NoDoor is a Door implementation that represents no door.
+// You can use it like a normal door, it simply does nothing.
+type NoDoor struct{}
+
+func (d NoDoor) open() error {
+  return nil
+}
+
+// NewCar creates a new car instance with the given door.
+// If no door is given, it creates a car with a NoDoor.
+func NewCar(d Door) Car {
+  if d == nil {
+  	d = NoDoor{}
+  }
+  return Car{Door: d}
+}
+```
+
+Let's create a car with no door,
+for example in a test where we don't care about the door:
+
+```go
+c := NewCar(nil)
+```
+
+Now our code can simply use the door, whether it is there or not:
+
+```go
+c.Door.open()
+```
+
+Instead of pervasive nil checks for every attribute each time we call it:
+
+```go
+if c.Door != nil {
+  c.Door.open()
+}
+```
+
+
 ## Recommended libaries
 
 These libraries are considered the best ones for their intended purpose
