@@ -202,6 +202,9 @@ __Advanced__
   This forces it to treat them as different types
   and causes all sorts of compiler errors.
   More info [here](https://peter.bourgon.org/go-best-practices-2016/#dependency-management).
+* Use pure functions if possible,
+  and provide dependencies explicitly,
+  as small and tightly-scoped interfaces.
 
 
 ### Make the zero value useful
