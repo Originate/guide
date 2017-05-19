@@ -4,10 +4,10 @@ Welcome to Originate's Android stack guidelines. This is intended to be a living
 
 ## Contents
 
-* [Project Setup](guide/Project Setup.md)
-* [Best Practices](guide/Best Practices.md)
+* [Project Setup](guide/Project%20Setup.md)
+* [Best Practices](guide/Best%20Practices.md)
 * [Libraries](guide/Libraries.md)
-* [Continuous Integration](guide/Continuous Integration.md)
-* [Continuous Deployment](guide/Continuous Deployment.md)
+* [Continuous Integration](guide/Continuous%20Integration.md)
+* [Continuous Deployment](guide/Continuous%20Deployment.md)
 * [Testing](guide/Testing.md)
 * [Resources](guide/Resources.md)

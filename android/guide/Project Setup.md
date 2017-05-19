@@ -232,4 +232,4 @@ Even with hardware acceleration, Android emulators are notoriously slow. Luckily
 * A complete Gradle and .gitignore example can be found [here](/android/files/code/setup).
 * Command line interfacing via [Android Debug Bridge (ADB)](http://developer.android.com/tools/help/adb.html)
 * [Helpful tips](https://wiki.cyanogenmod.org/w/Doc:_debugging_with_logcat) on using [logcat](http://developer.android.com/tools/help/logcat.html) to capture debug and error logs.
-* AVD emulator [setup instructions](Emulator Setup.md) for non-developers.
+* AVD emulator [setup instructions](Emulator%20Setup.md) for non-developers.

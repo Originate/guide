@@ -28,7 +28,7 @@ Appium offers both a standard command-line server and an OS X Appium desktop app
 
 ## Cucumber & Appium Example
 
-Describing how to write feature specs with Cucumber and Appium is no easy task. Specifications can vary greatly from project to project. As such, we'll use a [simple example](Feature Specifications Example.md) to show you how it works. Check out the [official Ruby documentation](https://github.com/appium/ruby_lib/blob/master/docs/android_docs.md) for a full list of Appium commands.
+Describing how to write feature specs with Cucumber and Appium is no easy task. Specifications can vary greatly from project to project. As such, we'll use a [simple example](Feature%20Specifications%20Example.md) to show you how it works. Check out the [official Ruby documentation](https://github.com/appium/ruby_lib/blob/master/docs/android_docs.md) for a full list of Appium commands.
 
 ### Known Appium Issues
 

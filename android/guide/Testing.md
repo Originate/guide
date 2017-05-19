@@ -4,7 +4,7 @@
 
 Integration tests (aka feature specifications) are an essential part of [test-driven development (TDD)](http://en.wikipedia.org/wiki/Test-driven_development). To verify that our application as a whole works, we simulate user interaction with our app and check that our app, as a black box, exhibits the correct behaviors. This allows us to catch regressions that might arise from refactoring and reduces the need for repetitive manual testing on the slow Android emulators. Integration tests can also help ensure that requirements are met by acting as acceptance criteria.
 
-In order to create integration tests on Android, we write feature specs with [Cucumber](https://cucumber.io) and [Appium](http://appium.io). [Checkout Originate's complete guide for writing and running Android feature specs.](Feature Specifications.md)
+In order to create integration tests on Android, we write feature specs with [Cucumber](https://cucumber.io) and [Appium](http://appium.io). [Checkout Originate's complete guide for writing and running Android feature specs.](Feature%20Specifications.md)
 
 ## Popular Testing Frameworks
 
