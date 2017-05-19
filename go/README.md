@@ -186,9 +186,10 @@ __Advanced__
 ## Guidelines
 
 * use `goimports` to automatically manage import statements and format the code for you
-* follow the documented best practices in the
-  [Go Blog](https://blog.golang.org) and the
-  [code review comments](https://github.com/golang/go/wiki/CodeReviewComments)
+* follow the idiomatic code style of Go's standard library,
+  the [naming conventions](https://talks.golang.org/2014/names.slide),
+  the documented best practices in the [Go Blog](https://blog.golang.org),
+  and the [code review comments](https://github.com/golang/go/wiki/CodeReviewComments)
 * vendor dependencies using [glide](https://github.com/Masterminds/glide),
   at least until the [official package manager](https://github.com/golang/dep)
   is stable
