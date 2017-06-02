@@ -277,7 +277,7 @@ if c.Door != nil {
 }
 ```
 
-## Always set a sane value for timeouts when using http.Client
+### Always set a sane value for timeouts when using http.Client
 
 When initializing a HTTP Client generally people use
 
