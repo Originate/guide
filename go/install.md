@@ -4,7 +4,11 @@
 
 - `brew install go`
 
-## Configuration
+## Linux
+
+Download binary release then follow instructions: [https://golang.org/dl/](https://golang.org/dl/)
+
+### Configuration for macOS and Linux
 
 - create your Go workspace directory, for example `~/go`
 - if your Go workspace is not in `~/go`, set the environment variables `GOPATH` to the Go workspace path
@@ -14,10 +18,16 @@
 A possible solution to the problem of the Go workspace cluttering up with
 dependencies is to have two Go workspaces:
 one for code you are working on, and another one for dependencies.
+
 If you pick `~/go-external` for the latter, your GOPATH should look like
 `$HOME/go-external:$HOME/go`.
+
 In this case, `go get` fetches into the first workspace.
 To work on code, manually clone it into the second workspace.
 Go uses both workspaces simultaneously.
 A downside is that certain tools might not work fully in this setup.
 More info [here](https://peter.bourgon.org/go-best-practices-2016/#development-environment)
+
+## Windows
+
+Official [Installer](https://golang.org/doc/install#windows) guide

@@ -1,6 +1,6 @@
 # Originate Guides - Go
 
-Golang is a great choice for CLI tools, API servers,
+[Golang](https://golang.org/) is a great choice for CLI tools, API servers,
 code that is getting deployed into external environments (e.g. agents),
 and other network (micro) services.
 
@@ -38,11 +38,11 @@ better than other languages:
   and they don't agree with each others styles.
   Too often good code is dismissed as "messy" and rewritten,
   not because it is bad,
-  but because the person taking it over doesn't understand or like it's structure.
-  This can be managed with strong tech leadership that determines the code style to be followed.
+  but because the person taking it over doesn't understand or like its structure.
+  This can be managed with strong tech leadership and/or well-thought conventions that determine the code style to be followed.
   In practice, these decisions are often arbitrary and subjective,
   not consistent between teams,
-  and not every team in the world even has great tech leadership.
+  and not every team in the world has great tech leadership.
 
   Go intentionally does not enable artistic freedom,
   but encourages simple, straightforward code that gets to the point.
@@ -51,11 +51,11 @@ better than other languages:
   This means Go code written by different developers
   looks much more similar than is typical in other languages.
   Different people feel more at home in each others Go code bases.
-  Even a bloody beginner can read, understand, and fix
+  Even a novice beginner can read, understand, and fix
   Go code written by a seasoned veteran,
   without having to spend months learning "advanced features" of the language,
   and without mental gymnastics understanding overly abstract concepts.
-  This is incredibly important in real life,
+  This is incredibly important in real life;
   it's the essence of collaborative software development.
 
 * __Standardized formatting:__
@@ -63,22 +63,22 @@ better than other languages:
   enforced by the Go toolchain.
   It is not the prettiest way of formatting,
   but the simplest possible one,
-  the one which causes the least amount of bikeshed or academic debates.
+  the one which causes the least amount of [bike-shed](https://en.wikipedia.org/wiki/Law_of_triviality) or academic debates.
   It also allows heavily automated modification of code bases
   without irrelevant formatting or whitespace changes.
-  For example, tools that parse source code into an AST,
+  For example, tools that parse source code into an [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree),
   change the AST,
   and serialize the modified AST back into source code.
   An example is the `go fix` command,
-  which allows to perform repetitive code changes
+  which can perform repetitive code changes
   in an automated way
   on a massive scale.
 
 * __Fast compilation:__
   This in combination with structural typing
   makes Go feel as productive as working with a dynamically typed language,
-  because there are almost no noticeable compile times.
-  But with the safeties and conveniences of static type checking.
+  because there are almost no noticeable compile times,
+  but with the safeties and conveniences of static type checking.
 
 * __Speed:__
   Go runs very fast, leading to great interactive user experiences
@@ -93,29 +93,29 @@ better than other languages:
     on top of extremely inexpensive green threads.
 
 * __Memory footprint:__
-  Unlike the JVM (which often requires Gigabytes of RAM),
-  a small Go processes only takes up 10-25 MB RAM.
+  Unlike the JVM (which often requires gigabytes of RAM),
+  a small Go process only takes up 10-25 MB RAM.
   This is important in cloud environments
   where memory is limited and expensive,
   as well as on developer machines
-  where we want to boot up an entire stacks on a single machine
+  where we want to boot up an entire stack on a single machine
   while leaving memory for other processes.
 
 * __Self-contained deployment:__
   Go applications are deployed as a single executable file that includes all dependencies.
   No changes to the machine running the Go binary have to be made.
   No frameworks or libraries of a particular version have to be installed,
-  possibly parallel to other existing versions of the same frameworks that are required for other tools,
-  the server doesn't even need an active internet connection
+  inadvertently in parallel to other existing versions of the same frameworks that are required for other tools.
+  The server doesn't even need an active internet connection
   to download and compile dependencies as part of the installation of the tool.
   This is beneficial in production
-  where changes to the server environment often require extensive approval and auditing,
-  as well as on developer machines
-  where users don't have to install frameworks in order to run your software anymore.
+  where changes to the server environment often require maintenance windows, extensive approval and auditing,
+  and on developer machines
+  where there is no need to install frameworks in order to run your software anymore.
   Go executables will keep working unchanged in the future
-  no matter what version of Go they and other tools running on that machine have been written in,
+  no matter what version of Go they, and other tools running on that machine, have been written in,
   independent of changes to the software setup of the OS or package managers,
-  as long as the ABIs of the OS remain the same.
+  as long as the [ABIs](https://en.wikipedia.org/wiki/Application_binary_interface) of the OS remain the same.
 
   The only exception to the above statement is dynamic linking against glibc
   when using the `net` and `os/user` packages.
@@ -165,8 +165,8 @@ better than other languages:
 
 * __Industry-leading in the cloud/devops space:__
   Most Ops toolkits and libraries
-  as well as a lot of the modern network technologies
-  like HTTP/2
+  as well as a lot of the modern network technologies,
+  like HTTP/2,
   are supported in Go first.
 
 
@@ -213,15 +213,15 @@ __Advanced__
 Go tries hard to make the zero value of variables useful.
 For example, an empty string is a better zero value for strings than `nil`,
 because you can use empty strings like any other string
-without having litter your code base with nil checks.
-When printed, it simply displays nothing if printed.
+without having to litter your code base with `nil` checks.
+When printed, it simply displays nothing.
 That's all you need in most situations.
 Go cannot do this for your own custom types,
 so it has to use `nil` as their zero value.
 This doesn't mean that `nil` is always the best zero value, though.
 Use the [null object pattern](https://en.wikipedia.org/wiki/Null_Object_pattern)
-to save yourself and your users from having to litter their code with nil checks.
-The Go library provides null implementations for many of it's elements, for example:
+to save yourself and your users from having to litter their code with `nil` checks.
+The Go library provides null implementations for many of its elements, for example:
 - [ioutil.Discard](https://golang.org/pkg/io/ioutil/#pkg-variables)
   for streams
 
