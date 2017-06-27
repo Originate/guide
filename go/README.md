@@ -214,13 +214,14 @@ Go tries hard to make the zero value of variables useful.
 For example, an empty string is a better zero value for strings than `nil`,
 because you can use empty strings like any other string
 without having to litter your code base with `nil` checks.
-When printed, it simply displays nothing.
+When used, it behaves neutral.
 That's all you need in most situations.
 Go cannot do this for your own custom types,
 so it has to use `nil` as their zero value.
 This doesn't mean that `nil` is always the best zero value, though.
-Use the [null object pattern](https://en.wikipedia.org/wiki/Null_Object_pattern)
+Use the [null object pattern](http://cs.oberlin.edu/~jwalker/nullObjPattern)
 to save yourself and your users from having to litter their code with `nil` checks.
+This can be done via [factory functions](http://www.golangpatterns.info/object-oriented/constructors).
 The Go library provides null implementations for many of its elements, for example:
 - [ioutil.Discard](https://golang.org/pkg/io/ioutil/#pkg-variables)
   for streams
@@ -252,7 +253,7 @@ func NewCar(d Door) Car {
   if d == nil {
   	d = NoDoor{}
   }
-  return Car{Door: d}
+  return Car{door: d}
 }
 ```
 
@@ -266,14 +267,14 @@ c := NewCar(nil)
 Now our code can simply use the door, whether it is there or not:
 
 ```go
-c.Door.open()
+c.door.open()
 ```
 
 Instead of pervasive nil checks for every attribute each time we call it:
 
 ```go
 if c.Door != nil {
-  c.Door.open()
+  c.door.open()
 }
 ```
 
