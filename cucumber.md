@@ -308,7 +308,7 @@ More information:
 
 * [Cucumber anti-patterns (part one)](https://cucumber.io/blog/2016/07/01/cucumber-antipatterns-part-one)
 * [Cucumber anti-patterns (part two)](https://cucumber.io/blog/2016/08/31/cucumber-anti-patterns-part-two)
-
+* [CukenFest 2017 Key Takeaways](http://blog.originate.com/blog/2017/07/10/cukenfest-2017/)
 
 ## Further reading:
 
