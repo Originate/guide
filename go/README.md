@@ -5,27 +5,45 @@ code that is getting deployed into external environments (e.g. agents),
 and other network (micro) services.
 
 
-## Advantages
+## Introduction
 
 _Bad programmers create complicated solutions for simple problems.
 Good programmers create complex solutions for complex problems.
 Geniuses create simple solutions for complex problems._
 
 Go is an ingeniously simple solution
-for the many complex problems encountered in modern,
-large-scale, high-quality and high-velocity software engineering.
-The genius underlying its simplicity isn't immediately obvious,
+for the many complex problems encountered in
+large-scale, long-term, high-velocity software engineering.
+Very often the velocity in such environments approximates zero
+because of exponentially growing complexity, technical drift, and bit rot.
+The genius underlying Go's simplicity isn't immediately obvious,
 but is often confused for crudeness.
-Nonetheless, Go addresses most of the issues found in large software projects
-better than other languages:
+Nonetheless, while many languages add complexity for the sake of feature richness
+and winning in code golf competitions,
+Go addresses most of the issues found in large real-world software engineering projects
+better than all other languages:
+- slow builds (hours)
+- each programmer uses a different subset of the language
+- poor understandability of the code base (hard to read, poorly documented, etc)
+- cost of updates (to the point of impossibility)
+- accumulating technical drift
+- not enough automated tools available
+- turnover (people who wrote most of the code leave the team at some point,
+  others have to take over)
+
+
+## Advantages
+
+The Go designers put a lot of thought into the language design
+to emphasize and achieve the following qualities:
 
 * __Easy to learn:__
   Golang is the equivalent of [Simple English](https://simple.wikipedia.org/wiki/Main_Page)
   for programming languages.
   It is intentionally simple, both in structure and vocabulary.
   This has several positive effects:
-  - new people on the team ramp up faster, and can contribute
-  - all code can be read and understood by everybody at any skill level
+  - new people on the team ramp up faster and can contribute earlier (within days)
+  - code written by a Go master can be read, understood, and contributed to by a novice
 
 * __One way to do things:__
   Other languages -
@@ -63,16 +81,38 @@ better than other languages:
   enforced by the Go toolchain.
   It is not the prettiest way of formatting,
   but the simplest possible one,
-  the one which causes the least amount of [bike-shed](https://en.wikipedia.org/wiki/Law_of_triviality) or academic debates.
-  It also allows heavily automated modification of code bases
+  the one which causes the least amount of
+  [bike-shed](https://en.wikipedia.org/wiki/Law_of_triviality) or academic debates.
+  This enforces that everybody uses the same code style,
+  and is therefore more familiar with other people's code.
+
+* __Automated code maintenance:__
+  Go is built from the ground up to make it easy to modify code via automated tools
   without irrelevant formatting or whitespace changes.
-  For example, tools that parse source code into an [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree),
-  change the AST,
-  and serialize the modified AST back into source code.
-  An example is the `go fix` command,
-  which can perform repetitive code changes
+  One part of that is the standardized formatting,
+  which guarantees that code expressions always look exactly the same,
+  allowing more efficient search-and-replace
+  and guaranteeing that file changes only reflect the actual code change,
+  and not for example whitespace or indentation changes.
+  Go also makes parsers, the AST, and serialization of the AST available to third-party developers,
+  which has led to a rich ecosystem of automated code maintenance tools.
+
+  An example is the [gorename](https://godoc.org/golang.org/x/tools/cmd/gorename)
+  tool, which performs precise type-safe renaming of identifiers in Go source code.
+  This tool can be used from any text editor including Vim, Emacs, Sublime, Atom, or any IDE.
+
+  Another example is the [go fix](https://blog.golang.org/introducing-gofix) command,
+  which allows to perform repetitive code updates
   in an automated way
   on a massive scale.
+  This helps prevent
+  [technical drift](http://blog.codeclimate.com/blog/2013/12/19/are-you-experiencing-technical-drift),
+  which inevitably bring every large code base down.
+
+  There are many dozens of other third-party refactoring tools, linters, and other little helpers.
+  It is not uncommon to use dozens of them on Go projects,
+  to keep the code base in good shape without having to burn too much human bandwidth.
+  An overview is given [below](#tools)
 
 * __Fast compilation:__
   This in combination with structural typing
@@ -121,6 +161,34 @@ better than other languages:
   when using the `net` and `os/user` packages.
   See [this article](https://dominik.honnef.co/posts/2015/06/go-musl)
   for more infomation.
+
+* __Package Management:__
+  Go does not use a central repository for third-party libraries,
+  but links directly to the respective repositories and downloads (vendors)
+  them into the code base using [glide](https://github.com/Masterminds/glide).
+  This has many advantages:
+  - no need to configure different repositories
+    (various public repos, internal caches like Artifactory, etc).
+    Get your modules from anywhere, including private Git repos.
+  - there is no global namespace for package names anymore.
+    Library authors can pick the most appropriate name for their library,
+    independently of whether this name is used elsewhere already
+  - the code base compiles on its own after checkout,
+    without further downloads of dependencies.
+  - deployments never break,
+    even if hosted packages or entire package repositories
+    slow down or cease to exist
+    (which has happened in the past)
+  - no floating version madness
+    or uncertainty whether a version was changed after publishing
+  - no reliance that every library author properly follows semantic versioning
+    (which many don't)
+  - third-party code can be reviewed, analyzed, linted, and tested
+    before being checked into the code base and used.
+    This ensures that quality third-party libraries are used
+  - a slow or unavailable package server does not prevent setups and deploys
+  - no bit rot since packages are bundled into a stand-alone binary that
+    keep running all just by itself
 
 * __Small deployment:__
   Go binaries are very concise in size.
@@ -181,6 +249,8 @@ __Advanced__
 * use [Effective Go](https://golang.org/doc/effective_go.html) as a reference later
 * [GoDoc](https://godoc.org) for information on Go packages
 * [Security Guidelines](https://www.gitbook.com/book/checkmarx/go-scp/details)
+* [Go at Google: Language Design in the Service of Software Engineering](https://talks.golang.org/2012/splash.article):
+  overview of the philosophy behind Go
 
 
 ## Guidelines
@@ -277,6 +347,17 @@ if c.Door != nil {
   c.door.open()
 }
 ```
+
+
+## Tools
+* [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports):
+  configure your editor to run this after each file save
+* [gorename](https://godoc.org/golang.org/x/tools/cmd/gorename):
+  performs precise type-safe renaming of identifiers in Go source code
+* [gofix](https://blog.golang.org/introducing-gofix)
+* [gometalinter](https://github.com/alecthomas/gometalinter):
+  runs dozens of linters in parallel over your source code,
+  normalizing their output
 
 
 ## Recommended libaries
