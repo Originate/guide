@@ -8,7 +8,7 @@ In order to upload our build to HockeyApp, we need to generate an **access token
 We need to perform these steps inside the **app owner's account**.
 
 1. Upload an apk for your app to HockeyApp (make sure that it works, manually)
-2. Add your app to a team. 
+2. Add your app to a team.
    1. Go to **Teams Page**
    2. Select your desired team or create a new one.
    3. Select **Apps** from left-hand menu
@@ -22,21 +22,21 @@ We need to perform these steps inside the **app owner's account**.
 
 Go to **Project Settings > Environment Variables (under Tweaks)** on CircleCI and set up the following environment variables :
 
-* `HOCKEYAPP_TOKEN`: 
+* `HOCKEYAPP_TOKEN`:
   * The access token, described above in **Getting started with HockeyApp**.
-* `HOCKEYAPP_EXPORT_APK_PATH`: 
+* `HOCKEYAPP_EXPORT_APK_PATH`:
   * May vary slightly from project to project, but a common example is ***app/build/outputs/apk/app-debug.apk***.
-* `HOCKEYAPP_TAGS`: 
+* `HOCKEYAPP_TAGS`:
   * Any tags that you'd like to be associated with your app version. We use *ocloud-android* in our example.
-* `HOCKEYAPP_TEAM_ID`: 
+* `HOCKEYAPP_TEAM_ID`:
   * The identifier for the app's **HockeyApp Team** can be found by checking the url when you click on the **Organization Profile** in the team owner's account. For example : https://rink.HockeyApp.net/manage/teams/**12345**/team_users
-* `HOCKEYAPP_APP_IDENTIFIER`: 
+* `HOCKEYAPP_APP_IDENTIFIER`:
   * You can find the App ID inside HockeyApp, in the main dashboard for your app, seen here:
-  ![HockeyAppAppId](/android/files/images/hockeyAppAppId.png)
+  ![HockeyAppAppId](../files/images/hockeyAppAppId.png)
 
 ## HockeyApp Deploy Script
 
-[scripts/deployHockeyApp.sh:](/android/files/code/CD/scripts/deployHockeyApp.sh)
+[scripts/deployHockeyApp.sh:](../files/code/CD/scripts/deployHockeyApp.sh)
 
 ```bash
 function uploadToHockeyApp {
@@ -83,11 +83,11 @@ In the example above, our app lives on the `master` branch. The name of your app
 
 The above steps should be enough to get your app deploying to HockeyApp. Hopefully, if all goes well, you will be getting emails from HockeyApp about your successful app version deployment.
 
-![hockeyAppSuccessfulDeployment](/android/files/images/hockeyAppSuccessfulDeployment.png)
+![hockeyAppSuccessfulDeployment](../files/images/hockeyAppSuccessfulDeployment.png)
 
 
 ### Additional Resources
 
-* The complete `circle.yml` & `scripts/deployHockeyApp.sh` built from this example can be found [here](/android/files/code/CD).
+* The complete `circle.yml` & `scripts/deployHockeyApp.sh` built from this example can be found [here](../files/code/CD).
 * [Official CircleCI Deployment Docs](https://circleci.com/docs/configuration#deployment)
 * [Official HockeyApp API Docs](http://support.hockeyapp.net/kb/api)

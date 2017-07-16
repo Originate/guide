@@ -4,7 +4,7 @@ Don't panic.
 
 ## Environment
 
-(see also the [Haskell Tool Stack](haskell/stack-tutorial.md)
+(see also the [Haskell Tool Stack](stack-tutorial.md)
 
 * Haskell tooling is in a state of flux. There are lots of obvious warts, unfortunately, but the community is working on it. The below tools represent the current state of the art as of writing.
 

@@ -5,7 +5,7 @@ Since feature specs may vary from app to app, we'll be using the following gener
 * Splash Screen with "Feed Me" button (which loads the Feed Page when clicked)
 * Feed Page which contains a list of feed items
 
-The complete feature spec code built from this example can be found [here](/android/files/code/featureSpecs).
+The complete feature spec code built from this example can be found [here](../files/code/featureSpecs).
 
 ## Environment Setup
 

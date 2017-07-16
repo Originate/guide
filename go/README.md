@@ -393,7 +393,7 @@ Find more in the [awesome Go list](https://github.com/avelino/awesome-go)
 
 ## Installation
 
-see the dedicated [Go installation guide](go/install.md)
+see the dedicated [Go installation guide](install.md)
 
 
 ## Editors

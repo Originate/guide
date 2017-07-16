@@ -28,7 +28,7 @@ Appium offers both a standard command-line server and an OS X Appium desktop app
 
 ## Cucumber & Appium Example
 
-Describing how to write feature specs with Cucumber and Appium is no easy task. Specifications can vary greatly from project to project. As such, we'll use a [simple example](Feature%20Specifications%20Example.md) to show you how it works. Check out the [official Ruby documentation](https://github.com/appium/ruby_lib/blob/master/docs/android_docs.md) for a full list of Appium commands.
+Describing how to write feature specs with Cucumber and Appium is no easy task. Specifications can vary greatly from project to project. As such, we'll use a [simple example](feature_specifications_example.md) to show you how it works. Check out the [official Ruby documentation](https://github.com/appium/ruby_lib/blob/master/docs/android_docs.md) for a full list of Appium commands.
 
 ### Known Appium Issues
 
@@ -91,13 +91,13 @@ Your CircleCI environment should now be ready to run your feature specs each tim
 
 ## Conclusion
 
-The above guide and the linked [feature specification example](Feature Specifications Example.md) should be enough to get you started writing integration tests with Cucumber and Appium. Hopefully, if all goes well, you will be seeing green!
+The above guide and the linked [feature specification example](feature_specifications_example.md) should be enough to get you started writing integration tests with Cucumber and Appium. Hopefully, if all goes well, you will be seeing green!
 
-![featureSpecSuccess](/android/files/images/featureSpecSuccess.png)
+![featureSpecSuccess](../files/images/featureSpecSuccess.png)
 
 ### Additional Resources
 
-* The complete feature spec code built from this example can be found [here](/android/files/code/featureSpecs).
+* The complete feature spec code built from this example can be found [here](../files/code/featureSpecs).
 * [Appium Inspector Guide](https://github.com/appium/appium-dot-app/blob/master/README.md)
 * [Official Ruby Appium Docs](https://github.com/appium/ruby_lib/blob/master/docs/android_docs.md)
 * [Official Cucumber Docs](https://cucumber.io/docs/reference)
