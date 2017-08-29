@@ -6,7 +6,8 @@ of solving the actual problems
 one uses the language for.
 It is great choice for CLI tools, API servers,
 code that is getting deployed into external environments (e.g. agents),
-and other network (micro) services.
+and other network services,
+be it extremely small (micro-services) or large (in terms of code or team size).
 
 
 ## Introduction
@@ -19,7 +20,7 @@ Go is an ingeniously simple solution
 for the many complex problems encountered in
 large-scale, long-term, high-velocity software engineering.
 Very often the velocity in such environments approximates zero
-because of exponentially growing complexity, technical drift, and bit rot.
+because of exponentially growing complexity, technical drift, compile times, and bit rot.
 The genius underlying Go's simplicity isn't immediately obvious,
 but is often confused for crudeness.
 Nonetheless, while many languages add complexity for the sake of feature richness
