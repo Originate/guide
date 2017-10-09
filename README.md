@@ -9,6 +9,8 @@ It gives an overview of our tech stack and best practices around engineering rel
 * [Code Reviews and Pull Requests](practices/pull_requests.md)
 * [Security](security/README.md)
 * [Open Sourcing](practices/open_sourcing.md)
+* [VIM](editors/vim.md)
+
 
 ### Technology Stack Guides
 
