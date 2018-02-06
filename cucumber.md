@@ -324,4 +324,4 @@ More information:
   on a high level.
 * [the world's most misunderstood collaboration tool](https://cucumber.io/blog/2014/03/03/the-worlds-most-misunderstood-collaboration-tool)
 * [three amigos meeting - agree on the tests before development starts](http://itsadeliverything.com/three-amigos-meeting-agree-the-tests-before-development-starts)
-
+* [Example Mapping](https://cucumber.io/blog/2015/12/08/example-mapping-introduction) - a technique to develop user stories with the entire team
