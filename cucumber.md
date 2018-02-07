@@ -148,7 +148,7 @@ Feature: Updating account information
   Scenario: an administrator updates another account
     Given I am logged in as an admin
     When updating the last name of John Doe to "Connor"
-    Then that account new has the name John Connor
+    Then that account now has the name John Connor
 
 
   @web @api

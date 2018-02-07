@@ -375,7 +375,7 @@ This is a living list, please suggest better ones via a PR.
 __Larger frameworks__
 * build CLI apps: [Cobra](https://github.com/spf13/cobra)
 * simple [Sinatra](http://www.sinatrarb.com) or [Flask](http://flask.pocoo.org) like server:
-  github.com/gin-gonic/gin
+  [github.com/gin-gonic/gin](https://github.com/gin-gonic/gin)
 
 __Testing__
 * end-to-end testing: [godog](https://github.com/DATA-DOG/godog)
@@ -386,12 +386,12 @@ __Debugging__
   explains how to compile, test, profile, and optimize Go code using flame graphs
 
 __Smaller libraries__
-* Postgres: github.com/lib/pq
-* logging: github.com/Sirupsen/logrus
-* generate UUIDs: github.com/satori/go.uuid
-* parse CLI flags: github.com/jessevdk/go-flags
-* rate limiting: golang.org/x/time/rate
-* HTTP middleware: github.com/urfave/negroni
+* Postgres: [github.com/lib/pq](https://github.com/lib/pq)
+* logging: [github.com/Sirupsen/logrus](https://github.com/Sirupsen/logrus)
+* generate UUIDs: [github.com/satori/go.uuid](https://github.com/satori/go.uuid)
+* parse CLI flags: [github.com/jessevdk/go-flags](https://github.com/jessevdk/go-flags)
+* rate limiting: [golang.org/x/time/rate](https://golang.org/x/time/rate)
+* HTTP middleware: [github.com/urfave/negroni](https://github.com/urfave/negroni)
 
 Find more in the [awesome Go list](https://github.com/avelino/awesome-go)
 
