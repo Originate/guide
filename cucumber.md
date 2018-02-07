@@ -1,5 +1,7 @@
 # Originate Guides - Cucumber
 
+Cucumber is a tool for example-driven development or [specification by example](https://en.wikipedia.org/wiki/Specification_by_example), a collaborative methodology for defining requirements and functional tests for software products using realistic, executable examples instead of abstract statements. 
+
 Feature specifications written using Cucumber fulfill many roles in modern agile development teams:
 
 * It is _living documentation_ of the product
