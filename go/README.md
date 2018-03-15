@@ -1,10 +1,10 @@
 # Originate Guides - Go
 
-[Golang](https://golang.org/) is a programming language
-that doesn't get in the way
-of solving the actual problems
-one uses the language for.
-It is great choice for CLI tools, API servers,
+*[Golang](https://golang.org/) is a programming language
+with focus on pragmatism, wisdom instead of cleverness,
+and engineering in the large.*
+
+Go is great choice for CLI tools, API servers,
 code that is getting deployed into external environments (e.g. agents),
 and other network services,
 be it extremely small (micro-services) or large (in terms of code or team size).
