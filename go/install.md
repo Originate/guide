@@ -1,4 +1,4 @@
-# Installing Go
+# Originate Guides - Go - Installation
 
 ## macOS
 
