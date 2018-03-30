@@ -1,5 +1,7 @@
 # Originate Guides
 
+[![CircleCI](https://circleci.com/gh/Originate/guide_private.svg?style=shield&circle-token=aa545442c1fc4b3d7dc3ac45d3c791a962306577)](https://circleci.com/gh/Originate/guide_private)
+
 This guide is the starting point for Originate engineers, product managers, and testers.
 It gives an overview of our tech stack and best practices around engineering related topics.
 

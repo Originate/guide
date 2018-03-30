@@ -14,7 +14,7 @@ to emphasize and achieve the following qualities:
 * [Package management](#package-management)
 * [Small deployment](#small-deployment)
 * [Built-in concurrency](#built-in-concurrency)
-* [Server-native language primitives](#server-native-language)
+* [Server-native language primitives](#server-native-language-primitives)
 * [Cross-compilation](#cross-compilation)
 * [Industry-leading](#industry-leading)
 

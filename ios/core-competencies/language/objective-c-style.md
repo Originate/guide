@@ -388,7 +388,7 @@ NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
 
 Prefer using `%@`. Wrap primitive values (float, double, long), in `@()`. **For example,** `NSLog(@"Speed: %@ MPH", @(user.speed))`, **instead of** `NSLog(@"Speed: %f MPH", user.speed)`.
 
-## `CGRect` Functions
+## CGRect Functions
 
 When accessing the `x`, `y`, `width`, or `height` of a `CGRect`, always use the [`CGGeometry` functions](http://developer.apple.com/library/ios/#documentation/graphicsimaging/reference/CGGeometry/Reference/reference.html) instead of direct struct member access. From Apple's `CGGeometry` reference:
 

@@ -32,17 +32,17 @@ covers rules that may change the meaning of your code:
     a very good reason not to.
     Failure to fully obey these conventions may **introduce errors**, degrade
     performance, or create maintenance headaches.
-    1. "[Tips & Tricks](TipsTricks.md#tips--tricks)" are mostly friendly
+    1. "[Tips & Tricks](TipsTricks.md)" are mostly friendly
     reminders that may not apply in all situations.
     Always keep them in mind and use your best judgement.
     1. "[Additional Remarks](AdditionalRemarks.md#additional-remarks)" are
     general hints that are always helpful to remember.
-0. Finally, the "[Reference](Reference.md#reference)" contains recommended
-further reading.
+0. Finally, the "[Reference](Reference.md)" contains recommended
+    further reading.
 
 ### Static Analysis Tools & Configuration
 
-A [skeleton](skeleton#scala-skeleton-project) project accompanies the guide.
+A [skeleton](skeleton/) project accompanies the guide.
 It encodes and enforces as many best practices as currently available tools
 allow us.
 Try to use as much of its default configuration as you can on your Scala projects.
