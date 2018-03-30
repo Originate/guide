@@ -30,6 +30,7 @@ __Advanced__
 * [Security Guidelines](https://www.gitbook.com/book/checkmarx/go-scp/details)
 * [Go at Google: Language Design in the Service of Software Engineering](https://talks.golang.org/2012/splash.article):
   overview of the philosophy behind Go
+* [Building web applications with Golang](https://github.com/astaxie/build-web-application-with-golang) ebook
 
 
 ## Guidelines
