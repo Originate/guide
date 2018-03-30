@@ -125,7 +125,7 @@ __Smaller libraries__
 Find more in the [awesome Go list](https://github.com/avelino/awesome-go)
 
 
-## Editors
+## Editor Plugins
 
 * Vim: [vim-go](https://github.com/fatih/vim-go)
 * Emacs: [go-mode](https://github.com/dominikh/go-mode.el)
