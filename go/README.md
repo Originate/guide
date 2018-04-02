@@ -1,8 +1,8 @@
 # Originate Guides - Go
 
 *[Golang](https://golang.org/) is a programming language
-with focus on pragmatism, wisdom instead of cleverness,
-and engineering in the large.*
+with focus on pragmatism, keeping things [simple](https://youtu.be/k9Zbuuo51go), 
+wisdom instead of cleverness, and engineering in the large.*
 
 Go is great choice for CLI tools, API servers,
 code that is getting deployed into external environments (e.g. agents),
