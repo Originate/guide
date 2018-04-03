@@ -31,6 +31,7 @@ __Advanced__
 * [Go at Google: Language Design in the Service of Software Engineering](https://talks.golang.org/2012/splash.article):
   overview of the philosophy behind Go
 * [Building web applications with Golang](https://github.com/astaxie/build-web-application-with-golang) ebook
+* Comprehensive [reading list](https://github.com/enocom/gopher-reading-list)
 
 
 ## Guidelines
