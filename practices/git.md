@@ -10,7 +10,11 @@ and it is important to know that changes really come from you,
 even if you work on open-source code.
 
 
-## Branches
+## Git Best Practices
+
+- [Git flight rules](https://github.com/k88hudson/git-flight-rules/blob/master/README.md)
+
+### Branches
 
 * One (or more) feature branches per user story.
 * Refactorings and bug fixes should be in their own feature branches, and be reviewed separately.
@@ -23,16 +27,7 @@ even if you work on open-source code.
 following convention: "[developer initials]-[ticket key]-[feature-name]", e.g. `kg-OR-16-new-settings-page`. *Note that
 JIRA expects the ticket key to be capitalized.*
 
-### Start a new feature branch
-
-```shell
-$ git checkout development
-$ git pull --rebase
-$ git checkout -b [new feature branch name]
-$ git push -u origin [new feature branch name]
-```
-
-## Commits
+### Commits
 
 * Each commit into the main branch should contain only one particular change.
 * Commit frequently during your work,
@@ -52,23 +47,7 @@ $ git push -u origin [new feature branch name]
   followed by an optional longer description.
 
 
-## Staying in sync
-
-It is important that you keep your feature branches in sync with the main _development_ branch.
-This prevents merge conflicts from building up, and lets you deal with them one at a time. The goal is
-to avoid fixing conflicts all at once when you want to merge your feature branch into development.
-
-```shell
-$ git checkout development
-$ git pull --rebase
-$ git checkout [feature branch]
-$ git pull --rebase
-$ git rebase development   --or--   git merge development
-$ git push -f    --or--  git push
-```
-
-
-## Resolving conflicts
+### Resolving conflicts
 
 Conflicts happen when two developers change the same line in the same file at the same time.
 To resolve them
@@ -82,7 +61,7 @@ $ git rebase --continue
 ```
 
 
-## Pull Requests
+### Pull Requests
 
 When you are done with a feature, submit a pull request so that it can be reviewed and merged into the development branch.
 
@@ -115,23 +94,13 @@ Here is a check list for reviewers:
 * There should not be any commented-out code. Commented code should be removed.
 * There should not be any debug statements like "console.log" or the like.
 
-```shell
-$ git checkout development
-$ git pull --rebase
-$ git checkout [feature branch]
-$ git pull --rebase
-$ git rebase development
-$ git push -u origin -f
-# Create the pull request on the Github page of the project
-```
-
 
 ### Breaking Up Large Branches
 
 See our blog post about [Refactoring Git Branches](http://blog.originate.com/blog/2014/04/19/refactoring_git_branches).
 
 
-## Merging
+### Merging
 
 If possible, do a squash merge
 
