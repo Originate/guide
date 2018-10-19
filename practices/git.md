@@ -102,16 +102,7 @@ See our blog post about [Refactoring Git Branches](http://blog.originate.com/blo
 
 ### Merging
 
-If possible, do a squash merge
-
-```shell
-$ git checkout [feature branch]
-$ git rebase development   --or--  git merge development   (then fix any conflicts)
-$ git checkout development
-$ git merge --squash [feature branch name]`
-```
-
-Advantages of squash merges:
+If possible, do a squash merge. Advantages of squash merges:
 * The Git history contains only one clean commit per feature / bug fix
 * The Git history is one straight line of linear commits, instead of the typical Git spaghetti branch madness
 * `git bisect` becomes a possibility again
