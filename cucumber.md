@@ -314,10 +314,7 @@ More information:
 
 ## Further reading:
 
-* [Kevin's Uncubed Edge class for Cucumber](http://edge.uncubed.com/course/originate-cucumber)
-  for a practical example
-  of how this collaboration could look like,
-* [User-level feature specs with Cucumber](http://blog.originate.com/blog/2014/12/02/high-level-cucumber)
+* [User-level feature specs with Cucumber](https://www.originate.com/thinking/user-level-feature-specs-with-cucumber)
   for a more developer-centric visualization
   of how much more powerful and expressive
   a well written Cucumber spec is
